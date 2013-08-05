@@ -1,4 +1,4 @@
-Mine_Horse_Racing
+Mine Horse Racing
 =================
-#概要
-マイクラで馬レースをするためのプラグイン
+Mine Horse Racing Plugin is a helper of your holding Minecraft Horse Racing!
+

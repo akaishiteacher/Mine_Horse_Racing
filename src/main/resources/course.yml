@@ -14,7 +14,7 @@ field:
         - x: x
           y: y
           z: z
-    waitingRoom:
+    anteroom:
       world: worldName
       spawnPoint:
         x: x
@@ -80,7 +80,7 @@ field:
         - x: x
           y: y
           z: z
-    waitingRoom:
+    anteroom:
       world: worldName
       spawnPoint:
         x: x

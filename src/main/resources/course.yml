@@ -65,3 +65,69 @@ field:
             - x: x
               y: y
               z: z
+  - name: field1
+    lobby:
+      world: worldName
+      spawnPoint:
+        x: x
+        y: y
+        z: z
+        direction: direction
+      area:
+        - x: x
+          y: y
+          z: z
+        - x: x
+          y: y
+          z: z
+    waitingRoom:
+      world: worldName
+      spawnPoint:
+        x: x
+        y: y
+        z: z
+        direction: direction
+      area:
+        - x: x
+          y: y
+          z: z
+        - x: x
+          y: y
+          z: z
+    course:
+      world: worldName
+      startArea:
+        spawnPoint:
+          x: x
+          y: y
+          z: z
+          direction: direction
+        area:
+          - x: x
+            y: y
+            z: z
+          - x: x
+            y: y
+            z: z
+      goalArea:
+        area:
+          - x: x
+            y: y
+            z: z
+          - x: x
+            y: y
+            z: z
+      checkpoint:
+        - label:
+          spawnPoint:
+            x: x
+            y: y
+            z: z
+            direction: direction
+          area:
+            - x: x
+              y: y
+              z: z
+            - x: x
+              y: y
+              z: z

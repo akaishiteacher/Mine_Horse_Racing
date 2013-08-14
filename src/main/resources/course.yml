@@ -1,8 +1,7 @@
-course:
-  - name: course1
-    startArea:
+field:
+  - name: field1
+    lobby:
       spawnPoint:
-        world: worldName
         x: x
         y: y
         z: z
@@ -14,7 +13,12 @@ course:
         - x: x
           y: y
           z: z
-    goalArea:
+    waitingRoom:
+      spawnPoint:
+        x: x
+        y: y
+        z: z
+        direction: direction
       area:
         - x: x
           y: y
@@ -22,8 +26,9 @@ course:
         - x: x
           y: y
           z: z
-    checkpoint:
-      - label:
+    course:
+      world: worldName
+      startArea:
         spawnPoint:
           x: x
           y: y
@@ -36,47 +41,25 @@ course:
           - x: x
             y: y
             z: z
-  - name: course2
-    startArea:
-      spawnPoint:
-        world: worldName
-        x: x
-        y: y
-        z: z
-        direction: direction
-      area:
-        - world: worldName
-          x: x
-          y: y
-          z: z
-        - world: worldName
-          x: x
-          y: y
-          z: z
-    goalArea:
-      area:
-        - world: worldName
-          x: x
-          y: y
-          z: z
-        - world: worldName
-          x: x
-          y: y
-          z: z
-    checkpoint:
-      - label:
-        spawnPoint:
-          world: worldName
-          x: x
-          y: y
-          z: z
-          direction: direction
+      goalArea:
         area:
-          - world: worldName
+          - x: x
+            y: y
+            z: z
+          - x: x
+            y: y
+            z: z
+      checkpoint:
+        - label:
+          spawnPoint:
             x: x
             y: y
             z: z
-          - world: worldName
-            x: x
-            y: y
-            z: z
+            direction: direction
+          area:
+            - x: x
+              y: y
+              z: z
+            - x: x
+              y: y
+              z: z

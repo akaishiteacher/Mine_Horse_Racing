@@ -1,0 +1,15 @@
+horse:
+  default:
+    - owner:
+      name:
+      UUID:
+    - owner:
+      name:
+      UUID:
+  group1:
+    - owner:
+      name:
+      UUID:
+    - owner:
+      name:
+      UUID:

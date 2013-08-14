@@ -17,10 +17,11 @@ public final class MineHorseRacingPlugin extends JavaPlugin {
 
 	public final Random RANDOM = new Random();
 
-	public void onEnable() {
-		getServer().getPluginManager().registerEvents(new MHREventListener(this), this);
-
-		// コマンド追加
+	/**
+	 * コマンドを読み込む
+	 * コマンドの追加もここに
+	 */
+	public void loadCommands() {
 		// メソッドチェーンで追加も可。 サンプルとして何種類か
 		MHRCommandExecutor mce = new MHRCommandExecutor(this);
 		mce.addCommand(new SampleChildCommand(this, "child1"));
@@ -34,6 +35,12 @@ public final class MineHorseRacingPlugin extends JavaPlugin {
 		).addCommand(new SampleParentCommand(this, "parent2")
 		);
 		getCommand("minehorseracing").setExecutor(mce);
+	}
+
+	public void onEnable() {
+		getServer().getPluginManager().registerEvents(new MHREventListener(this), this);
+
+		this.loadCommands();
 
 		getLogger().info("Enabled " + this.getName());
 	}

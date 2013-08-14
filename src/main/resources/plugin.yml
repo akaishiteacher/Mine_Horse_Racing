@@ -1,0 +1,8 @@
+name: MineHorseRacingPlugin
+main: net.akaishi_teacher.mhr.MineHorseRacingPlugin
+version: 0.1.0
+description: this is -
+authors: [ilicodaisuki]
+commands:
+  minehorseracing:
+    aliases: mhr

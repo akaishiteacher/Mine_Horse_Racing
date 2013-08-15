@@ -26,14 +26,13 @@ public final class MineHorseRacingPlugin extends JavaPlugin {
 		MHRCommandExecutor mce = new MHRCommandExecutor(this);
 		mce.addCommand(new SampleChildCommand(this, "child1"));
 		mce.addCommand(new SampleChildCommand(this, "child2"))
-				.addCommand(new SampleChildCommand(this, "child3")
-				);
+				.addCommand(new SampleChildCommand(this, "child3"));
 		mce.addCommand(new BaseParentCommand(this, "parent1")
 				.addCommand(new SampleChildCommand(this, "child1"))
 				.addCommand(new SampleChildCommand(this, "child2"))
 				.addCommand(new SampleChildCommand(this, "child3"))
-		).addCommand(new SampleParentCommand(this, "parent2")
-		);
+		).addCommand(new SampleParentCommand(this, "parent2"));
+
 		getCommand("minehorseracing").setExecutor(mce);
 	}
 

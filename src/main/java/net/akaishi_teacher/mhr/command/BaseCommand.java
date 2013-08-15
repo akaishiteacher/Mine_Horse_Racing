@@ -4,7 +4,6 @@ import net.akaishi_teacher.mhr.MineHorseRacingPlugin;
 import org.bukkit.command.BlockCommandSender;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
-import org.bukkit.command.RemoteConsoleCommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -44,8 +43,6 @@ public class BaseCommand extends CommandComponent {
 			return onCommand((Player) sender, args);
 		} else if (sender instanceof ConsoleCommandSender) {
 			return onCommand((ConsoleCommandSender) sender, args);
-		} else if (sender instanceof RemoteConsoleCommandSender) {
-			return onCommand((RemoteConsoleCommandSender) sender, args);
 		} else if (sender instanceof BlockCommandSender) {
 			return onCommand((BlockCommandSender) sender, args);
 		}
@@ -73,10 +70,6 @@ public class BaseCommand extends CommandComponent {
 	}
 
 	protected boolean onCommand(ConsoleCommandSender sender, ArrayList<String> args) {
-		return false;
-	}
-
-	protected boolean onCommand(RemoteConsoleCommandSender sender, ArrayList<String> args) {
 		return false;
 	}
 

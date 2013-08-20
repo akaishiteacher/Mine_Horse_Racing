@@ -4,23 +4,27 @@ import java.util.UUID;
 
 import org.bukkit.entity.Horse;
 
+/**
+ * 馬の情報が格納されているクラス
+ * @author mozipi
+ */
 public class HorseInfo {
 
-	private UUID uuid;
+	protected UUID uuid;
 
-	private double x;
+	protected double x;
 
-	private double y;
+	protected double y;
 
-	private double z;
+	protected double z;
 
-	private double jumpStrength;
+	protected double jumpStrength;
 
-	private double speed;
+	protected double speed;
 
-	private Horse horse;
+	protected Horse horse;
 
-	private int number;
+	protected int number;
 
 	public double getX() {
 		return x;

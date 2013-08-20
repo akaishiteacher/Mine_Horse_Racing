@@ -3,17 +3,26 @@ package net.akaishi_teacher.mhr;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
+import net.akaishi_teacher.mhr.commands.CommandExecutor;
+import net.akaishi_teacher.mhr.commands.Help;
+import net.akaishi_teacher.mhr.commands.TestCommand_A;
+import net.akaishi_teacher.mhr.commands.TestCommand_B;
+
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class MHR extends JavaPlugin {
-
-	private ArrayList<HorseInfo> horseInfoList = new ArrayList<HorseInfo>();
+/**
+ * MineHorseRacingPluginの元になるクラス
+ * @author mozipi
+ */
+public final class MHR extends JavaPlugin {
 
 	private Logger logger;
 
 	private MHRListeners listener;
+
+	private CommandExecutor cmdExecutor;
 
 	@Override
 	public void onEnable() {
@@ -22,7 +31,8 @@ public class MHR extends JavaPlugin {
 		logger.info("MineHorseRacingPlugin Enabled.");
 		listener = new MHRListeners(this);
 		getServer().getPluginManager().registerEvents(listener, this);
-		getServer().getScheduler().runTaskTimer(this, listener, 0, 1);
+		cmdExecutor = new CommandExecutor(this);
+		registerCommands();
 	}
 
 	@Override
@@ -34,7 +44,13 @@ public class MHR extends JavaPlugin {
 	@Override
 	public boolean onCommand(CommandSender sender, Command command,
 			String label, String[] args) {
-		return true;
+		return cmdExecutor.onCommand(sender, args);
+	}
+
+	protected void registerCommands() {
+		cmdExecutor.addCommand(new Help(this, null, null, null, "HelpCommand"));
+		cmdExecutor.addCommand(new TestCommand_A(this, "test_A","r r r o o", "mhr.test.a", "テストコマンドA"));
+		cmdExecutor.addCommand(new TestCommand_B(this, "test_B","r r r o o", "mhr.test.b", "テストコマンドB"));
 	}
 
 }

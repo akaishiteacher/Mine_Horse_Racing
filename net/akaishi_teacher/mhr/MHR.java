@@ -1,15 +1,16 @@
 package net.akaishi_teacher.mhr;
 
-import java.util.ArrayList;
+import java.io.File;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.logging.Logger;
 
 import net.akaishi_teacher.mhr.commands.CommandExecutor;
-import net.akaishi_teacher.mhr.commands.Help;
-import net.akaishi_teacher.mhr.commands.TestCommand_A;
-import net.akaishi_teacher.mhr.commands.TestCommand_B;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -24,21 +25,36 @@ public final class MHR extends JavaPlugin {
 
 	private CommandExecutor cmdExecutor;
 
+	private Language lang;
+
+	private FileConfiguration cfg;
+
 	@Override
 	public void onEnable() {
 		super.onEnable();
+		cfg = getConfig();
 		logger = getLogger();
 		logger.info("MineHorseRacingPlugin Enabled.");
 		listener = new MHRListeners(this);
 		getServer().getPluginManager().registerEvents(listener, this);
 		cmdExecutor = new CommandExecutor(this);
 		registerCommands();
+		try {
+			lang = createLanguageInstance();
+			lang.loadLangFile();
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void onDisable() {
 		super.onDisable();
 		logger.info("MineHorseRacingPlugin Disabled.");
+		setConfigs();
+		saveConfig();
 	}
 
 	@Override
@@ -48,9 +64,17 @@ public final class MHR extends JavaPlugin {
 	}
 
 	protected void registerCommands() {
-		cmdExecutor.addCommand(new Help(this, null, null, null, "HelpCommand"));
-		cmdExecutor.addCommand(new TestCommand_A(this, "test_A","r r r o o", "mhr.test.a", "テストコマンドA"));
-		cmdExecutor.addCommand(new TestCommand_B(this, "test_B","r r r o o", "mhr.test.b", "テストコマンドB"));
+	}
+
+	protected Language createLanguageInstance() throws URISyntaxException {
+		cfg.addDefault("lang", "ja_JP");
+		String langStr = cfg.getString("lang");
+		URI uri = new URI(getDataFolder().toURI().getPath() + "/lang/");
+		return new Language(new File(uri.getPath()), langStr, logger);
+	}
+
+	protected void setConfigs() {
+		cfg.set("lang", lang.getLang());
 	}
 
 }

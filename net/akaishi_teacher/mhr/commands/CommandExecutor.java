@@ -2,6 +2,7 @@ package net.akaishi_teacher.mhr.commands;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 
 import net.akaishi_teacher.mhr.MHR;
@@ -24,30 +25,23 @@ public class CommandExecutor {
 		this.plugin = plugin;
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public boolean onCommand(CommandSender sender, String[] args) {
+		ArrayList l = new ArrayList<AbstractCommand>(commandSet);
+		Collections.sort(l, new ComparatorCommandArgs());
+		commandSet = new HashSet<AbstractCommand>(l);
+
 		for (AbstractCommand command : commandSet) {
-			if (args.length != 0 && command.isNoLabel() == 1) {
-				if (command.isLabelMatch(args[0])) {
-					if (permissionCheck(sender, command.getPermission())) {
-						ArrayList<String> argList = getArgs(args);
-						if (command.getNeedArgsLength() <= argList.size()) {
-							return command.execute(sender, argList);
-						} else {
-							sender.sendMessage(command.description);
-						}
-					} else {
-						sender.sendMessage("§4You don't have permission! (" + command.getPermission() + ")");
-						return true;
-					}
+			if (CommandSearcher.search(command.pattern, args)) {
+				if (sender.hasPermission(command.getPermission())) {
+					return command.execute(sender, new ArrayList<String>(Arrays.asList(args)));
+				} else {
+					sender.sendMessage("§4You don't have permission!(" + command.getPermission() + ")");
 				}
 			} else {
-				if (args.length == 0 && command.isNoLabel() == 0) {
-					if (permissionCheck(sender, command.getPermission())) {
-						return command.execute(sender, null);
-					} else {
-						sender.sendMessage("§4You don't have permission! (" + command.getPermission() + ")");
-						return true;
-					}
+				if (CommandSearcher.search_notAnys(command.pattern, args)) {
+					sender.sendMessage(command.getUsage(sender));
+					return true;
 				}
 			}
 		}
@@ -71,13 +65,6 @@ public class CommandExecutor {
 	 */
 	public boolean permissionCheck(CommandSender sender, String permission) {
 		return permission == null || sender.hasPermission(permission) ? true : false;
-	}
-
-	public static ArrayList<String> getArgs(String[] args) {
-		args[0] = null;
-		ArrayList<String> r = new ArrayList<String>(Arrays.asList(args));
-		r.trimToSize();
-		return r;
 	}
 
 }

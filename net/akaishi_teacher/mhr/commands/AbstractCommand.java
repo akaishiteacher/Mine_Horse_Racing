@@ -12,8 +12,6 @@ import net.akaishi_teacher.mhr.MHR;
  */
 public abstract class AbstractCommand {
 
-	protected String label;
-
 	protected String pattern;
 
 	protected String permission;
@@ -22,18 +20,13 @@ public abstract class AbstractCommand {
 
 	protected MHR plugin;
 
-	public AbstractCommand(MHR plugin, String label, String pattern, String permission,
+	public AbstractCommand(MHR plugin,  String pattern, String permission,
 			String description) {
 		super();
-		this.label = label;
 		this.plugin = plugin;
 		this.pattern = pattern;
 		this.permission = permission;
 		this.description = description;
-	}
-
-	public String getLabel() {
-		return label;
 	}
 
 	public String getPattern() {
@@ -48,38 +41,16 @@ public abstract class AbstractCommand {
 		return description;
 	}
 
-	public int getNeedArgsLength() {
-		if (pattern == null) {
-			return 0;
+	public boolean isMatch(ArrayList<String> args) {
+		if (CommandSearcher.search(pattern, (String[]) args.toArray())) {
+			return true;
 		}
-		String[] patterns = pattern.split(" ");
-		int rNum = 0;
-		for (String p : patterns) {
-			if (p.equals("r")) {
-				++rNum;
-			}
-		}
-		return rNum;
-	}
-
-	/**
-	 * 実行されたコマンドのラベルがこのクラスのラベルと一致するかどうかを判定します。
-	 * @param checkStr チェックするラベルの文字列
-	 * @return ラベルが一致する場合はtrue。一致しなければfalse
-	 */
-	public boolean isLabelMatch(String checkStr) {
-		return label == null || label == "" ? true :label.equals(checkStr);
-	}
-
-	/**
-	 * ラベルが無い場合は0を返すメソッドです
-	 * @return labelが空文字もしくはnullの場合は0。空文字でなくnullでもない場合はtrue
-	 */
-	public int isNoLabel() {
-		return label == null || label == "" ? 0: 1;
+		return false;
 	}
 
 	public abstract boolean execute(CommandSender sender, ArrayList<String> args);
+
+	public abstract String getUsage(CommandSender sender);
 
 	@Override
 	public int hashCode() {

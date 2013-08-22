@@ -35,17 +35,22 @@ public final class MHR extends JavaPlugin {
 
 	private CommonHorseStats horseStats;
 
+	private String langFilesDirString;
+
 	@Override
 	public void onEnable() {
 		super.onEnable();
 		cfg = getConfig();
 		logger = getLogger();
+		loadConfig();
+
 		logger.info("MineHorseRacingPlugin Enabled.");
+
 		listener = new MHRListeners(this);
 		getServer().getPluginManager().registerEvents(listener, this);
 		getServer().getScheduler().runTaskTimer(this, listener, 0, 100);
+
 		cmdExecutor = new CommandExecutor(this);
-		registerCommands();
 		try {
 			lang = createLanguageInstance();
 			lang.loadLangFile();
@@ -55,13 +60,15 @@ public final class MHR extends JavaPlugin {
 			e.printStackTrace();
 		}
 		horseStats = createCommonHorseStatsInstance();
+
+		registerCommands();
 	}
 
 	@Override
 	public void onDisable() {
 		super.onDisable();
 		logger.info("MineHorseRacingPlugin Disabled.");
-		setConfigs();
+		setConfigValues();
 		saveConfig();
 	}
 
@@ -82,7 +89,7 @@ public final class MHR extends JavaPlugin {
 		cfg.addDefault("lang", "ja_JP");
 		String langStr = cfg.getString("lang");
 		URI uri = new URI(getDataFolder().toURI().getPath() + "/lang/");
-		return new Language(new File(uri.getPath()), langStr, logger);
+		return new Language(new File(langFilesDirString == null ? uri.getPath() : langFilesDirString), langStr, logger);
 	}
 
 	protected CommonHorseStats createCommonHorseStatsInstance() {
@@ -91,10 +98,17 @@ public final class MHR extends JavaPlugin {
 		return new CommonHorseStats(cfg.getDouble("DefaultHorseSpeed"), cfg.getDouble("DefaultHorseJumpStrength"));
 	}
 
-	protected void setConfigs() {
+	protected void loadConfig() {
+		langFilesDirString = cfg.getString("LangFilesDir");
+	}
+
+	protected void setConfigValues() {
 		cfg.set("lang", lang.getLang());
 		cfg.set("DefaultHorseSpeed", horseStats.getSpeed());
 		cfg.set("DefaultHorseJumpStrength", horseStats.getJump());
+		if (langFilesDirString != null) {
+			cfg.set("LangFilesDir", langFilesDirString);
+		}
 	}
 
 	public CommandExecutor getCmdExecutor() {

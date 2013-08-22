@@ -1,4 +1,4 @@
-package net.akaishi_teacher.mhr.commands;
+package net.akaishi_teacher.mhr.commands.func;
 
 import java.util.ArrayList;
 

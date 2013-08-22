@@ -1,4 +1,4 @@
-package net.akaishi_teacher.mhr.commands;
+package net.akaishi_teacher.mhr.commands.func;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -6,6 +6,9 @@ import java.util.LinkedList;
 public class CommandSearcher {
 
 	public static boolean search(String searchCommand, String[] commandArgs) {
+		if (searchCommand.equals("")) {
+			return true;
+		}
 		String[] searchArgs = searchCommand.split(" ");
 		if (searchArgs.length > commandArgs.length) {
 			return false;
@@ -37,6 +40,9 @@ public class CommandSearcher {
 	}
 
 	public static boolean search_notAnys(String searchCommand, String[] commandArgs) {
+		if (searchCommand.equals("")) {
+			return true;
+		}
 		LinkedList<String> s1 = new LinkedList<String>();
 		LinkedList<String> s2 = new LinkedList<String>();
 		String[] searchArgs = searchCommand.split(" ");

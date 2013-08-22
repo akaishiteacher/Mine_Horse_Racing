@@ -50,21 +50,21 @@ public class Language {
 	}
 
 	public void loadLangFile() throws IOException, URISyntaxException {
+		localizedStringMap.clear();
 		Properties prop = new Properties();
-		prop.load(
-				new InputStreamReader(
-						new FileInputStream(
-								new File(
-										new URI(langFileDir.toURI().getPath() + "/" + lang + ".lang").getPath()
-										)
-								), "UTF-8")
-				);
+		URI u = new URI(langFileDir.toURI().getPath() + "/" + lang + ".lang");
+		File f = new File(u.getPath());
+		FileInputStream fi = new FileInputStream(f);
+		InputStreamReader isr = new InputStreamReader(fi, "UTF-8");
+		prop.load(isr);
 		for (Object obj : prop.keySet()) {
 			if (obj instanceof String) {
 				String key = (String) obj;
 				localizedStringMap.put(key, prop.getProperty(key));
 			}
 		}
+		fi.close();
+		isr.close();
 	}
 
 	public String getLocalizedString(String key) {

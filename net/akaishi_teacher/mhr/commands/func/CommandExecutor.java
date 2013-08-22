@@ -1,4 +1,4 @@
-package net.akaishi_teacher.mhr.commands;
+package net.akaishi_teacher.mhr.commands.func;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,7 +33,8 @@ public class CommandExecutor {
 
 		for (AbstractCommand command : commandSet) {
 			if (CommandSearcher.search(command.pattern, args)) {
-				if (sender.hasPermission(command.getPermission())) {
+				if (command.getPermission() == null
+						|| sender.hasPermission(command.getPermission())) {
 					return command.execute(sender, new ArrayList<String>(Arrays.asList(args)));
 				} else {
 					sender.sendMessage("§4You don't have permission!(" + command.getPermission() + ")");
@@ -65,6 +66,10 @@ public class CommandExecutor {
 	 */
 	public boolean permissionCheck(CommandSender sender, String permission) {
 		return permission == null || sender.hasPermission(permission) ? true : false;
+	}
+
+	public HashSet<AbstractCommand> getCommandSet() {
+		return commandSet;
 	}
 
 }

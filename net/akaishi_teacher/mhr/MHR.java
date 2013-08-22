@@ -6,7 +6,11 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.logging.Logger;
 
-import net.akaishi_teacher.mhr.commands.CommandExecutor;
+import net.akaishi_teacher.mhr.commands.Help;
+import net.akaishi_teacher.mhr.commands.ReloadLangFile;
+import net.akaishi_teacher.mhr.commands.SetJump;
+import net.akaishi_teacher.mhr.commands.SetSpeed;
+import net.akaishi_teacher.mhr.commands.func.CommandExecutor;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -29,6 +33,8 @@ public final class MHR extends JavaPlugin {
 
 	private FileConfiguration cfg;
 
+	private CommonHorseStats horseStats;
+
 	@Override
 	public void onEnable() {
 		super.onEnable();
@@ -37,6 +43,7 @@ public final class MHR extends JavaPlugin {
 		logger.info("MineHorseRacingPlugin Enabled.");
 		listener = new MHRListeners(this);
 		getServer().getPluginManager().registerEvents(listener, this);
+		getServer().getScheduler().runTaskTimer(this, listener, 0, 100);
 		cmdExecutor = new CommandExecutor(this);
 		registerCommands();
 		try {
@@ -47,6 +54,7 @@ public final class MHR extends JavaPlugin {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		horseStats = createCommonHorseStatsInstance();
 	}
 
 	@Override
@@ -64,6 +72,10 @@ public final class MHR extends JavaPlugin {
 	}
 
 	protected void registerCommands() {
+		cmdExecutor.addCommand(new Help(this, "", null, "This command is help command."));
+		cmdExecutor.addCommand(new ReloadLangFile(this, "reloadLangFile", "mhr.reload.lang", "This command will reload the language file."));
+		cmdExecutor.addCommand(new SetSpeed(this, "setspeed any", "mhr.horse.set", "This command will set speed to a horse."));
+		cmdExecutor.addCommand(new SetJump(this, "setjump any", "mhr.horse.set", "This command will set jump strength to a horse."));
 	}
 
 	protected Language createLanguageInstance() throws URISyntaxException {
@@ -73,8 +85,28 @@ public final class MHR extends JavaPlugin {
 		return new Language(new File(uri.getPath()), langStr, logger);
 	}
 
+	protected CommonHorseStats createCommonHorseStatsInstance() {
+		cfg.addDefault("DefaultHorseSpeed", 2);
+		cfg.addDefault("DefaultHorseJumpStrength", 2);
+		return new CommonHorseStats(cfg.getDouble("DefaultHorseSpeed"), cfg.getDouble("DefaultHorseJumpStrength"));
+	}
+
 	protected void setConfigs() {
 		cfg.set("lang", lang.getLang());
+		cfg.set("DefaultHorseSpeed", horseStats.getSpeed());
+		cfg.set("DefaultHorseJumpStrength", horseStats.getJump());
+	}
+
+	public CommandExecutor getCmdExecutor() {
+		return cmdExecutor;
+	}
+
+	public Language getLang() {
+		return lang;
+	}
+
+	public CommonHorseStats getHorseStats() {
+		return horseStats;
 	}
 
 }

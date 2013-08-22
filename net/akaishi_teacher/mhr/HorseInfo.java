@@ -18,10 +18,6 @@ public class HorseInfo {
 
 	protected double z;
 
-	protected double jumpStrength;
-
-	protected double speed;
-
 	protected Horse horse;
 
 	protected int number;
@@ -48,22 +44,6 @@ public class HorseInfo {
 
 	public void setZ(double z) {
 		this.z = z;
-	}
-
-	public double getJumpStrength() {
-		return jumpStrength;
-	}
-
-	public void setJumpStrength(double jumpStrength) {
-		this.jumpStrength = jumpStrength;
-	}
-
-	public double getSpeed() {
-		return speed;
-	}
-
-	public void setSpeed(double speed) {
-		this.speed = speed;
 	}
 
 	public int getNumber() {

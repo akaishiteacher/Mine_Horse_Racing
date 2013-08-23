@@ -18,12 +18,24 @@ import java.util.logging.Logger;
  */
 public class Language {
 
+	/**
+	 * 言語ファイルがあるディレクトリ
+	 */
 	protected File langFileDir;
 
+	/**
+	 * 言語名
+	 */
 	protected String lang;
 
+	/**
+	 * ローカライズされた文字列のマップ
+	 */
 	protected HashMap<String, String> localizedStringMap = new HashMap<String, String>();
 
+	/**
+	 * ログ出力のためのインスタンスが格納された変数
+	 */
 	protected Logger logger;
 
 	public Language(File langFileDir, String lang, Logger logger) {
@@ -33,6 +45,11 @@ public class Language {
 		mkdir();
 	}
 
+
+
+	/**
+	 * ディレクトリが存在しない場合、ディレクトリを生成します。
+	 */
 	protected void mkdir() {
 		//言語ファイルがあるディレクトリが存在するかどうか。
 		//存在しない場合はディレクトリ生成する。
@@ -49,6 +66,13 @@ public class Language {
 		}
 	}
 
+
+
+	/**
+	 * 言語ファイルを読み込みます。読み込む前にlocalizedStringMapのclearメソッドを呼び出します。
+	 * @throws IOException
+	 * @throws URISyntaxException
+	 */
 	public void loadLangFile() throws IOException, URISyntaxException {
 		localizedStringMap.clear();
 		Properties prop = new Properties();
@@ -67,6 +91,13 @@ public class Language {
 		isr.close();
 	}
 
+
+
+	/**
+	 * ローカライズされた文字列を取得します。
+	 * @param key ローカライズされた文字列のキー
+	 * @return キーをもとに取得したローカライズされた文字列
+	 */
 	public String getLocalizedString(String key) {
 		String g = localizedStringMap.get(key);
 		if (g == null) {
@@ -75,6 +106,11 @@ public class Language {
 		return g;
 	}
 
+
+	/**
+	 * 言語名を取得します。
+	 * @return 言語名
+	 */
 	public String getLang() {
 		return lang;
 	}

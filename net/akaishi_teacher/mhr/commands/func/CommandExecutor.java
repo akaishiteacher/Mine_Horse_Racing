@@ -17,6 +17,9 @@ public class CommandExecutor {
 
 	protected MHR plugin;
 
+	/**
+	 * コマンドのHashSet
+	 */
 	protected HashSet<AbstractCommand> commandSet =
 			new HashSet<AbstractCommand>();
 
@@ -25,6 +28,14 @@ public class CommandExecutor {
 		this.plugin = plugin;
 	}
 
+
+
+	/**
+	 * コマンドを実行します。
+	 * @param sender CommandSenderのインスタンス
+	 * @param args コマンドの引数
+	 * @return コマンドが実行できた場合はtrue。コマンドが見つからなくてもtrue。実行できなかった場合はfalse
+	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public boolean onCommand(CommandSender sender, String[] args) {
 		ArrayList l = new ArrayList<AbstractCommand>(commandSet);
@@ -49,6 +60,8 @@ public class CommandExecutor {
 		return true;
 	}
 
+
+
 	/**
 	 * コマンドを追加します。
 	 * @param command 追加したい{@link AbstractCommand}のインスタンス
@@ -57,6 +70,8 @@ public class CommandExecutor {
 	public boolean addCommand(AbstractCommand command) {
 		return commandSet.add(command);
 	}
+
+
 
 	/**
 	 * パーミッションをチェックします
@@ -67,6 +82,8 @@ public class CommandExecutor {
 	public boolean permissionCheck(CommandSender sender, String permission) {
 		return permission == null || sender.hasPermission(permission) ? true : false;
 	}
+
+
 
 	public HashSet<AbstractCommand> getCommandSet() {
 		return commandSet;

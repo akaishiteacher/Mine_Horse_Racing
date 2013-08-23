@@ -3,6 +3,9 @@ package net.akaishi_teacher.mhr.commands.func;
 import java.util.Arrays;
 import java.util.LinkedList;
 
+/**
+ * @author mozipi
+ */
 public class CommandSearcher {
 
 	public static boolean search(String searchCommand, String[] commandArgs) {

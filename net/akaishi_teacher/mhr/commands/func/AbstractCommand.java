@@ -2,9 +2,10 @@ package net.akaishi_teacher.mhr.commands.func;
 
 import java.util.ArrayList;
 
-import org.bukkit.command.CommandSender;
-
 import net.akaishi_teacher.mhr.MHR;
+
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 /**
  * コマンドを実装するための抽象クラス
@@ -12,10 +13,19 @@ import net.akaishi_teacher.mhr.MHR;
  */
 public abstract class AbstractCommand {
 
+	/**
+	 * コマンドのパターン(anyは必須引数)
+	 */
 	protected String pattern;
 
+	/**
+	 * コマンドのパーミッション
+	 */
 	protected String permission;
 
+	/**
+	 * コマンドの説明
+	 */
 	protected String description;
 
 	protected MHR plugin;
@@ -29,18 +39,31 @@ public abstract class AbstractCommand {
 		this.description = description;
 	}
 
+
+
 	public String getPattern() {
 		return pattern;
 	}
+
+
 
 	public String getPermission() {
 		return permission;
 	}
 
+
+
 	public String getDescription() {
 		return description;
 	}
 
+
+
+	/**
+	 * コマンドが一致するかを判定します。
+	 * @param args コマンドの引数
+	 * @return 引数に渡されたArrayListを元に判定し、一致する場合はtrue。一致しなければfalse
+	 */
 	public boolean isMatch(ArrayList<String> args) {
 		if (CommandSearcher.search(pattern, (String[]) args.toArray())) {
 			return true;
@@ -48,9 +71,26 @@ public abstract class AbstractCommand {
 		return false;
 	}
 
+
+
+	/**
+	 * コマンドを実行する抽象メソッドです。
+	 * @param sender CommandSenderのインスタンス
+	 * @param args コマンドの引数
+	 * @return コマンドが実行できた場合はtrue
+	 */
 	public abstract boolean execute(CommandSender sender, ArrayList<String> args);
 
+
+
+	/**
+	 * コマンドの実行方法を返すメソッドです、
+	 * @param sender CommandSenderのインスタンス
+	 * @return コマンドの実行方法
+	 */
 	public abstract String getUsage(CommandSender sender);
+
+
 
 	@Override
 	public int hashCode() {
@@ -59,6 +99,8 @@ public abstract class AbstractCommand {
 		result = prime * result + ((pattern == null) ? 0 : pattern.hashCode());
 		return result;
 	}
+
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -75,6 +117,22 @@ public abstract class AbstractCommand {
 		} else if (!pattern.equals(other.pattern))
 			return false;
 		return true;
+	}
+
+
+	/**
+	 * CommandSenderからPlayerに変換します。<br>
+	 * ただし、Consoleの場合、警告文をだし、nullを返します。
+	 * @param sender CommandSenderのインスタンス
+	 * @return CommandSenderのgetNameメソッドの文字列からプレイヤーに変換したPlayerクラスのインスタンス
+	 */
+	public static Player castPlayer(CommandSender sender) {
+		if (sender.getName() == "Console") {
+			sender.sendMessage("§4Console is can't command execute!");
+			return null;
+		} else {
+			return sender.getServer().getPlayerExact(sender.getName());
+		}
 	}
 
 }

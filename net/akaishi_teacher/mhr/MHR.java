@@ -6,15 +6,18 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.logging.Logger;
 
+import net.akaishi_teacher.mhr.commands.Despawn;
 import net.akaishi_teacher.mhr.commands.Help;
 import net.akaishi_teacher.mhr.commands.ReloadLangFile;
 import net.akaishi_teacher.mhr.commands.SetJump;
 import net.akaishi_teacher.mhr.commands.SetSpeed;
+import net.akaishi_teacher.mhr.commands.Spawn;
 import net.akaishi_teacher.mhr.commands.func.CommandExecutor;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -37,14 +40,18 @@ public final class MHR extends JavaPlugin {
 
 	private String langFilesDirString;
 
+	private HorsesControler horsesControler;
+
+	private HorseInfoConfig horseInfoCfg;
+
 	@Override
 	public void onEnable() {
 		super.onEnable();
+		ConfigurationSerialization.registerClass(HorseInfo.class);
+
 		cfg = getConfig();
 		logger = getLogger();
 		loadConfig();
-
-		logger.info("MineHorseRacingPlugin Enabled.");
 
 		listener = new MHRListeners(this);
 		getServer().getPluginManager().registerEvents(listener, this);
@@ -60,17 +67,39 @@ public final class MHR extends JavaPlugin {
 			e.printStackTrace();
 		}
 		horseStats = createCommonHorseStatsInstance();
+		horsesControler = new HorsesControler(this);
+
+		try {
+			horseInfoCfg = createHorseInfoConfig();
+			horseInfoCfg.loadConfig();
+		} catch (URISyntaxException | IOException e1) {
+			e1.printStackTrace();
+		}
 
 		registerCommands();
+
+		horsesControler.serverStart();
+
+		logger.info("MineHorseRacingPlugin Enabled.");
 	}
+
+
 
 	@Override
 	public void onDisable() {
 		super.onDisable();
-		logger.info("MineHorseRacingPlugin Disabled.");
+		try {
+			horseInfoCfg.saveConfig();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		horsesControler.despawnHorse();
 		setConfigValues();
 		saveConfig();
+		logger.info("MineHorseRacingPlugin Disabled.");
 	}
+
+
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command command,
@@ -78,13 +107,38 @@ public final class MHR extends JavaPlugin {
 		return cmdExecutor.onCommand(sender, args);
 	}
 
+
+
+	/**
+	 * コマンドを追加する処理をするメソッドです。
+	 */
 	protected void registerCommands() {
 		cmdExecutor.addCommand(new Help(this, "", null, "This command is help command."));
 		cmdExecutor.addCommand(new ReloadLangFile(this, "reloadLangFile", "mhr.reload.lang", "This command will reload the language file."));
 		cmdExecutor.addCommand(new SetSpeed(this, "setspeed any", "mhr.horse.set", "This command will set speed to a horse."));
 		cmdExecutor.addCommand(new SetJump(this, "setjump any", "mhr.horse.set", "This command will set jump strength to a horse."));
+		cmdExecutor.addCommand(new Spawn(this, "spawn any", "mhr.horse.spawn", "This command will spawn horses."));
+		cmdExecutor.addCommand(new Despawn(this, "despawn", "mhr.horse.despawn", "This command will despawn horse(s)."));
 	}
 
+
+
+	/**
+	 * HorseInfoConfigクラスのインスタンスを生成し、戻り値として返すメソッドです。
+	 * @return HorseInfoConfigクラスのインスタンス
+	 * @throws URISyntaxException
+	 * @throws IOException
+	 */
+	public HorseInfoConfig createHorseInfoConfig() throws URISyntaxException, IOException {
+		URI uri = new URI(getDataFolder().toURI().getPath() + "/horseinfo.info");
+		return new HorseInfoConfig(this, new File(uri.getPath()));
+	}
+
+	/**
+	 * Languageクラスのインスタンスを生成し、戻り値として返すメソッドです。
+	 * @return Languageクラスのインスタンス
+	 * @throws URISyntaxException
+	 */
 	protected Language createLanguageInstance() throws URISyntaxException {
 		cfg.addDefault("lang", "ja_JP");
 		String langStr = cfg.getString("lang");
@@ -92,16 +146,32 @@ public final class MHR extends JavaPlugin {
 		return new Language(new File(langFilesDirString == null ? uri.getPath() : langFilesDirString), langStr, logger);
 	}
 
+
+
+	/**
+	 * HorseStatsクラスのインスタンスを生成し、戻り値として返すメソッドです。
+	 * @return HorseStatsクラスのインスタンス
+	 */
 	protected CommonHorseStats createCommonHorseStatsInstance() {
 		cfg.addDefault("DefaultHorseSpeed", 2);
 		cfg.addDefault("DefaultHorseJumpStrength", 2);
 		return new CommonHorseStats(cfg.getDouble("DefaultHorseSpeed"), cfg.getDouble("DefaultHorseJumpStrength"));
 	}
 
+
+
+	/**
+	 * コンフィグをロードし、フィールド変数に代入するメソッドです。
+	 */
 	protected void loadConfig() {
 		langFilesDirString = cfg.getString("LangFilesDir");
 	}
 
+
+
+	/**
+	 * コンフィグにデータを設定する処理をするメソッドです。
+	 */
 	protected void setConfigValues() {
 		cfg.set("lang", lang.getLang());
 		cfg.set("DefaultHorseSpeed", horseStats.getSpeed());
@@ -111,16 +181,35 @@ public final class MHR extends JavaPlugin {
 		}
 	}
 
+
+
 	public CommandExecutor getCmdExecutor() {
 		return cmdExecutor;
 	}
+
+
 
 	public Language getLang() {
 		return lang;
 	}
 
+
+
 	public CommonHorseStats getHorseStats() {
 		return horseStats;
 	}
 
+
+
+	public HorsesControler getHorsesControler() {
+		return horsesControler;
+	}
+
+
+
+	public HorseInfoConfig getHorseInfoCfg() {
+		return horseInfoCfg;
+	}
+
 }
+

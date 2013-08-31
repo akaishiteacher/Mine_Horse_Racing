@@ -150,7 +150,7 @@ public class HorsesControler {
 	/**
 	 * HorseInfoの情報を元にし、馬をスポーンさせ、isDeadがtrueの場合は馬をHorse.removeメソッドを呼び出します。
 	 */
-	public void serverStart() {
+	public void init() {
 		for (World world : plugin.getServer().getWorlds()) {
 			for (Entity entity : world.getEntitiesByClasses(Horse.class)) {
 				Horse horse = (Horse) entity;

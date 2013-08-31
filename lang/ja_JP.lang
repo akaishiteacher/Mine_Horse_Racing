@@ -6,7 +6,6 @@ Cmd_Usage_Spawn=§6/mhr spawn <int:num>: 馬を指定した数スポーンさせ
 Cmd_Usage_Despawn=§6/mhr despawn [int:num or "bug"]: 馬をデスポーンさせます。
 Cmd_Usage_Tp=§6/mhr tp <int:Number> [String:PlayerName] [boolean:馬に乗っている人もテレポートするかどうか]: 指定した馬をテレポートします。
 Cmd_Usage_AllTp=§6/mhr alltp [String:PlayerName] [boolean:馬に乗っている人もテレポートするかどうか]: すべての馬をテレポートします。
-Cmd_Usage_Init=§6/mhr init: MineHorseRacingPluginの初期化をします。
 Cmd_Err_NumberFormatException=§4数値であるべき引数が数値ではありません!
 Cmd_Err_PlayerNotFound=§4指定したプレイヤーは存在しません!
 Cmd_Out_ReloadLangFile_Reloaded=§a言語ファイルをリロードしました。

@@ -80,6 +80,7 @@ public class HorsesControler {
 	 */
 	public void despawnHorse() {
 		for (HorseInfo info : horseInfoList) {
+			loadChunks(info);
 			info.getHorse().remove();
 		}
 	}
@@ -92,6 +93,7 @@ public class HorsesControler {
 	public void despawnHorse(int num) {
 		for (HorseInfo info : horseInfoList) {
 			if (info.getNumber() == num) {
+				loadChunks(info);
 				info.getHorse().remove();
 			}
 		}
@@ -151,6 +153,9 @@ public class HorsesControler {
 	 * HorseInfoの情報を元にし、馬をスポーンさせ、isDeadがtrueの場合は馬をHorse.removeメソッドを呼び出します。
 	 */
 	public void init() {
+		for (HorseInfo info : horseInfoList) {
+			loadChunks(info);
+		}
 		for (World world : plugin.getServer().getWorlds()) {
 			for (Entity entity : world.getEntitiesByClasses(Horse.class)) {
 				Horse horse = (Horse) entity;
@@ -170,6 +175,7 @@ public class HorsesControler {
 			double y = info.getY();
 			double z = info.getZ();
 			Location loc = new Location(world, x, y, z);
+			loadChunks(info);
 			Horse horse = world.spawn(loc, Horse.class);
 			horse.setTamed(true);
 			horse.setAge(Integer.MAX_VALUE);
@@ -194,6 +200,23 @@ public class HorsesControler {
 
 	public void setHorseInfoList(ArrayList<HorseInfo> horseInfoList) {
 		this.horseInfoList = horseInfoList;
+	}
+
+	protected void loadChunks(HorseInfo info) {
+		World world = plugin.getServer().getWorlds().get(info.getDimID());
+		int chunkX = (int) (info.getX() / 16);
+		int chunkZ = (int) (info.getZ() / 16);
+		if (!world.isChunkInUse(chunkX, chunkZ)) {
+			world.loadChunk(chunkX*1, chunkZ, true);
+			world.loadChunk(chunkX, chunkZ+1, true);
+			world.loadChunk(chunkX-1, chunkZ, true);
+			world.loadChunk(chunkX, chunkZ-1, true);
+			world.loadChunk(chunkX+1, chunkZ+1, true);
+			world.loadChunk(chunkX-1, chunkZ-1, true);
+			world.loadChunk(chunkX+1, chunkZ-1, true);
+			world.loadChunk(chunkX-1, chunkZ+1, true);
+			world.loadChunk(chunkX, chunkZ, true);
+		}
 	}
 
 }

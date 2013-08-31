@@ -9,7 +9,6 @@ import java.util.logging.Logger;
 import net.akaishi_teacher.mhr.commands.AllTp;
 import net.akaishi_teacher.mhr.commands.Despawn;
 import net.akaishi_teacher.mhr.commands.Help;
-import net.akaishi_teacher.mhr.commands.Init;
 import net.akaishi_teacher.mhr.commands.ReloadLangFile;
 import net.akaishi_teacher.mhr.commands.SetJump;
 import net.akaishi_teacher.mhr.commands.SetSpeed;
@@ -81,6 +80,14 @@ public final class MHR extends JavaPlugin {
 
 		registerCommands();
 
+		Runnable r = new Runnable() {
+			@Override
+			public void run() {
+				horsesControler.init();
+			}
+		};
+		getServer().getScheduler().runTaskLater(this, r, 60);
+
 		logger.info("MineHorseRacingPlugin Enabled.");
 	}
 
@@ -92,6 +99,12 @@ public final class MHR extends JavaPlugin {
 		try {
 			horseInfoCfg.saveConfig();
 		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		horsesControler.despawnHorse();
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 		setConfigValues();
@@ -121,7 +134,6 @@ public final class MHR extends JavaPlugin {
 		cmdExecutor.addCommand(new Despawn(this, "despawn", "mhr.horse.despawn", "This command will despawn horse(s)."));
 		cmdExecutor.addCommand(new AllTp(this, "alltp", "mhr.horse.tp", "Teleport a horse all."));
 		cmdExecutor.addCommand(new Tp(this, "tp any", "mhr.horse.tp", "Teleport a horse."));
-		cmdExecutor.addCommand(new Init(this, "init", "mhr.init", "Init MineHorseRacingPlugin"));
 	}
 
 

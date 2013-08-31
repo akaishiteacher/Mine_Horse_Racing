@@ -3,12 +3,12 @@ package net.akaishi_teacher.mhr.commands;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import net.akaishi_teacher.mhr.MHR;
+import net.akaishi_teacher.mhr.commands.func.AbstractCommand;
+
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
-import net.akaishi_teacher.mhr.MHR;
-import net.akaishi_teacher.mhr.commands.func.AbstractCommand;
 
 public class Tp extends AbstractCommand {
 

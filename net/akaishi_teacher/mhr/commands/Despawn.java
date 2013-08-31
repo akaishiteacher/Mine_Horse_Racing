@@ -2,11 +2,11 @@ package net.akaishi_teacher.mhr.commands;
 
 import java.util.ArrayList;
 
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-
 import net.akaishi_teacher.mhr.MHR;
 import net.akaishi_teacher.mhr.commands.func.AbstractCommand;
+
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 public class Despawn extends AbstractCommand {
 

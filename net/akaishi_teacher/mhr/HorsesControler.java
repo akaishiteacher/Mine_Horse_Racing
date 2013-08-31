@@ -6,6 +6,7 @@ import net.minecraft.server.v1_6_R2.Item;
 
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Horse;
 import org.bukkit.inventory.ItemStack;
 
@@ -64,7 +65,7 @@ public class HorsesControler {
 				horse.getInventory().setItem(0, new ItemStack(Item.SADDLE.id));
 				HorseInfo info = new HorseInfo();
 				info.setHorse(horse);
-				info.setNumber(a + i);
+				info.setNumber(a + i + 1);
 				horse.setCustomName(String.valueOf(info.getNumber()));
 				horseInfoList.add(info);
 			}
@@ -99,9 +100,70 @@ public class HorsesControler {
 
 
 	/**
+	 * すべての馬を引数locの場所にテレポートします。<br>
+	 * flagがtrueの場合は乗っている人もテレポートします。
+	 * @param locテレポート先
+	 * @param flag 乗っている人もテレポートするかどうか
+	 */
+	public void alltp(Location loc, boolean flag) {
+		for (HorseInfo info : horseInfoList) {
+			Horse horse = info.getHorse();
+			Entity rider = horse.getPassenger();
+			if (rider != null && flag) {
+				horse.eject();
+			}
+			horse.teleport(loc);
+			if (rider != null && flag) {
+				rider.teleport(loc);
+				horse.setPassenger(rider);
+			}
+		}
+	}
+
+
+
+	/**
+	 * 馬をテレポートします。
+	 * @param num テレポートする馬の個体番号
+	 * @param loc テレポート先
+	 * @param flag 乗っている人もテレポートするかどうか
+	 */
+	public void tp(int num, Location loc, boolean flag) {
+		for (HorseInfo info : horseInfoList) {
+			if (info.getNumber() == num) {
+				Horse horse = info.getHorse();
+				Entity rider = horse.getPassenger();
+				if (rider != null && flag) {
+					horse.eject();
+				}
+				horse.teleport(loc);
+				if (rider != null && flag) {
+					rider.teleport(loc);
+					horse.setPassenger(rider);
+				}
+			}
+		}
+	}
+
+
+
+	/**
 	 * HorseInfoの情報を元にし、馬をスポーンさせ、isDeadがtrueの場合は馬をHorse.removeメソッドを呼び出します。
 	 */
 	public void serverStart() {
+		for (World world : plugin.getServer().getWorlds()) {
+			for (Entity entity : world.getEntitiesByClasses(Horse.class)) {
+				Horse horse = (Horse) entity;
+				if (horse.getCustomName() != null) {
+					try {
+						Integer.parseInt(horse.getCustomName());
+						horse.remove();
+					} catch (NumberFormatException e) {
+						continue;
+					}
+				}
+			}
+		}
 		for (HorseInfo info : horseInfoList) {
 			World world = plugin.getServer().getWorlds().get(info.getDimID());
 			double x = info.getX();
@@ -119,6 +181,7 @@ public class HorsesControler {
 				horse.remove();
 			}
 		}
+		plugin.getServer().broadcastMessage(plugin.getLang().getLocalizedString("Cmd_UseOK"));
 	}
 
 

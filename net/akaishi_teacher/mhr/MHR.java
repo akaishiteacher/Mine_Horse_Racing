@@ -6,12 +6,14 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.logging.Logger;
 
+import net.akaishi_teacher.mhr.commands.AllTp;
 import net.akaishi_teacher.mhr.commands.Despawn;
 import net.akaishi_teacher.mhr.commands.Help;
 import net.akaishi_teacher.mhr.commands.ReloadLangFile;
 import net.akaishi_teacher.mhr.commands.SetJump;
 import net.akaishi_teacher.mhr.commands.SetSpeed;
 import net.akaishi_teacher.mhr.commands.Spawn;
+import net.akaishi_teacher.mhr.commands.Tp;
 import net.akaishi_teacher.mhr.commands.func.CommandExecutor;
 
 import org.bukkit.command.Command;
@@ -78,7 +80,13 @@ public final class MHR extends JavaPlugin {
 
 		registerCommands();
 
-		horsesControler.serverStart();
+		Runnable serverStartScheduler = new Runnable() {
+			@Override
+			public void run() {
+				horsesControler.serverStart();
+			}
+		};
+		getServer().getScheduler().runTaskLater(this, serverStartScheduler, 60);
 
 		logger.info("MineHorseRacingPlugin Enabled.");
 	}
@@ -93,7 +101,6 @@ public final class MHR extends JavaPlugin {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		horsesControler.despawnHorse();
 		setConfigValues();
 		saveConfig();
 		logger.info("MineHorseRacingPlugin Disabled.");
@@ -119,6 +126,8 @@ public final class MHR extends JavaPlugin {
 		cmdExecutor.addCommand(new SetJump(this, "setjump any", "mhr.horse.set", "This command will set jump strength to a horse."));
 		cmdExecutor.addCommand(new Spawn(this, "spawn any", "mhr.horse.spawn", "This command will spawn horses."));
 		cmdExecutor.addCommand(new Despawn(this, "despawn", "mhr.horse.despawn", "This command will despawn horse(s)."));
+		cmdExecutor.addCommand(new AllTp(this, "alltp", "mhr.horse.tp", "Teleport a horse all."));
+		cmdExecutor.addCommand(new Tp(this, "tp any", "mhr.horse.tp", "Teleport a horse."));
 	}
 
 

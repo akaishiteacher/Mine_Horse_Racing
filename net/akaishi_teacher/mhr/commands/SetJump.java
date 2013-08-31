@@ -2,10 +2,10 @@ package net.akaishi_teacher.mhr.commands;
 
 import java.util.ArrayList;
 
-import org.bukkit.command.CommandSender;
-
 import net.akaishi_teacher.mhr.MHR;
 import net.akaishi_teacher.mhr.commands.func.AbstractCommand;
+
+import org.bukkit.command.CommandSender;
 
 public class SetJump extends AbstractCommand {
 

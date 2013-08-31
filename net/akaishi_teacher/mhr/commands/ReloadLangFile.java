@@ -4,10 +4,10 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 
-import org.bukkit.command.CommandSender;
-
 import net.akaishi_teacher.mhr.MHR;
 import net.akaishi_teacher.mhr.commands.func.AbstractCommand;
+
+import org.bukkit.command.CommandSender;
 
 public class ReloadLangFile extends AbstractCommand {
 

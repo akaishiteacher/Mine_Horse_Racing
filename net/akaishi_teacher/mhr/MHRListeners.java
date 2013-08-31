@@ -10,22 +10,30 @@ import org.bukkit.craftbukkit.v1_6_R2.entity.CraftHorse;
 import org.bukkit.entity.Horse;
 import org.bukkit.event.Listener;
 
-public class MHRListeners implements Listener, Runnable {
+/**
+ * MineHorseRacingPluginのイベントリスナー&スレッド用クラス
+ * @author mozipi
+ */
+public final class MHRListeners implements Listener, Runnable {
 
 	private MHR plugin;
 
 	public MHRListeners(MHR plugin) {
+		super();
 		this.plugin = plugin;
 	}
 
+
+
 	@Override
 	public void run() {
-		ArrayList<World> worldList = (ArrayList<World>) plugin.getServer().getWorlds();
-		for (World world :  worldList) {
-			ArrayList<Horse> horseList = (ArrayList<Horse>) world.getEntitiesByClass(Horse.class);
-			for (Horse horse : horseList) {
-				EntityHorse eh = ((CraftHorse)horse).getHandle();
-				eh.getAttributeInstance(GenericAttributes.d).setValue(5);
+		ArrayList<World> worlds = (ArrayList<World>) plugin.getServer().getWorlds();
+		for (World world : worlds) {
+			ArrayList<Horse> horses = (ArrayList<Horse>) world.getEntitiesByClass(Horse.class);
+			for (Horse h : horses) {
+				EntityHorse horse = ((CraftHorse) h).getHandle();
+				horse.getAttributeInstance(GenericAttributes.d).setValue(plugin.getHorseStats().getSpeed());
+				h.setJumpStrength(plugin.getHorseStats().getJump());
 			}
 		}
 	}

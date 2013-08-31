@@ -1,25 +1,42 @@
 package net.akaishi_teacher.mhr.commands;
 
-import org.bukkit.command.Command;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+
+import net.akaishi_teacher.mhr.MHR;
+import net.akaishi_teacher.mhr.commands.func.AbstractCommand;
+import net.akaishi_teacher.mhr.commands.func.ComparatorCommandArgs_Reverse;
+
 import org.bukkit.command.CommandSender;
-import org.bukkit.plugin.java.JavaPlugin;
 
-import net.akaishi_teacher.mhr.CommandImplementation;
-import net.akaishi_teacher.mhr.CommandRunInfo;
+public class Help extends AbstractCommand {
 
-public class Help implements CommandImplementation {
+	public Help(MHR plugin, String pattern, String permission,
+			String description) {
+		super(plugin, pattern, permission, description);
+	}
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@Override
+	public boolean execute(CommandSender sender, ArrayList<String> args) {
+		sender.sendMessage("§a======== MineHorseRacingPlugin Commands ================");
+		HashSet<AbstractCommand> cmdSet = plugin.getCmdExecutor().getCommandSet();
+		ArrayList l = new ArrayList<AbstractCommand>(cmdSet);
+		Collections.sort(l, new ComparatorCommandArgs_Reverse());
+		cmdSet = new HashSet<AbstractCommand>(l);
+		for (AbstractCommand command : cmdSet) {
+			if (command.getPermission() == null || sender.hasPermission(command.getPermission())) {
+				sender.sendMessage(command.getUsage(sender));
+			}
+		}
+		sender.sendMessage("§a===================================================");
+		return true;
+	}
 
 	@Override
-	public CommandRunInfo onCommand(JavaPlugin absPlugin, CommandSender sender,
-			Command command, String label, String[] args) {
-		CommandRunInfo info = new CommandRunInfo(50);
-		String[] helpMessages = new String[] {
-				"§5[MineHorseRacingPlugin]",
-				"§5/minehorseracing : ヘルプを表示します",
-				"§5/minehorseracing setspeed (Speed)"
-		};
-		info.setReturnMessages(helpMessages);
-		return info;
+	public String getUsage(CommandSender sender) {
+		return plugin.getLang().getLocalizedString("Cmd_Usage_Help");
 	}
 
 }

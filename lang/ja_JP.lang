@@ -1,0 +1,16 @@
+Cmd_Usage_Help=§6/mhr: MineHorseRacingPluginのヘルプコマンドです。
+Cmd_Usage_ReloadLangFile=§6/mhr reloadLangFile: 言語ファイルをリロードします。
+Cmd_Usage_SetSpeed=§6/mhr setspeed <double:Speed>: 馬の速度を設定します。
+Cmd_Usage_SetJump=§6/mhr setjump <double:Jump>: 馬のジャンプ力を設定します。
+Cmd_Usage_Spawn=§6/mhr spawn <int:num>: 馬を指定した数スポーンさせます。
+Cmd_Usage_Despawn=§6/mhr despawn [int:num or "bug"]: 馬をデスポーンさせます。
+Cmd_Usage_Tp=§6/mhr tp <int:Number> [String:PlayerName] [boolean:馬に乗っている人もテレポートするかどうか]: 指定した馬をテレポートします。
+Cmd_Usage_AllTp=§6/mhr alltp [String:PlayerName] [boolean:馬に乗っている人もテレポートするかどうか]: すべての馬をテレポートします。
+Cmd_Err_PlayerNotFound=§4指定したプレイヤーは存在しません!
+Cmd_Err_NumberFormatException=§4数値であるべき引数が数値ではありません!
+Cmd_Out_ReloadLangFile_Reloaded=§a言語ファイルをリロードしました。
+Cmd_Out_SetSpeed_Set=§a馬の速度を設定しました。
+Cmd_Out_SetJump_Set=§a馬の速度を設定しました。
+Cmd_Out_AllTp_Set=§aすべての馬をテレポートしました。テレポート先:<%toPlayer%> Flag:<%flag%>
+Cmd_Out_Tp_Set=§a馬をテレポートしました。個体番号:<%num%> テレポート先:<%toPlayer%> Flag:<%flag%>
+Cmd_UseOK=§aMineHorseRacingのコマンドが使用できます!

@@ -1,6 +1,7 @@
 package net.akaishi_teacher.mhr;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import net.minecraft.server.v1_6_R2.Item;
 
@@ -79,11 +80,14 @@ public class HorsesControler {
 	 * horseInfoListの馬をすべてデスポーンさせます。
 	 */
 	public void despawnHorse() {
-		for (HorseInfo info : horseInfoList) {
+		Iterator<HorseInfo> itInfo = horseInfoList.iterator();
+		while (itInfo.hasNext()) {
+			HorseInfo info = itInfo.next();
 			loadChunks(info);
-			horseInfoList.remove(info);
+			itInfo.remove();
 			info.getHorse().remove();
 		}
+		horseInfoList.trimToSize();
 	}
 
 
@@ -92,13 +96,16 @@ public class HorsesControler {
 	 * @param num デスポーンさせる馬の個体番号
 	 */
 	public void despawnHorse(int num) {
-		for (HorseInfo info : horseInfoList) {
+		Iterator<HorseInfo> itInfo = horseInfoList.iterator();
+		while (itInfo.hasNext()) {
+			HorseInfo info = itInfo.next();
 			if (info.getNumber() == num) {
 				loadChunks(info);
-				horseInfoList.remove(info);
+				itInfo.remove();
 				info.getHorse().remove();
 			}
 		}
+		horseInfoList.trimToSize();
 	}
 
 

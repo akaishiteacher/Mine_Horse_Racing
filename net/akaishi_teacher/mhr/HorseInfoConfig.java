@@ -24,6 +24,10 @@ public class HorseInfoConfig extends Config {
 	public void saveConfig() throws IOException {
 		ArrayList<HorseInfo> hil = plugin.getHorsesControler().getHorseInfoList();
 		for (HorseInfo info : hil) {
+			if (info.isDead()) {
+				hil.remove(info);
+				continue;
+			}
 			Location loc = info.getHorse().getLocation();
 			info.setX(loc.getX());
 			info.setY(loc.getY());

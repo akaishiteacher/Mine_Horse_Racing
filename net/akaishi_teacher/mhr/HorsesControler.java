@@ -81,6 +81,7 @@ public class HorsesControler {
 	public void despawnHorse() {
 		for (HorseInfo info : horseInfoList) {
 			loadChunks(info);
+			horseInfoList.remove(info);
 			info.getHorse().remove();
 		}
 	}
@@ -94,6 +95,7 @@ public class HorsesControler {
 		for (HorseInfo info : horseInfoList) {
 			if (info.getNumber() == num) {
 				loadChunks(info);
+				horseInfoList.remove(info);
 				info.getHorse().remove();
 			}
 		}

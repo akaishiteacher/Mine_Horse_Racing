@@ -46,6 +46,10 @@ public final class MHR extends JavaPlugin {
 
 	private HorseInfoConfig horseInfoCfg;
 
+	private MHRSetSpeedRunnable setSpeedRunnable;
+
+	private MHRFullTimeHealRunnable fullTimeHealRunnable;
+
 	@Override
 	public void onEnable() {
 		super.onEnable();
@@ -56,8 +60,11 @@ public final class MHR extends JavaPlugin {
 		loadConfig();
 
 		listener = new MHRListeners(this);
+		setSpeedRunnable = new MHRSetSpeedRunnable(this);
+		fullTimeHealRunnable = new MHRFullTimeHealRunnable(this);
 		getServer().getPluginManager().registerEvents(listener, this);
-		getServer().getScheduler().runTaskTimer(this, listener, 0, 100);
+		getServer().getScheduler().runTaskTimer(this, setSpeedRunnable, 65, 100);
+		getServer().getScheduler().runTaskTimer(this, fullTimeHealRunnable, 65, 1);
 
 		cmdExecutor = new CommandExecutor(this);
 		try {

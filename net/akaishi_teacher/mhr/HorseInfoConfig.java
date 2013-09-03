@@ -3,6 +3,7 @@ package net.akaishi_teacher.mhr;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import org.bukkit.Location;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -22,8 +23,13 @@ public class HorseInfoConfig extends Config {
 
 	@Override
 	public void saveConfig() throws IOException {
-		ArrayList<HorseInfo> hil = plugin.getHorsesControler().getHorseInfoList();
-		for (HorseInfo info : hil) {
+		Iterator<HorseInfo> itHil = plugin.getHorsesControler().getHorseInfoList().iterator();
+		while (itHil.hasNext()) {
+			HorseInfo info = itHil.next();
+			if (info.isDead()) {
+				itHil.remove();
+				continue;
+			}
 			Location loc = info.getHorse().getLocation();
 			info.setX(loc.getX());
 			info.setY(loc.getY());

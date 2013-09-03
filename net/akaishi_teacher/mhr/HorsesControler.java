@@ -1,6 +1,7 @@
 package net.akaishi_teacher.mhr;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import net.minecraft.server.v1_6_R2.Item;
 
@@ -8,6 +9,9 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Horse;
+import org.bukkit.entity.Horse.Color;
+import org.bukkit.entity.Horse.Style;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 /**
@@ -32,7 +36,7 @@ public class HorsesControler {
 	 * ただし、馬が足りない場合は足りない馬を含めスポーンさせます。
 	 * @param num スポーンさせる馬の数
 	 */
-	public void spawnHorses(int num, Location spawnLoc) {
+	public void spawnHorses(int num, Location spawnLoc, Player player) {
 		horseInfoList.trimToSize();
 		while (num > 0) {
 			//足りない馬の補充。パフォーマンスが悪いのは許して
@@ -46,6 +50,11 @@ public class HorsesControler {
 					horse.getInventory().setItem(0, new ItemStack(Item.SADDLE.id));
 					horse.setCustomName(String.valueOf(info.getNumber()));
 					horse.setCustomNameVisible(true);
+					horse.setOwner(player);
+					Color color = Color.values()[(int) (Math.random() * Color.values().length)];
+					horse.setColor(color);
+					Style style = Style.values()[(int) (Math.random() * Style.values().length)];
+					horse.setStyle(style);
 					HorseInfo newInfo = new HorseInfo();
 					newInfo.setHorse(horse);
 					newInfo.setNumber(info.getNumber());
@@ -63,6 +72,11 @@ public class HorsesControler {
 				horse.setAge(Integer.MAX_VALUE);
 				horse.setCustomNameVisible(true);
 				horse.getInventory().setItem(0, new ItemStack(Item.SADDLE.id));
+				horse.setOwner(player);
+				Color color = Color.values()[(int) (Math.random() * Color.values().length)];
+				horse.setColor(color);
+				Style style = Style.values()[(int) (Math.random() * Style.values().length)];
+				horse.setStyle(style);
 				HorseInfo info = new HorseInfo();
 				info.setHorse(horse);
 				info.setNumber(a + i + 1);
@@ -79,10 +93,14 @@ public class HorsesControler {
 	 * horseInfoListの馬をすべてデスポーンさせます。
 	 */
 	public void despawnHorse() {
-		for (HorseInfo info : horseInfoList) {
+		Iterator<HorseInfo> itInfo = horseInfoList.iterator();
+		while (itInfo.hasNext()) {
+			HorseInfo info = itInfo.next();
 			loadChunks(info);
+			itInfo.remove();
 			info.getHorse().remove();
 		}
+		horseInfoList.trimToSize();
 	}
 
 
@@ -91,12 +109,16 @@ public class HorsesControler {
 	 * @param num デスポーンさせる馬の個体番号
 	 */
 	public void despawnHorse(int num) {
-		for (HorseInfo info : horseInfoList) {
+		Iterator<HorseInfo> itInfo = horseInfoList.iterator();
+		while (itInfo.hasNext()) {
+			HorseInfo info = itInfo.next();
 			if (info.getNumber() == num) {
 				loadChunks(info);
+				itInfo.remove();
 				info.getHorse().remove();
 			}
 		}
+		horseInfoList.trimToSize();
 	}
 
 

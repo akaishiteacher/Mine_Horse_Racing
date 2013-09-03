@@ -21,7 +21,7 @@ public class Spawn extends AbstractCommand {
 			int num = Integer.parseInt(args.get(1));
 			Player player = castPlayer(sender);
 			if (player != null) {
-				plugin.getHorsesControler().spawnHorses(num, player.getLocation());
+				plugin.getHorsesControler().spawnHorses(num, player.getLocation(), player);
 			}
 		} catch (NumberFormatException e) {
 			sender.sendMessage(plugin.getLang().getLocalizedString("Cmd_Err_NumberFormatException"));

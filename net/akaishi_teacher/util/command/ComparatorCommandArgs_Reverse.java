@@ -1,4 +1,4 @@
-package net.akaishi_teacher.mhr.commands.func;
+package net.akaishi_teacher.util.command;
 
 import java.util.Comparator;
 

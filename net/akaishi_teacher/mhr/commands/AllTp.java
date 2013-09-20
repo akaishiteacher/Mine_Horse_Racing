@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import net.akaishi_teacher.mhr.MHR;
-import net.akaishi_teacher.mhr.commands.func.AbstractCommand;
+import net.akaishi_teacher.util.command.AbstractCommand;
 
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;

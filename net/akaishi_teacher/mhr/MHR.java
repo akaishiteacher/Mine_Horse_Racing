@@ -14,7 +14,7 @@ import net.akaishi_teacher.mhr.commands.SetJump;
 import net.akaishi_teacher.mhr.commands.SetSpeed;
 import net.akaishi_teacher.mhr.commands.Spawn;
 import net.akaishi_teacher.mhr.commands.Tp;
-import net.akaishi_teacher.mhr.commands.func.CommandExecutor;
+import net.akaishi_teacher.util.command.CommandExecutor;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;

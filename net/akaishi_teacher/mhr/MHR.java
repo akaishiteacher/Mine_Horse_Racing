@@ -66,7 +66,7 @@ public final class MHR extends JavaPlugin {
 		getServer().getScheduler().runTaskTimer(this, setSpeedRunnable, 65, 100);
 		getServer().getScheduler().runTaskTimer(this, fullTimeHealRunnable, 65, 1);
 
-		cmdExecutor = new CommandExecutor(this);
+		cmdExecutor = new CommandExecutor();
 		try {
 			lang = createLanguageInstance();
 			lang.loadLangFile();

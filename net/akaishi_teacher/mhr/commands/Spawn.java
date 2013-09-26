@@ -3,12 +3,11 @@ package net.akaishi_teacher.mhr.commands;
 import java.util.ArrayList;
 
 import net.akaishi_teacher.mhr.MHR;
-import net.akaishi_teacher.util.command.AbstractCommand;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class Spawn extends AbstractCommand {
+public class Spawn extends MHRAbstractCommand {
 
 	public Spawn(MHR plugin, String pattern, String permission,
 			String description) {

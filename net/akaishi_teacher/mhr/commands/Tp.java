@@ -4,13 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import net.akaishi_teacher.mhr.MHR;
-import net.akaishi_teacher.util.command.AbstractCommand;
 
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class Tp extends AbstractCommand {
+public class Tp extends MHRAbstractCommand {
 
 	public Tp(MHR plugin, String pattern, String permission, String description) {
 		super(plugin, pattern, permission, description);

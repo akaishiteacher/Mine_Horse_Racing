@@ -3,11 +3,10 @@ package net.akaishi_teacher.mhr.commands;
 import java.util.ArrayList;
 
 import net.akaishi_teacher.mhr.MHR;
-import net.akaishi_teacher.util.command.AbstractCommand;
 
 import org.bukkit.command.CommandSender;
 
-public class SetJump extends AbstractCommand {
+public class SetJump extends MHRAbstractCommand {
 
 	public SetJump(MHR plugin, String pattern, String permission,
 			String description) {

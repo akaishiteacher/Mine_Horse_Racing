@@ -1,4 +1,4 @@
-package net.akaishi_teacher.util.command;
+package net.akaishi_teacher.mhr.commands.func;
 
 import java.util.Arrays;
 import java.util.LinkedList;

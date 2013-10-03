@@ -22,18 +22,14 @@ public class MHRSetSpeedRunnable implements Runnable {
 
 	@Override
 	public void run() {
-		try {
-			ArrayList<World> worlds = (ArrayList<World>) plugin.getServer().getWorlds();
-			for (World world : worlds) {
-				ArrayList<Horse> horses = (ArrayList<Horse>) world.getEntitiesByClass(Horse.class);
-				for (Horse h : horses) {
-					EntityHorse horse = ((CraftHorse) h).getHandle();
-					horse.getAttributeInstance(GenericAttributes.d).setValue(plugin.getHorseStats().getSpeed());
-					h.setJumpStrength(plugin.getHorseStats().getJump());
-				}
+		ArrayList<World> worlds = (ArrayList<World>) plugin.getServer().getWorlds();
+		for (World world : worlds) {
+			ArrayList<Horse> horses = (ArrayList<Horse>) world.getEntitiesByClass(Horse.class);
+			for (Horse h : horses) {
+				EntityHorse horse = ((CraftHorse) h).getHandle();
+				horse.getAttributeInstance(GenericAttributes.d).setValue(plugin.getHorseStats().getSpeed());
+				h.setJumpStrength(plugin.getHorseStats().getJump());
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
 	}
 

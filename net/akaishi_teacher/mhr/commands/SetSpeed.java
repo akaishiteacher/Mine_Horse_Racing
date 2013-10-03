@@ -3,10 +3,11 @@ package net.akaishi_teacher.mhr.commands;
 import java.util.ArrayList;
 
 import net.akaishi_teacher.mhr.MHR;
+import net.akaishi_teacher.mhr.commands.func.AbstractCommand;
 
 import org.bukkit.command.CommandSender;
 
-public class SetSpeed extends MHRAbstractCommand {
+public class SetSpeed extends AbstractCommand {
 
 	public SetSpeed(MHR plugin, String pattern, String permission,
 			String description) {

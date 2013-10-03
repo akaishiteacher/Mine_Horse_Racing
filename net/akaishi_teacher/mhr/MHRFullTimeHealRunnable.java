@@ -15,15 +15,11 @@ public class MHRFullTimeHealRunnable implements Runnable {
 
 	@Override
 	public void run() {
-		try {
-			ArrayList<HorseInfo> infoList = plugin.getHorsesControler().getHorseInfoList();
-			for (HorseInfo info : infoList) {
-				if (!info.getHorse().isDead()) {
-					info.getHorse().setHealth(20.0D);
-				}
+		ArrayList<HorseInfo> infoList = plugin.getHorsesControler().getHorseInfoList();
+		for (HorseInfo info : infoList) {
+			if (!info.getHorse().isDead()) {
+				info.getHorse().setHealth(20.0D);
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
 	}
 

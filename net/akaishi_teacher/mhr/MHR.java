@@ -14,7 +14,7 @@ import net.akaishi_teacher.mhr.commands.SetJump;
 import net.akaishi_teacher.mhr.commands.SetSpeed;
 import net.akaishi_teacher.mhr.commands.Spawn;
 import net.akaishi_teacher.mhr.commands.Tp;
-import net.akaishi_teacher.util.command.CommandExecutor;
+import net.akaishi_teacher.mhr.commands.func.CommandExecutor;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -66,7 +66,7 @@ public final class MHR extends JavaPlugin {
 		getServer().getScheduler().runTaskTimer(this, setSpeedRunnable, 65, 100);
 		getServer().getScheduler().runTaskTimer(this, fullTimeHealRunnable, 65, 1);
 
-		cmdExecutor = new CommandExecutor();
+		cmdExecutor = new CommandExecutor(this);
 		try {
 			lang = createLanguageInstance();
 			lang.loadLangFile();

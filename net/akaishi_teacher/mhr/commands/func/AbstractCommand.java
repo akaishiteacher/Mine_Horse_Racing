@@ -1,8 +1,10 @@
-package net.akaishi_teacher.util.command;
+package net.akaishi_teacher.mhr.commands.func;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
+
+import net.akaishi_teacher.mhr.MHR;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -28,9 +30,12 @@ public abstract class AbstractCommand {
 	 */
 	protected String description;
 
-	public AbstractCommand(String pattern, String permission,
+	protected MHR plugin;
+
+	public AbstractCommand(MHR plugin,  String pattern, String permission,
 			String description) {
 		super();
+		this.plugin = plugin;
 		this.pattern = pattern;
 		this.permission = permission;
 		this.description = description;

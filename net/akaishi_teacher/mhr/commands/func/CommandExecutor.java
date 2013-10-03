@@ -1,9 +1,11 @@
-package net.akaishi_teacher.util.command;
+package net.akaishi_teacher.mhr.commands.func;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
+
+import net.akaishi_teacher.mhr.MHR;
 
 import org.bukkit.command.CommandSender;
 
@@ -13,14 +15,17 @@ import org.bukkit.command.CommandSender;
  */
 public class CommandExecutor {
 
+	protected MHR plugin;
+
 	/**
 	 * コマンドのHashSet
 	 */
 	protected HashSet<AbstractCommand> commandSet =
 			new HashSet<AbstractCommand>();
 
-	public CommandExecutor() {
+	public CommandExecutor(MHR plugin) {
 		super();
+		this.plugin = plugin;
 	}
 
 

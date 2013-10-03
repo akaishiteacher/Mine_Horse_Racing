@@ -21,7 +21,6 @@ public class HorseInfoConfig extends Config {
 		plugin.getHorsesControler().setHorseInfoList((ArrayList<HorseInfo>) yamlConf.getList("HorseInfoList"));
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public void saveConfig() throws IOException {
 		Iterator<HorseInfo> itHil = plugin.getHorsesControler().getHorseInfoList().iterator();

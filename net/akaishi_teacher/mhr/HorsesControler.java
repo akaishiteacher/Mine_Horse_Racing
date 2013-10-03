@@ -3,8 +3,9 @@ package net.akaishi_teacher.mhr;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import net.minecraft.server.v1_6_R2.Item;
+
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Horse;
@@ -46,7 +47,7 @@ public class HorsesControler {
 					Horse horse = (Horse) info.getHorse().getWorld().spawn(loc, Horse.class);
 					horse.setTamed(true);
 					horse.setAge(Integer.MAX_VALUE);
-					horse.getInventory().setItem(0, new ItemStack(Material.SADDLE));
+					horse.getInventory().setItem(0, new ItemStack(Item.SADDLE.id));
 					horse.setCustomName(String.valueOf(info.getNumber()));
 					horse.setCustomNameVisible(true);
 					horse.setOwner(player);
@@ -70,7 +71,7 @@ public class HorsesControler {
 				horse.setTamed(true);
 				horse.setAge(Integer.MAX_VALUE);
 				horse.setCustomNameVisible(true);
-				horse.getInventory().setItem(0, new ItemStack(Material.SADDLE));
+				horse.getInventory().setItem(0, new ItemStack(Item.SADDLE.id));
 				horse.setOwner(player);
 				Color color = Color.values()[(int) (Math.random() * Color.values().length)];
 				horse.setColor(color);
@@ -202,7 +203,7 @@ public class HorsesControler {
 			horse.setAge(Integer.MAX_VALUE);
 			horse.setCustomName(String.valueOf(info.number));
 			horse.setCustomNameVisible(true);
-			horse.getInventory().setItem(0, new ItemStack(Material.SADDLE));
+			horse.getInventory().setItem(0, new ItemStack(Item.SADDLE.id));
 			info.setHorse(horse);
 			if (info.isDead()) {
 				horse.remove();

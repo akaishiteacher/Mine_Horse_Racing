@@ -5,12 +5,12 @@ import java.util.Collections;
 import java.util.HashSet;
 
 import net.akaishi_teacher.mhr.MHR;
-import net.akaishi_teacher.mhr.commands.func.AbstractCommand;
-import net.akaishi_teacher.mhr.commands.func.ComparatorCommandArgs_Reverse;
+import net.akaishi_teacher.util.command.AbstractCommand;
+import net.akaishi_teacher.util.command.ComparatorCommandArgs_Reverse;
 
 import org.bukkit.command.CommandSender;
 
-public class Help extends AbstractCommand {
+public class Help extends MHRAbstractCommand {
 
 	public Help(MHR plugin, String pattern, String permission,
 			String description) {

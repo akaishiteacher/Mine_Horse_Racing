@@ -4,13 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import net.akaishi_teacher.mhr.MHR;
-import net.akaishi_teacher.mhr.commands.func.AbstractCommand;
 
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class Tp extends AbstractCommand {
+public class Tp extends MHRAbstractCommand {
 
 	public Tp(MHR plugin, String pattern, String permission, String description) {
 		super(plugin, pattern, permission, description);
@@ -26,11 +25,26 @@ public class Tp extends AbstractCommand {
 			num = Integer.parseInt(args.get(1));
 		} catch (NumberFormatException e) {
 			sender.sendMessage(plugin.getLang().getLocalizedString("Cmd_Err_NumberFormatException"));
+			return true;
 		}
-		if (args.size() >= 4) { //Flag option
+		boolean field_00001 = false;
+		if (args.size() >= 6) {
+			try {
+				flag = Boolean.parseBoolean(args.get(2));
+				double x = Double.parseDouble(args.get(3));
+				double y = Double.parseDouble(args.get(4));
+				double z = Double.parseDouble(args.get(5));
+				loc = new Location(castPlayer(sender).getWorld(), x, y, z);
+				field_00001 = true;
+			} catch (NumberFormatException e) {
+				sender.sendMessage(plugin.getLang().getLocalizedString("Cmd_Err_NumberFormatException"));
+				return true;
+			}
+		}
+		if (args.size() >= 4 && !field_00001) { //Flag option
 			flag = Boolean.parseBoolean(args.get(3));
 		}
-		if (args.size() >= 3) { //To player option
+		if (args.size() >= 3 && !field_00001) { //To player option
 			p = plugin.getServer().getPlayerExact(args.get(2));
 			if (p != null) {
 				loc = p.getLocation();
@@ -38,8 +52,14 @@ public class Tp extends AbstractCommand {
 				sender.sendMessage(plugin.getLang().getLocalizedString("Cmd_Err_PlayerNotFound"));
 				return true;
 			}
-		} else {
+		} else if (!field_00001) {
 			loc = castPlayer(sender).getLocation();
+		}
+		if (args.size() >= 7) {
+			loc.setYaw((float) Double.parseDouble(args.get(6)));
+		}
+		if (args.size() >= 8) {
+			loc.setPitch((float) Double.parseDouble(args.get(7)));
 		}
 		plugin.getHorsesControler().tp(num, loc, flag);
 		HashMap<String, String> replaceMap = new HashMap<String, String>();

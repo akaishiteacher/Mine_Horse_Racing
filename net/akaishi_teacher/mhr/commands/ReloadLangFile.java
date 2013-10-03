@@ -5,11 +5,10 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 
 import net.akaishi_teacher.mhr.MHR;
-import net.akaishi_teacher.mhr.commands.func.AbstractCommand;
 
 import org.bukkit.command.CommandSender;
 
-public class ReloadLangFile extends AbstractCommand {
+public class ReloadLangFile extends MHRAbstractCommand {
 
 	public ReloadLangFile(MHR plugin, String pattern, String permission,
 			String description) {

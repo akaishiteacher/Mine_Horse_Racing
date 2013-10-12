@@ -27,7 +27,7 @@
       <version>1.6.4-R0.1-SNAPSHOT</version>
     </dependency>
   </dependencies>
-  <version>1.0.0</version>
+  <version>1.0.0_for_164</version>
   <artifactId>MineHorseRacing</artifactId>
   <organization>
   	<name>Developers for akaishi teacher</name>

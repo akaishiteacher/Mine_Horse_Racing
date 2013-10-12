@@ -15,7 +15,6 @@ import net.akaishi_teacher.mhr.commands.SetSpeed;
 import net.akaishi_teacher.mhr.commands.Spawn;
 import net.akaishi_teacher.mhr.commands.Tp;
 import net.akaishi_teacher.mhr.cource.MHRCource;
-import net.akaishi_teacher.mhr.cource.commands.Start;
 import net.akaishi_teacher.util.command.CommandExecuter;
 
 import org.bukkit.command.Command;
@@ -147,7 +146,7 @@ public final class MHR extends JavaPlugin {
 		cmdExecuter.addCommand(new Despawn(this, "despawn", "mhr.horse.despawn", "This command will despawn horse(s)."));
 		cmdExecuter.addCommand(new AllTp(this, "alltp", "mhr.horse.tp", "Teleport a horse all."));
 		cmdExecuter.addCommand(new Tp(this, "tp any", "mhr.horse.tp", "Teleport a horse."));
-		cmdExecuter.addCommand(new Start(this, "start", "mhr.cource.start", "Start MineHorseRacing."));
+		//cmdExecuter.addCommand(new Start(this, "start", "mhr.cource.start", "Start MineHorseRacing."));
 	}
 
 

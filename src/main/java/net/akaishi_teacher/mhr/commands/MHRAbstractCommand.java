@@ -5,15 +5,12 @@ import net.akaishi_teacher.util.command.AbstractCommand;
 
 public abstract class MHRAbstractCommand extends AbstractCommand {
 
-	/**
-	 * プラグインのインスタンス
-	 */
-	protected MHR pl;
+	protected MHR mhr;
 
-	public MHRAbstractCommand(MHR plugin, String pattern, String permission,
+	public MHRAbstractCommand(MHR mhr, String pattern, String permission,
 			String description) {
 		super(pattern, permission, description);
-		this.pl = plugin;
+		this.mhr = mhr;
 	}
 
 }

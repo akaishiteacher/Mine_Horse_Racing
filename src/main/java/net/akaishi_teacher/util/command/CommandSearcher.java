@@ -1,6 +1,5 @@
 package net.akaishi_teacher.util.command;
 
-import java.util.Arrays;
 import java.util.LinkedList;
 
 /**
@@ -8,74 +7,77 @@ import java.util.LinkedList;
  */
 public class CommandSearcher {
 
-	public static boolean search(String searchCommand, String[] commandArgs) {
-		if (searchCommand.equals("")) {
+	public static boolean search(String pattern, String[] commandArgs) {
+		//Command that does not have command pattern.
+		if (pattern.equals("")) {
 			return true;
 		}
-		String[] searchArgs = searchCommand.split(" ");
-		if (searchArgs.length > commandArgs.length) {
+
+		//Divided pattern.
+		String[] dividedPattern = pattern.split(" ");
+
+		//Arguments shortage.
+		if (dividedPattern.length > commandArgs.length) {
 			return false;
 		}
-		boolean flag = true;
-		for (int i = 0; i < searchArgs.length; i++) {
-			if (searchArgs[i].equalsIgnoreCase("any")) {
+
+		for (int i = 0; i < dividedPattern.length; i++) {
+			if (dividedPattern[i].equalsIgnoreCase("any")) {
 				continue;
 			}
-			if (searchArgs[i].endsWith(":any")) {
-				String startsWithStr = searchArgs[i].split(":")[0];
+			if (dividedPattern[i].endsWith(":any")) {
+				String startsWithStr = dividedPattern[i].split(":")[0];
 				if (!commandArgs[i].startsWith(startsWithStr)) {
-					flag = false;
+					return false;
 				}
 				continue;
 			}
-			if (searchArgs[i].startsWith("any:")) {
-				String endsWithStr = searchArgs[i].split(":")[1];
+			if (dividedPattern[i].startsWith("any:")) {
+				String endsWithStr = dividedPattern[i].split(":")[1];
 				if (!commandArgs[i].endsWith(endsWithStr)) {
-					flag = false;
+					return false;
 				}
 				continue;
 			}
-			if (!commandArgs[i].equalsIgnoreCase(searchArgs[i])) {
-				flag = false;
+			if (!commandArgs[i].equalsIgnoreCase(dividedPattern[i])) {
+				return false;
 			}
 		}
-		return flag;
+		return true;
 	}
 
-	public static boolean search_notAnys(String searchCommand, String[] commandArgs) {
-		if (searchCommand.equals("")) {
+	public static boolean search_notAnys(String pattern, String[] commandArgs) {
+		//Command that does not have command pattern.
+		if (pattern.equals("")) {
 			return true;
 		}
+
+		//List that removed the "any".
 		LinkedList<String> s1 = new LinkedList<String>();
 		LinkedList<String> s2 = new LinkedList<String>();
-		String[] searchArgs = searchCommand.split(" ");
-		for (int i = 0; i < searchArgs.length; i++) {
-			if (!searchArgs[i].equals("any")) {
-				s1.add(searchArgs[i]);
+
+		//Divided pattern.
+		String[] dividedPattern = pattern.split(" ");
+
+		for (int i = 0; i < dividedPattern.length; i++) {
+			if (!dividedPattern[i].equals("any")) {
+				s1.add(dividedPattern[i]);
 			} else break;
 		}
 
+		//Compare two list.
 		if (commandArgs.length < s1.size()) return false;
+
 		for (int i = 0; i < s1.size(); i++) {
 			s2.add(commandArgs[i]);
 		}
 
-		boolean flag = true;
 		for (int i = 0; i < s1.size(); i++) {
 			if (!s1.get(i).equalsIgnoreCase(s2.get(i))) {
-				flag = false;
+				return false;
 			}
 		}
-		return flag;
-	}
-
-	public static String commandBond(String[] bondStrs) {
-		String command = "";
-		System.out.println(Arrays.toString(bondStrs));
-		for (int i = 0; i < bondStrs.length; i++) {
-			command = command + bondStrs[i] + " ";
-		}
-		return command;
+		return true;
 	}
 
 }

@@ -1,5 +1,5 @@
 name: MineHorseRacingPlugin
-main: net.akaishi_teacher.mhr.MHR
+main: net.akaishi_teacher.mhr.Main
 version: alpha1.0.0
 
 commands:
@@ -9,24 +9,3 @@ commands:
  mhr:
   description: Commands of MineHorseRacingPlugin.
   permission-message: §4You don't have permission.
-
-permissions:
- mhr.*:
-  description: MineHorseRacingPluginのすべての権限を持つパーミッションです。
-  children:
-   mhr.horse: true
- mhr.horse.*:
-  description: 馬を操作するコマンドすべてを使用する権限を持つパーミッションです。
-  children:
-   mhr.horse.set: true
-   mhr.horse.spawn: true
-   mhr.despawn: true
-   mhr.horse.tp: true
- mhr.horse.set:
-  description: 馬のスピードとジャンプ力を設定するコマンドを使用する権限を持つパーミッションです。
- mhr.horse.spawn:
-  description: 同じ個体値の馬を任意の値スポーンさせるコマンドを使用する権限を持つパーミッションです。
- mhr.horse.despawn:
-  description: 馬をデスポーンさせるコマンドを使用するコマンドを使用する権限を持つパーミッションです。
- mhr.horse.tp:
-  description: 馬をテレポートするコマンドを使用する権限を持つパーミッションです。

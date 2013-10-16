@@ -1,8 +1,6 @@
 package net.akaishi_teacher.util.command;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Map;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -130,25 +128,6 @@ public abstract class AbstractCommand {
 		} else {
 			return sender.getServer().getPlayerExact(sender.getName());
 		}
-	}
-
-	/**
-	 * 言語ファイルの変数定義を指定した文字列に置き換えます。<br>
-	 * 変数定義は&lt;%引数名%&gt;です。
-	 * @param str 置き換え元の文字列
-	 * @param argsMap 変数定義名と置き換える文字列のマップ
-	 * @return 置き換えた文字列
-	 */
-	public static String replaceArgs(final String str, final Map<String, String> argsMap) {
-		String vstr = str;
-		Iterator<String> itKeys = argsMap.keySet().iterator();
-		Iterator<String> itValues = argsMap.values().iterator();
-		while (itKeys.hasNext()) {
-			String key = itKeys.next();
-			String value = itValues.next();
-			vstr = vstr.replaceAll("<%" + key + "%>", value);
-		}
-		return vstr;
 	}
 
 }

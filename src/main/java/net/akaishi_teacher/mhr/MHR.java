@@ -2,247 +2,88 @@ package net.akaishi_teacher.mhr;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URI;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URISyntaxException;
-import java.util.logging.Logger;
+import java.net.URL;
 
-import net.akaishi_teacher.mhr.commands.AllTp;
-import net.akaishi_teacher.mhr.commands.Despawn;
 import net.akaishi_teacher.mhr.commands.Help;
-import net.akaishi_teacher.mhr.commands.ReloadLangFile;
-import net.akaishi_teacher.mhr.commands.SetJump;
-import net.akaishi_teacher.mhr.commands.SetSpeed;
-import net.akaishi_teacher.mhr.commands.Spawn;
-import net.akaishi_teacher.mhr.commands.Tp;
-import net.akaishi_teacher.mhr.cource.MHRCource;
-import net.akaishi_teacher.util.command.CommandExecuter;
+import net.akaishi_teacher.util.command.CommandExecutor;
+import net.akaishi_teacher.util.lang.Language;
 
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.plugin.java.JavaPlugin;
 
-/**
- * MineHorseRacingPluginの元になるクラス
- * @author mozipi
- */
-public final class MHR extends JavaPlugin {
+public class MHR {
 
-	private Logger logger;
+	/**
+	 * コマンドを実行するためのクラス
+	 */
+	private CommandExecutor cmdExecutor;
 
-	private MHRListeners listener;
-
-	private CommandExecuter cmdExecuter;
-
+	/**
+	 * 言語対応クラス
+	 */
 	private Language lang;
 
-	private FileConfiguration cfg;
+	/**
+	 * プラグイン
+	 */
+	private JavaPlugin plugin;
 
-	private CommonHorseStats horseStats;
+	public MHR(JavaPlugin plugin) {
+		this.plugin = plugin;
+	}
 
-	private String langFilesDirString;
-
-	private HorsesControler horsesControler;
-
-	private HorseInfoConfig horseInfoCfg;
-
-	private MHRSetSpeedRunnable setSpeedRunnable;
-
-	private MHRFullTimeHealRunnable fullTimeHealRunnable;
-
-	private MHRCource cource;
-
-	@Override
-	public void onEnable() {
-		super.onEnable();
-		ConfigurationSerialization.registerClass(HorseInfo.class);
-
-		cfg = getConfig();
-		logger = getLogger();
+	public void init() {
+		//Configuration load.
 		loadConfig();
 
-		listener = new MHRListeners(this);
-		setSpeedRunnable = new MHRSetSpeedRunnable(this);
-		fullTimeHealRunnable = new MHRFullTimeHealRunnable(this);
-		getServer().getPluginManager().registerEvents(listener, this);
-		getServer().getScheduler().runTaskTimer(this, setSpeedRunnable, 65, 100);
-		getServer().getScheduler().runTaskTimer(this, fullTimeHealRunnable, 65, 1);
+		//Create the CommandExecutor instance.
+		cmdExecutor = new CommandExecutor();
 
-		cmdExecuter = new CommandExecuter();
+		//Load language file.
+		lang = new Language(new File(plugin.getDataFolder().getAbsolutePath() + "/lang"), langName, plugin.getLogger());
 		try {
-			lang = createLanguageInstance();
 			lang.loadLangFile();
-		} catch (URISyntaxException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		horseStats = createCommonHorseStatsInstance();
-		horsesControler = new HorsesControler(this);
-
-		try {
-			horseInfoCfg = createHorseInfoConfig();
-			horseInfoCfg.loadConfig();
-		} catch (URISyntaxException | IOException e1) {
-			e1.printStackTrace();
+		} catch (IOException | URISyntaxException e) {
+			//Load default language file.
+			try {
+				ClassLoader cl = getClass().getClassLoader();
+				URL fileURL = cl.getResource("default.txt");
+				InputStream stream = fileURL.openStream();
+				InputStreamReader isr = new InputStreamReader(stream, "UTF-8");
+				lang.loadDefaultLanguage(isr);
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
 		}
 
-		cource = new MHRCource();
-
+		//Register commands.
 		registerCommands();
 
-		Runnable r = new Runnable() {
-			@Override
-			public void run() {
-				horsesControler.init();
-			}
-		};
-		getServer().getScheduler().runTaskLater(this, r, 60);
-
-		logger.info("MineHorseRacingPlugin Enabled.");
+		plugin.getLogger().info("MineHorseRacingPlugin enabled.");
 	}
 
-
-
-	@Override
-	public void onDisable() {
-		super.onDisable();
-		try {
-			horseInfoCfg.saveConfig();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		horsesControler.despawnHorse();
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		setConfigValues();
-		saveConfig();
-		logger.info("MineHorseRacingPlugin Disabled.");
+	public void disable() {
+		plugin.getLogger().info("MineHorseRacingPlugin disabled.");
 	}
 
-
-
-	@Override
-	public boolean onCommand(CommandSender sender, Command command,
-			String label, String[] args) {
-		return cmdExecuter.onCommand(sender, args);
-	}
-
-
-
-	/**
-	 * コマンドを追加する処理をするメソッドです。
-	 */
-	protected void registerCommands() {
-		cmdExecuter.addCommand(new Help(this, "", null, "This command is help command."));
-		cmdExecuter.addCommand(new ReloadLangFile(this, "reloadLangFile", "mhr.reload.lang", "This command will reload the language file."));
-		cmdExecuter.addCommand(new SetSpeed(this, "setspeed any", "mhr.horse.set", "This command will set speed to a horse."));
-		cmdExecuter.addCommand(new SetJump(this, "setjump any", "mhr.horse.set", "This command will set jump strength to a horse."));
-		cmdExecuter.addCommand(new Spawn(this, "spawn any", "mhr.horse.spawn", "This command will spawn horses."));
-		cmdExecuter.addCommand(new Despawn(this, "despawn", "mhr.horse.despawn", "This command will despawn horse(s)."));
-		cmdExecuter.addCommand(new AllTp(this, "alltp", "mhr.horse.tp", "Teleport a horse all."));
-		cmdExecuter.addCommand(new Tp(this, "tp any", "mhr.horse.tp", "Teleport a horse."));
-		//cmdExecuter.addCommand(new Start(this, "start", "mhr.cource.start", "Start MineHorseRacing."));
-	}
-
-
-
-	/**
-	 * HorseInfoConfigクラスのインスタンスを生成し、戻り値として返すメソッドです。
-	 * @return HorseInfoConfigクラスのインスタンス
-	 * @throws URISyntaxException
-	 * @throws IOException
-	 */
-	public HorseInfoConfig createHorseInfoConfig() throws URISyntaxException, IOException {
-		URI uri = new URI(getDataFolder().toURI().getPath() + "/horseinfo.info");
-		return new HorseInfoConfig(this, new File(uri.getPath()));
-	}
-
-	/**
-	 * Languageクラスのインスタンスを生成し、戻り値として返すメソッドです。
-	 * @return Languageクラスのインスタンス
-	 * @throws URISyntaxException
-	 */
-	protected Language createLanguageInstance() throws URISyntaxException {
-		cfg.addDefault("lang", "ja_JP");
-		String langStr = cfg.getString("lang");
-		URI uri = new URI(getDataFolder().toURI().getPath() + "/lang/");
-		return new Language(new File(langFilesDirString == null ? uri.getPath() : langFilesDirString), langStr, logger);
-	}
-
-
-
-	/**
-	 * HorseStatsクラスのインスタンスを生成し、戻り値として返すメソッドです。
-	 * @return HorseStatsクラスのインスタンス
-	 */
-	protected CommonHorseStats createCommonHorseStatsInstance() {
-		cfg.addDefault("DefaultHorseSpeed", 2);
-		cfg.addDefault("DefaultHorseJumpStrength", 2);
-		return new CommonHorseStats(cfg.getDouble("DefaultHorseSpeed"), cfg.getDouble("DefaultHorseJumpStrength"));
-	}
-
-
-
-	/**
-	 * コンフィグをロードし、フィールド変数に代入するメソッドです。
-	 */
 	protected void loadConfig() {
-		langFilesDirString = cfg.getString("LangFilesDir");
+		langName = plugin.getConfig().getString("lang", "ja_JP");
 	}
 
-
-
-	/**
-	 * コンフィグにデータを設定する処理をするメソッドです。
-	 */
-	protected void setConfigValues() {
-		cfg.set("lang", lang.getLang());
-		cfg.set("DefaultHorseSpeed", horseStats.getSpeed());
-		cfg.set("DefaultHorseJumpStrength", horseStats.getJump());
-		if (langFilesDirString != null) {
-			cfg.set("LangFilesDir", langFilesDirString);
-		}
+	protected void registerCommands() {
+		cmdExecutor.addCommand(new Help(this, "", null, "Helpコマンドです。"));
 	}
 
-
-
-	public CommandExecuter getCmdExecutor() {
-		return cmdExecuter;
+	public CommandExecutor getCmdExecutor() {
+		return cmdExecutor;
 	}
-
-
 
 	public Language getLang() {
 		return lang;
 	}
 
+	private static String langName = null;
 
-
-	public CommonHorseStats getHorseStats() {
-		return horseStats;
-	}
-
-
-
-	public HorsesControler getHorsesControler() {
-		return horsesControler;
-	}
-
-
-
-	public HorseInfoConfig getHorseInfoCfg() {
-		return horseInfoCfg;
-	}
-
-
-
-	public MHRCource getMHRCource() {
-		return cource;
-	}
 }
-

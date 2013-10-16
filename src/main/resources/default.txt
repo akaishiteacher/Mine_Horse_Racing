@@ -1,0 +1,1 @@
+Cmd_Usage_Help=§6/mhr: コマンド一覧を表示します。

@@ -3,6 +3,10 @@ package net.akaishi_teacher.mhr.commands;
 import net.akaishi_teacher.mhr.MHR;
 import net.akaishi_teacher.util.command.AbstractCommand;
 
+/**
+ * MHRのAbstractCommandです。
+ * @author mozipi
+ */
 public abstract class MHRAbstractCommand extends AbstractCommand {
 
 	protected MHR mhr;

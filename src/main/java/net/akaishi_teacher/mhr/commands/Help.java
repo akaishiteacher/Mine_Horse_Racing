@@ -8,7 +8,11 @@ import net.akaishi_teacher.util.command.AbstractCommand;
 
 import org.bukkit.command.CommandSender;
 
-public class Help extends MHRAbstractCommand {
+/**
+ * コマンド一覧を表示するコマンドです。
+ * @author mozipi
+ */
+public final class Help extends MHRAbstractCommand {
 
 	public Help(MHR mhr, String pattern, String permission, String description) {
 		super(mhr, pattern, permission, description);

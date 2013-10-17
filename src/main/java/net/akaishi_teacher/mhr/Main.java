@@ -4,6 +4,10 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
+/**
+ * Pluginの実行部分。詳細は{@link MHR MHR}クラスを参照してください。
+ * @author mozipi
+ */
 public final class Main extends JavaPlugin {
 
 	/**

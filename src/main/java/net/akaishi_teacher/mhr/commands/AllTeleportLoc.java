@@ -28,7 +28,7 @@ public class AllTeleportLoc extends MHRAbstractCommand {
 			if (args.size() >= 5) {
 				//tploc x y z flag
 				if (args.get(4).equals("true") || args.get(4).equals("false")) {
-					flag = Boolean.getBoolean(args.get(4));
+					flag = Boolean.parseBoolean(args.get(4));
 				} else {
 					//tploc x y z yaw pitch [flag]
 					if (args.size() >= 6) {
@@ -36,7 +36,7 @@ public class AllTeleportLoc extends MHRAbstractCommand {
 						pitch = Double.parseDouble(args.get(5));
 						//tploc x y z yaw pitch flag
 						if (args.size() >= 7) {
-							flag = Boolean.getBoolean(args.get(6));
+							flag = Boolean.parseBoolean(args.get(6));
 						}
 					} else {
 						sender.sendMessage(getUsage(sender));

@@ -31,7 +31,7 @@ public class TeleportLoc extends MHRAbstractCommand {
 			if (args.size() >= 6) {
 				//tploc x y z flag
 				if (args.get(5).equals("true") || args.get(5).equals("false")) {
-					flag = Boolean.getBoolean(args.get(5));
+					flag = Boolean.parseBoolean(args.get(5));
 				} else {
 					//tploc x y z yaw pitch [flag]
 					if (args.size() >= 7) {
@@ -39,7 +39,7 @@ public class TeleportLoc extends MHRAbstractCommand {
 						pitch = Double.parseDouble(args.get(6));
 						//tploc x y z yaw pitch flag
 						if (args.size() >= 8) {
-							flag = Boolean.getBoolean(args.get(7));
+							flag = Boolean.parseBoolean(args.get(7));
 						}
 					} else {
 						sender.sendMessage(getUsage(sender));
@@ -54,6 +54,8 @@ public class TeleportLoc extends MHRAbstractCommand {
 				sender.sendMessage(mhr.getLang().get("Err_HorseNotFound"));
 				return true;
 			}
+
+			System.out.println(flag);
 
 			//Send message.
 			HashMap<String, String> replaceMap = new HashMap<>();

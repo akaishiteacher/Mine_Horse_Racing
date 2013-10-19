@@ -173,7 +173,7 @@ public final class HorseController implements AnimalTamer {
 
 			//Teleport horse.
 			horse.teleport(toLoc);
-			if (flag) {
+			if (flag && passenger != null) {
 				//Teleport passenger.
 				passenger.teleport(toLoc);
 				//Ride on.

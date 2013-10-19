@@ -35,7 +35,8 @@ public class HorseData implements ConfigurationSerializable {
 		this.loc = loc;
 	}
 
-	public HorseData(Map<String, Object> map) {
+	@SuppressWarnings("rawtypes")
+	public HorseData(Map map) {
 		this.id = (int) map.get("Id");
 		this.loc = (SimpleLocation) map.get("Loc");
 	}

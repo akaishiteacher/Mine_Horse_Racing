@@ -49,11 +49,12 @@ public class SimpleLocation implements ConfigurationSerializable {
 		this.pitch = pitch;
 	}
 
-	public SimpleLocation(Map<String, Object> map) {
+	@SuppressWarnings("rawtypes")
+	public SimpleLocation(Map map) {
 		this.worldName = (String) map.get("WorldName");
-		this.x = (int) map.get("X");
-		this.y = (int) map.get("Y");
-		this.z = (int) map.get("Z");
+		this.x = (double) map.get("X");
+		this.y = (double) map.get("Y");
+		this.z = (double) map.get("Z");
 		this.yaw = (double) map.get("Yaw");
 		this.pitch = (double) map.get("Pitch");
 	}

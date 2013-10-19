@@ -64,6 +64,9 @@ public class MHR {
 	}
 
 	public void init() {
+		//Deserializes.
+		deserializes();
+
 		//Configuration load.
 		loadConfig();
 
@@ -95,10 +98,22 @@ public class MHR {
 		//Register event.
 		plugin.getServer().getPluginManager().registerEvents(new NoDamageEvent(), plugin);
 
+		//Server initialize;
+		status.serverInit(this, datas);
+
 		plugin.getLogger().info("MineHorseRacingPlugin enabled.");
 	}
 
 	public void disable() {
+		//Server end.
+		status.serverEnd(this);
+
+		//Set Configuration.
+		setConfig();
+
+		//Save configuration.
+		horseDataConf.save();
+
 		plugin.getLogger().info("MineHorseRacingPlugin disabled.");
 	}
 
@@ -110,8 +125,8 @@ public class MHR {
 		stream.close();
 		try {
 			lang.loadLangFile();
-			plugin.onDisable();
 		} catch (URISyntaxException e) {
+			plugin.onDisable();
 			e.printStackTrace();
 		}
 	}
@@ -125,15 +140,24 @@ public class MHR {
 		double jump = plugin.getConfig().getDouble("jump");
 
 		//Get horse datas.
-		horseDataConf = new ConfigurationForData(plugin, "horsedatas.dat");
+		horseDataConf = new ConfigurationForData(plugin, "horsedatas.info");
 		horseDataConf.load();
 		horseDataConf.getConf().addDefault("HorseDatas", new ArrayList<>());
 		@SuppressWarnings("unchecked")
 		ArrayList<HorseData> horseDatas =
 		(ArrayList<HorseData>) horseDataConf.getConf().getList("HorseDatas");
+		datas = horseDatas;
 
 		//Assignment to the "status" variable.
-		status = new HorseStatus(horseDatas, speed, jump);
+		status = new HorseStatus(horseDatas, speed, jump, false);
+	}
+
+	protected void setConfig() {
+		//Set horsedatas.
+		horseDataConf.conf.set("HorseDatas", status.getHorseDatas());
+	}
+
+	protected void deserializes() {
 	}
 
 	protected void registerCommands() {
@@ -187,6 +211,8 @@ public class MHR {
 	public HorseController getController() {
 		return  controller;
 	}
+
+	private ArrayList<HorseData> datas;
 
 	private static String langName = null;
 

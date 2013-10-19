@@ -3,8 +3,12 @@ package net.akaishi_teacher.mhr;
 import java.io.File;
 import java.io.IOException;
 
+import net.akaishi_teacher.mhr.other.SimpleLocation;
+import net.akaishi_teacher.mhr.status.HorseData;
+
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class ConfigurationForData {
@@ -35,6 +39,9 @@ public class ConfigurationForData {
 					e.printStackTrace();
 				}
 			}
+
+			ConfigurationSerialization.registerClass(SimpleLocation.class);
+			ConfigurationSerialization.registerClass(HorseData.class);
 			conf = YamlConfiguration.loadConfiguration(file);
 		} else {
 			try {

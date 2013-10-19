@@ -26,14 +26,19 @@ public class AllTeleport extends MHRAbstractCommand {
 		//Assignment the location and flag.
 		if (args.size() >= 3) {
 			if (args.get(1).equals("true") || args.get(1).equals("false")) {
+				//Get flag and player.
 				flag = Boolean.parseBoolean(args.get(1));
 				player = castPlayer(sender);
 			} else {
+				//Get player.
 				player = mhr.getPlugin().getServer().getPlayer(args.get(1));
+				//Player found?
 				if (player == null) {
+					//Player not found!
 					sender.sendMessage(mhr.getLang().get("Err_PlayerNotFound"));
 					return true;
 				}
+				//Get flag.
 				flag = Boolean.parseBoolean(args.get(2));
 			}
 		} else {

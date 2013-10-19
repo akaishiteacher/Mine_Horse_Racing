@@ -18,7 +18,7 @@ public class SetSpeed extends MHRAbstractCommand {
 	@Override
 	public boolean execute(CommandSender sender, ArrayList<String> args) {
 		try {
-			double speed = Integer.parseInt(args.get(1));
+			double speed = Double.parseDouble(args.get(1));
 			mhr.getStatus().getCommonStatus().setSpeed(speed);
 			HashMap<String, String> replaceMap = new HashMap<>();
 			replaceMap.put("speed", args.get(1));

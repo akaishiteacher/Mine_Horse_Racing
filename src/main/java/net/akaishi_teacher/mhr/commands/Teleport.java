@@ -30,14 +30,19 @@ public class Teleport extends MHRAbstractCommand {
 			//Assignment the location and flag.
 			if (args.size() >= 3) {
 				if (args.get(2).equals("true") || args.get(2).equals("false")) {
+					//Get flag and player.
 					flag = Boolean.parseBoolean(args.get(2));
 					player = castPlayer(sender);
 				} else {
+					//Get player.
 					player = mhr.getPlugin().getServer().getPlayer(args.get(2));
+					//Found player?
 					if (player == null) {
+						//Player not found!
 						sender.sendMessage(mhr.getLang().get("Err_PlayerNotFound"));
 						return true;
 					}
+					//Get flag.
 					flag = Boolean.parseBoolean(args.get(3));
 				}
 			} else {

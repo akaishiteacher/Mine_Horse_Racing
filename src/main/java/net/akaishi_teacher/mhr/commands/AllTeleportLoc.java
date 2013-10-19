@@ -56,6 +56,7 @@ public class AllTeleportLoc extends MHRAbstractCommand {
 				}
 			}
 
+			//Send message.
 			HashMap<String, String> replaceMap = new HashMap<>();
 			replaceMap.put("X", String.valueOf(loc.x));
 			replaceMap.put("Y", String.valueOf(loc.y));

@@ -18,7 +18,7 @@ public class SetJump extends MHRAbstractCommand {
 	@Override
 	public boolean execute(CommandSender sender, ArrayList<String> args) {
 		try {
-			double jump = Integer.parseInt(args.get(1));
+			double jump = Double.parseDouble(args.get(1));
 			mhr.getStatus().getCommonStatus().setSpeed(jump);
 			HashMap<String, String> replaceMap = new HashMap<>();
 			replaceMap.put("jump", args.get(1));

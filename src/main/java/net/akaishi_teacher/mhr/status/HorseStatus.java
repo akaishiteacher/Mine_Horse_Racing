@@ -2,6 +2,11 @@ package net.akaishi_teacher.mhr.status;
 
 import java.util.ArrayList;
 
+import net.akaishi_teacher.mhr.MHR;
+import net.akaishi_teacher.mhr.other.SimpleLocation;
+
+import org.bukkit.World;
+
 /**
  * 馬のステータスが存在するクラスです。<br>
  * 共通のステータスや個別に保存されている値もここに存在します。
@@ -17,7 +22,7 @@ public class HorseStatus {
 	/**
 	 * 個別の馬のステータスが存在するクラスのリスト
 	 */
-	protected ArrayList<HorseData> horseDatas;
+	protected ArrayList<HorseData> horseDatas = new ArrayList<>();
 
 	public HorseStatus(ArrayList<HorseData> horseDatas, CommonHorseStatus status) {
 		this.horseDatas = horseDatas;
@@ -27,6 +32,29 @@ public class HorseStatus {
 	public HorseStatus(ArrayList<HorseData> horseDatas, double speed, double jump) {
 		this.horseDatas = horseDatas;
 		this.status = new CommonHorseStatus(speed, jump);
+	}
+
+	public HorseStatus(ArrayList<HorseData> horseDatas, double speed, double jump, boolean flag) {
+		if (flag) {
+			this.horseDatas = horseDatas;
+		}
+		this.status = new CommonHorseStatus(speed, jump);
+	}
+
+	public void serverInit(MHR mhr, ArrayList<HorseData> datas) {
+		for (int i = 0; i < datas.size(); i++) {
+			HorseData data = datas.get(i);
+			mhr.getController().spawn(data.id, data.loc);
+		}
+	}
+
+	public void serverEnd(MHR mhr) {
+		for (HorseData data : horseDatas) {
+			World world = mhr.getPlugin().getServer().getWorld(data.loc.worldName);
+			data.loc = SimpleLocation.toSimpleLocation(data.horse.getLocation());
+			world.loadChunk((int) (data.loc.x / 16 + 1), (int) (data.loc.y / 16 + 1));
+			data.horse.remove();
+		}
 	}
 
 	/**

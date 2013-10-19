@@ -9,6 +9,7 @@ public class NoDamageEvent implements Listener {
 
 	@EventHandler
 	public void horseNoDamageEvent(EntityDamageEvent event) {
+		//TODO MHRの馬のみにする
 		if (event.getEntity() instanceof Horse) {
 			event.setCancelled(true);
 		}

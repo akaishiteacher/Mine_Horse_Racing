@@ -103,7 +103,6 @@ public class MHR {
 			public void run() {
 				//Server initialize;
 				status.serverInit(getMHR(), datas);
-				System.out.println("hjfhjdfdhjh");
 			}
 		};
 		plugin.getServer().getScheduler().runTaskLater(plugin, runnable, 100);
@@ -143,8 +142,10 @@ public class MHR {
 		langName = plugin.getConfig().getString("lang", "ja_JP");
 
 		//Get common horse status.
+		plugin.getConfig().addDefault("Speed", 0.3);
+		plugin.getConfig().addDefault("Jump", 0.75);
 		double speed = plugin.getConfig().getDouble("Speed");
-		double jump = plugin.getConfig().getDouble("jump");
+		double jump = plugin.getConfig().getDouble("Jump");
 
 		//Get horse datas.
 		horseDataConf = new ConfigurationForData(plugin, "horsedatas.info");
@@ -162,6 +163,9 @@ public class MHR {
 	protected void setConfig() {
 		//Set horsedatas.
 		horseDataConf.conf.set("HorseDatas", status.getHorseDatas());
+		//Set common status.
+		getPlugin().getConfig().set("Speed", status.getCommonStatus().getSpeed());
+		getPlugin().getConfig().set("Jump", status.getCommonStatus().getJump());
 	}
 
 	protected void deserializes() {

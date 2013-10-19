@@ -11,7 +11,7 @@ public class NoDamageEvent implements Listener {
 	public void horseNoDamageEvent(EntityDamageEvent event) {
 		//TODO MHRの馬のみにする
 		if (event.getEntity() instanceof Horse) {
-			event.setCancelled(true);
+			event.setDamage(0);
 		}
 	}
 

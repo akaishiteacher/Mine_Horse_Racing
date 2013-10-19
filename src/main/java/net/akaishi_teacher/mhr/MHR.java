@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 
+import net.akaishi_teacher.mhr.commands.Despawn;
 import net.akaishi_teacher.mhr.commands.Help;
 import net.akaishi_teacher.mhr.commands.SetJump;
 import net.akaishi_teacher.mhr.commands.SetSpeed;
@@ -130,6 +131,7 @@ public class MHR {
 		cmdExecutor.addCommand(new SetSpeed(this, "setspeed any", "mhr.horse.set", "馬の速度を設定します。"));
 		cmdExecutor.addCommand(new SetJump(this, "setjump any", "mhr.horse.set", "馬のジャンプ力を設定します。"));
 		cmdExecutor.addCommand(new Spawn(this, "spawn any", "mhr.horse.spawn", "馬をスポーンします。"));
+		cmdExecutor.addCommand(new Despawn(this, "despawn", "mhr.horse.despawn", "馬をデスポーンします。"));
 	}
 
 	/**

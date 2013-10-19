@@ -1,1 +1,2 @@
 copy "C:\Users\mozipi\Documents\Minecraft\Plugin_Develops\1.5.2\Plugin\MHR\target\*.jar" "C:\Users\mozipi\Documents\Minecraft\Servers\debugServer\plugins" /Y
+del "C:\Users\mozipi\Documents\Minecraft\Servers\debugServer\plugins\MineHorseRacingPlugin\lang\ja_JP.lang"

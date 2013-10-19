@@ -1,5 +1,8 @@
 package net.akaishi_teacher.mhr;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
 import net.akaishi_teacher.mhr.other.SimpleLocation;
 import net.akaishi_teacher.mhr.status.HorseData;
 
@@ -64,6 +67,7 @@ public final class HorseController implements AnimalTamer {
 	public HorseData spawn(int id, SimpleLocation loc) {
 		HorseData data = new HorseData(id, loc);
 		Horse horse = spawn(loc);
+		//Set horse status.
 		horse.setStyle(Style.values()[(int) (Math.random() * Style.values().length)]);
 		horse.setCustomName(String.valueOf(data.id+1));
 		horse.getInventory().setSaddle(new ItemStack(Material.SADDLE));
@@ -82,6 +86,57 @@ public final class HorseController implements AnimalTamer {
 	public Horse spawn(SimpleLocation loc) {
 		World world = mhr.getPlugin().getServer().getWorld(loc.worldName);
 		return (Horse) world.spawnEntity(new Location(world, loc.x, loc.y, loc.z), EntityType.HORSE);
+	}
+
+	/**
+	 * 馬を複数デスポーンします。
+	 * @param baseId デスポーンさせたい馬のIDの基となる値
+	 * @param num デスポーンさせる数
+	 */
+	public void despawns(int baseId, int num) {
+		ArrayList<HorseData> datas = mhr.getStatus().getHorseDatas();
+		ArrayList<Integer> removeList = new ArrayList<>();
+		for (int i = 0; i < num; i++) {
+			int index = datas.indexOf(new HorseData(baseId+i, null));
+			if (index != -1) {
+				//Remove horse.
+				datas.get(index).horse.remove();
+				//Add to the "remove list".
+				removeList.add(datas.get(index).id);
+			} else { //その番号の馬がいない時(翻訳できませんでした)
+				i--;
+				continue;
+			}
+		}
+
+		for (Iterator<Integer> iterator = removeList.iterator(); iterator.hasNext();) {
+			int index = datas.indexOf(new HorseData(iterator.next(), null));
+			if (index != -1) {
+				//Remove the "MHR horse".
+				datas.remove(index);
+			}
+		}
+
+		//Memory reduction.
+		removeList = null;
+
+		datas.trimToSize();
+	}
+
+	/**
+	 * 馬をデスポーンします。
+	 * @param id デスポーンさせたい馬のID
+	 */
+	public void despawn(int id) {
+		ArrayList<HorseData> datas = mhr.getStatus().getHorseDatas();
+		int index = datas.indexOf(new HorseData(id, null));
+		if (index != -1) {
+			//Remove horse.
+			datas.get(index).horse.remove();
+			//Remove the "MHR horse".
+			datas.remove(index);
+		}
+		datas.trimToSize();
 	}
 
 	@Override

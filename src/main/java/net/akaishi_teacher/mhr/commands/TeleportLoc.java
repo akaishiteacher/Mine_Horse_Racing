@@ -48,7 +48,7 @@ public class TeleportLoc extends MHRAbstractCommand {
 			}
 
 			//Get location.
-			loc = new SimpleLocation(castPlayer(sender).getWorld().getName(), Integer.parseInt(args.get(2)), Integer.parseInt(args.get(3)), Integer.parseInt(args.get(4)), yaw, pitch);
+			loc = new SimpleLocation(castPlayer(sender).getWorld().getName(), Double.parseDouble(args.get(2)), Double.parseDouble(args.get(3)), Double.parseDouble(args.get(4)), yaw, pitch);
 
 			if (!mhr.getController().teleport(id, loc, flag)) {
 				sender.sendMessage(mhr.getLang().get("Err_HorseNotFound"));

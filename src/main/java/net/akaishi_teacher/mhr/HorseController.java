@@ -67,6 +67,12 @@ public final class HorseController implements AnimalTamer {
 	 */
 	public HorseData spawn(int id, SimpleLocation loc) {
 		HorseData data = new HorseData(id, loc);
+		World world = mhr.getPlugin().getServer().getWorld(data.loc.worldName);
+		for (int i = -1; i < 2; i++) {
+			for (int j = -1; j < 2; j++) {
+				world.loadChunk((int) (data.loc.x / 16 + i), (int) (data.loc.z / 16 + j));
+			}
+		}
 		Horse horse = spawn(loc);
 		//Set horse status.
 		horse.setStyle(Style.values()[(int) (Math.random() * Style.values().length)]);

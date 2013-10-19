@@ -98,8 +98,15 @@ public class MHR {
 		//Register event.
 		plugin.getServer().getPluginManager().registerEvents(new NoDamageEvent(), plugin);
 
-		//Server initialize;
-		status.serverInit(this, datas);
+		Runnable runnable = new Runnable() {
+			@Override
+			public void run() {
+				//Server initialize;
+				status.serverInit(getMHR(), datas);
+				System.out.println("hjfhjdfdhjh");
+			}
+		};
+		plugin.getServer().getScheduler().runTaskLater(plugin, runnable, 100);
 
 		plugin.getLogger().info("MineHorseRacingPlugin enabled.");
 	}
@@ -158,6 +165,10 @@ public class MHR {
 	}
 
 	protected void deserializes() {
+	}
+
+	protected MHR getMHR() {
+		return this;
 	}
 
 	protected void registerCommands() {

@@ -52,7 +52,11 @@ public class HorseStatus {
 		for (HorseData data : horseDatas) {
 			World world = mhr.getPlugin().getServer().getWorld(data.loc.worldName);
 			data.loc = SimpleLocation.toSimpleLocation(data.horse.getLocation());
-			world.loadChunk((int) (data.loc.x / 16 + 1), (int) (data.loc.z / 16 + 1));
+			for (int i = -1; i < 2; i++) {
+				for (int j = -1; j < 2; j++) {
+					world.loadChunk((int) (data.loc.x / 16 + i), (int) (data.loc.z / 16 + j));
+				}
+			}
 			data.horse.remove();
 		}
 	}

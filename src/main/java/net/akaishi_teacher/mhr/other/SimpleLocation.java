@@ -19,9 +19,17 @@ public class SimpleLocation implements ConfigurationSerializable {
 	/**
 	 * 座標
 	 */
-	public int x, y, z;
+	public double x, y, z;
 
 	public SimpleLocation(String worldName, int x, int y, int z) {
+		super();
+		this.worldName = worldName;
+		this.x = x;
+		this.y = y;
+		this.z = z;
+	}
+
+	public SimpleLocation(String worldName, double x, double y, double z) {
 		super();
 		this.worldName = worldName;
 		this.x = x;

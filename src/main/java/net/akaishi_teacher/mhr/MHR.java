@@ -110,6 +110,14 @@ public class MHR {
 	}
 
 	/**
+	 * プラグインを取得します。
+	 * @return プラグインのインスタンス
+	 */
+	public JavaPlugin getPlugin() {
+		return plugin;
+	}
+
+	/**
 	 * {@link CommandExecutor}クラスのインスタンスを取得します。
 	 * @return {@link CommandExecutor}のインスタンス
 	 */

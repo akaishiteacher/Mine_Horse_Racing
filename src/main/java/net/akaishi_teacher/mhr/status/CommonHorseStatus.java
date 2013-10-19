@@ -1,6 +1,7 @@
 package net.akaishi_teacher.mhr.status;
 
 
+
 public class CommonHorseStatus {
 
 	/**
@@ -12,6 +13,7 @@ public class CommonHorseStatus {
 	 * 馬のジャンプ力(共通)
 	 */
 	protected double jump;
+
 
 	public CommonHorseStatus(double speed, double jump) {
 		this.speed = speed;

@@ -25,7 +25,8 @@ public class Despawn extends MHRAbstractCommand {
 			if (removeAll) {
 				//Despawn the horse.
 				id = Integer.parseInt(args.get(1));
-				mhr.getController().despawn(id);
+				if (!mhr.getController().despawn(id))
+					sender.sendMessage(mhr.getLang().get("Err_HorseNotFound"));
 			} else {
 				//Despawn all horses.
 				mhr.getController().despawns(0, mhr.getStatus().getHorseDatas().size());

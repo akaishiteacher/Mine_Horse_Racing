@@ -13,6 +13,7 @@ import org.bukkit.entity.AnimalTamer;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Horse.Style;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 public final class HorseController implements AnimalTamer {
@@ -126,8 +127,9 @@ public final class HorseController implements AnimalTamer {
 	/**
 	 * 馬をデスポーンします。
 	 * @param id デスポーンさせたい馬のID
+	 * @return 馬をデスポーンできた場合はtrueを返します。
 	 */
-	public void despawn(int id) {
+	public boolean despawn(int id) {
 		ArrayList<HorseData> datas = mhr.getStatus().getHorseDatas();
 		int index = datas.indexOf(new HorseData(id, null));
 		if (index != -1) {
@@ -135,8 +137,47 @@ public final class HorseController implements AnimalTamer {
 			datas.get(index).horse.remove();
 			//Remove the "MHR horse".
 			datas.remove(index);
+		} else {
+			return false;
 		}
+
 		datas.trimToSize();
+
+		return true;
+	}
+
+	/**
+	 * 馬をテレポートします。
+	 * @param id テレポートする馬
+	 * @param loc テレポート先
+	 * @param flag 乗っている人もテレポートするか
+	 * @return 馬をテレポートできた場合がtrueを返します。
+	 */
+	public boolean teleport(int id, SimpleLocation loc, boolean flag) {
+		int index = mhr.getStatus().getHorseDatas().indexOf(new HorseData(id, null));
+		if (index != -1) {
+			Horse horse = mhr.getStatus().getHorseDatas().get(index).horse;
+			Player passenger = (Player) horse.getPassenger();
+
+			//Cast location.
+			Location toLoc = new Location(horse.getWorld(), loc.x, loc.y, loc.z, (float) loc.yaw, (float) loc.pitch);
+
+			//Eject passenger.
+			horse.eject();
+
+			//Teleport horse.
+			horse.teleport(toLoc);
+			if (flag) {
+				//Teleport passenger.
+				passenger.teleport(toLoc);
+				//Ride on.
+				horse.setPassenger(passenger);
+			}
+		} else {
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override

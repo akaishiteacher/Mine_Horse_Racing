@@ -7,11 +7,15 @@ import java.io.InputStreamReader;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 
+import net.akaishi_teacher.mhr.commands.AllTeleport;
+import net.akaishi_teacher.mhr.commands.AllTeleportLoc;
 import net.akaishi_teacher.mhr.commands.Despawn;
 import net.akaishi_teacher.mhr.commands.Help;
 import net.akaishi_teacher.mhr.commands.SetJump;
 import net.akaishi_teacher.mhr.commands.SetSpeed;
 import net.akaishi_teacher.mhr.commands.Spawn;
+import net.akaishi_teacher.mhr.commands.Teleport;
+import net.akaishi_teacher.mhr.commands.TeleportLoc;
 import net.akaishi_teacher.mhr.status.HorseData;
 import net.akaishi_teacher.mhr.status.HorseStatus;
 import net.akaishi_teacher.util.command.CommandExecutor;
@@ -85,6 +89,12 @@ public class MHR {
 		//Register commands.
 		registerCommands();
 
+		//Start thread.
+		plugin.getServer().getScheduler().runTaskTimer(plugin, new SetStatusThread(this), 60, 20);
+
+		//Register event.
+		plugin.getServer().getPluginManager().registerEvents(new NoDamageEvent(), plugin);
+
 		plugin.getLogger().info("MineHorseRacingPlugin enabled.");
 	}
 
@@ -132,6 +142,10 @@ public class MHR {
 		cmdExecutor.addCommand(new SetJump(this, "setjump any", "mhr.horse.set", "馬のジャンプ力を設定します。"));
 		cmdExecutor.addCommand(new Spawn(this, "spawn any", "mhr.horse.spawn", "馬をスポーンします。"));
 		cmdExecutor.addCommand(new Despawn(this, "despawn", "mhr.horse.despawn", "馬をデスポーンします。"));
+		cmdExecutor.addCommand(new Teleport(this, "tp any", "mhr.horse.tp", "馬をテレポートします。"));
+		cmdExecutor.addCommand(new TeleportLoc(this, "tploc any any any any", "mhr.horse.tploc", "馬を指定した座標テレポートします。"));
+		cmdExecutor.addCommand(new AllTeleport(this, "alltp", "mhr.horse.alltp", "すべての馬をテレポートします。"));
+		cmdExecutor.addCommand(new AllTeleportLoc(this, "alltploc any any any", "mhr.horse.alltploc", "すべての馬を指定した座標にテレポートします。"));
 	}
 
 	/**

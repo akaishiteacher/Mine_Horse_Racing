@@ -43,6 +43,11 @@ public class MHR {
 	private ConfigurationForData horseDataConf;
 
 	/**
+	 * 馬をコントロールするためのクラス
+	 */
+	private HorseController controller;
+
+	/**
 	 * プラグイン
 	 */
 	private JavaPlugin plugin;
@@ -139,6 +144,14 @@ public class MHR {
 	 */
 	public HorseStatus getStatus() {
 		return status;
+	}
+
+	/**
+	 * {@link HorseController}クラスのインスタンスを取得します。
+	 * @return {@link HorseController}クラスのインスタンス
+	 */
+	public HorseController getController() {
+		return  controller;
 	}
 
 	private static String langName = null;

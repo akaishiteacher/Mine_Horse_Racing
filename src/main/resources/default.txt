@@ -1,6 +1,8 @@
 Cmd_Usage_Help=§6/mhr - コマンド一覧を表示します。
 Cmd_Usage_SetSpeed=§6/mhr setspeed <double:speed> - 馬の速度を設定します。
 Cmd_Usage_SetJump=§6/mhr setjump <double:jump> - 馬の速度を設定します。
+Cmd_Usage_Spawn=§6/mhr spawn <int:num> [double:x,y,z] - 馬をスポーンします。
 Cmd_Out_SetSpeed_Set=§a馬のスピードを<%speed%>に設定しました。
 Cmd_Out_SetJump_Set=§a馬のジャンプ力を<%jump%>に設定しました。
+Cmd_Out_Spawn_Spawned=§a馬を<%Num%>頭スポーンしました。
 Err_NotNumber=§4数値であるべき指定が数値ではありません!

@@ -4,11 +4,15 @@ import net.akaishi_teacher.mhr.other.SimpleLocation;
 import net.akaishi_teacher.mhr.status.HorseData;
 
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.entity.AnimalTamer;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Horse;
+import org.bukkit.entity.Horse.Style;
+import org.bukkit.inventory.ItemStack;
 
-public final class HorseController {
+public final class HorseController implements AnimalTamer {
 
 	/**
 	 * MineHorseRacingPluginのインスタンス
@@ -60,7 +64,12 @@ public final class HorseController {
 	public HorseData spawn(int id, SimpleLocation loc) {
 		HorseData data = new HorseData(id, loc);
 		Horse horse = spawn(loc);
+		horse.setStyle(Style.values()[(int) (Math.random() * Style.values().length)]);
+		horse.setCustomName(String.valueOf(data.id+1));
+		horse.getInventory().setSaddle(new ItemStack(Material.SADDLE));
+		horse.setOwner(this);
 		data.horse = horse;
+		mhr.getStatus().getHorseDatas().add(data);
 		return data;
 	}
 
@@ -73,6 +82,11 @@ public final class HorseController {
 	public Horse spawn(SimpleLocation loc) {
 		World world = mhr.getPlugin().getServer().getWorld(loc.worldName);
 		return (Horse) world.spawnEntity(new Location(world, loc.x, loc.y, loc.z), EntityType.HORSE);
+	}
+
+	@Override
+	public String getName() {
+		return "MineHorseRacing";
 	}
 
 }

@@ -1,10 +1,13 @@
 package net.akaishi_teacher.util.lang;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.HashMap;
@@ -97,22 +100,31 @@ public class Language {
 
 
 	/**
-	 * 言語ファイルが見つからなかった場合に、Streamを直接渡して言語ファイルを読み込みます。
+	 * 言語ファイルが見つからなかった場合に、Streamを直接渡して言語ファイルをコピーします。
 	 * @param stream 言語ファイルのInputStreamReader
 	 * @throws IOException
 	 */
-	public void loadDefaultLanguage(InputStreamReader stream) throws IOException {
-		localizedStringMap.clear();
-		Properties prop = new Properties();
+	public void copyDefaultLanguage(InputStreamReader stream) throws IOException {
+		//Create streams.
 		BufferedReader br = new BufferedReader(stream);
-		prop.load(br);
-		for (Object obj : prop.keySet()) {
-			if (obj instanceof String) {
-				String key = (String) obj;
-				localizedStringMap.put(key, prop.getProperty(key));
-			}
+		File file = new File(langFileDir, "/" + lang + ".lang");
+		file.createNewFile();
+		FileOutputStream fos = new FileOutputStream(file);
+		OutputStreamWriter osw = new OutputStreamWriter(fos, "UTF-8");
+		BufferedWriter bw = new BufferedWriter(osw);
+
+		//Write file.
+		String str = null;
+		while ((str = br.readLine()) != null) {
+			bw.write(str);
+			bw.newLine();
 		}
+
+		//Close streams.
 		br.close();
+		bw.close();
+		osw.close();
+		fos.close();
 		stream.close();
 	}
 

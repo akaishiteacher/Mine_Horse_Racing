@@ -18,14 +18,14 @@ public class SetJump extends MHRAbstractCommand {
 	@Override
 	public boolean execute(CommandSender sender, ArrayList<String> args) {
 		try {
-			double jump = Integer.parseInt(args.get(0));
+			double jump = Integer.parseInt(args.get(1));
 			mhr.getStatus().getCommonStatus().setSpeed(jump);
 			HashMap<String, String> replaceMap = new HashMap<>();
-			replaceMap.put("jump", args.get(0));
+			replaceMap.put("jump", args.get(1));
 			String sendA = Language.replaceArgs(mhr.getLang().get("Cmd_Out_SetJump_Set"), replaceMap);
 			sender.sendMessage(sendA);
 		} catch (NumberFormatException e) {
-			sender.sendMessage("Err_NotNumber");
+			sender.sendMessage(mhr.getLang().get("Err_NotNumber"));
 		}
 		return true;
 	}

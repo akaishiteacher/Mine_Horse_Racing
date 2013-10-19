@@ -5,10 +5,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.ArrayList;
 
 import net.akaishi_teacher.mhr.commands.Help;
+import net.akaishi_teacher.mhr.commands.SetJump;
+import net.akaishi_teacher.mhr.commands.SetSpeed;
+import net.akaishi_teacher.mhr.commands.Spawn;
 import net.akaishi_teacher.mhr.status.HorseData;
 import net.akaishi_teacher.mhr.status.HorseStatus;
 import net.akaishi_teacher.util.command.CommandExecutor;
@@ -70,15 +72,14 @@ public class MHR {
 		} catch (IOException | URISyntaxException e) {
 			//Load default language file.
 			try {
-				ClassLoader cl = getClass().getClassLoader();
-				URL fileURL = cl.getResource("default.txt");
-				InputStream stream = fileURL.openStream();
-				InputStreamReader isr = new InputStreamReader(stream, "UTF-8");
-				lang.loadDefaultLanguage(isr);
+				copyDefaultLang();
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
 		}
+
+		//Assignment controller.
+		controller = new HorseController(this);
 
 		//Register commands.
 		registerCommands();
@@ -88,6 +89,20 @@ public class MHR {
 
 	public void disable() {
 		plugin.getLogger().info("MineHorseRacingPlugin disabled.");
+	}
+
+	protected void copyDefaultLang() throws IOException {
+		ClassLoader cl = getClass().getClassLoader();
+		InputStream stream = cl.getResourceAsStream("default.txt");
+		InputStreamReader isr = new InputStreamReader(stream, "UTF-8");
+		lang.copyDefaultLanguage(isr);
+		stream.close();
+		try {
+			lang.loadLangFile();
+			plugin.onDisable();
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+		}
 	}
 
 	protected void loadConfig() {
@@ -104,7 +119,7 @@ public class MHR {
 		horseDataConf.getConf().addDefault("HorseDatas", new ArrayList<>());
 		@SuppressWarnings("unchecked")
 		ArrayList<HorseData> horseDatas =
-				(ArrayList<HorseData>) horseDataConf.getConf().getList("HorseDatas");
+		(ArrayList<HorseData>) horseDataConf.getConf().getList("HorseDatas");
 
 		//Assignment to the "status" variable.
 		status = new HorseStatus(horseDatas, speed, jump);
@@ -112,6 +127,9 @@ public class MHR {
 
 	protected void registerCommands() {
 		cmdExecutor.addCommand(new Help(this, "", null, "Helpコマンドです。"));
+		cmdExecutor.addCommand(new SetSpeed(this, "setspeed any", "mhr.horse.set", "馬の速度を設定します。"));
+		cmdExecutor.addCommand(new SetJump(this, "setjump any", "mhr.horse.set", "馬のジャンプ力を設定します。"));
+		cmdExecutor.addCommand(new Spawn(this, "spawn any", "mhr.horse.spawn", "馬をスポーンします。"));
 	}
 
 	/**

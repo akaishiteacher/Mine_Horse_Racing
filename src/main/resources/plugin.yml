@@ -1,6 +1,6 @@
 name: MineHorseRacingPlugin
 main: net.akaishi_teacher.mhr.Main
-version: alpha1.0.0
+version: 1.0.1
 
 commands:
  minehorseracing:

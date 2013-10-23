@@ -12,6 +12,7 @@ import org.bukkit.World;
 import org.bukkit.entity.AnimalTamer;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Horse;
+import org.bukkit.entity.Horse.Color;
 import org.bukkit.entity.Horse.Style;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -76,6 +77,7 @@ public final class HorseController implements AnimalTamer {
 		Horse horse = spawn(loc);
 		//Set horse status.
 		horse.setStyle(Style.values()[(int) (Math.random() * Style.values().length)]);
+		horse.setColor(Color.values()[(int) (Math.random() * Color.values().length)]);
 		horse.setCustomName(String.valueOf(data.id+1));
 		horse.getInventory().setSaddle(new ItemStack(Material.SADDLE));
 		horse.setOwner(this);
@@ -166,13 +168,15 @@ public final class HorseController implements AnimalTamer {
 			Player passenger = (Player) horse.getPassenger();
 
 			//Cast location.
-			Location toLoc = new Location(horse.getWorld(), loc.x, loc.y, loc.z, (float) loc.yaw, (float) loc.pitch);
+			Location toLoc = new Location(horse.getWorld(), loc.x, loc.y, loc.z);
 
 			//Eject passenger.
 			horse.eject();
 
 			//Teleport horse.
 			horse.teleport(toLoc);
+			toLoc.setYaw((float) loc.yaw);
+			toLoc.setPitch((float) toLoc.getPitch());
 			if (flag && passenger != null) {
 				//Teleport passenger.
 				passenger.teleport(toLoc);

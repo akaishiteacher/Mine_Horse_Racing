@@ -26,7 +26,7 @@ public class TeleportLoc extends MHRAbstractCommand {
 			double pitch = 0;
 
 			//Get id.
-			id = Integer.parseInt(args.get(1))-1;
+			id = Integer.parseInt(args.get(1)) - 1;
 
 			if (args.size() >= 6) {
 				//tploc x y z flag
@@ -43,6 +43,7 @@ public class TeleportLoc extends MHRAbstractCommand {
 						}
 					} else {
 						sender.sendMessage(getUsage(sender));
+						return true;
 					}
 				}
 			}
@@ -55,14 +56,12 @@ public class TeleportLoc extends MHRAbstractCommand {
 				return true;
 			}
 
-			System.out.println(flag);
-
 			//Send message.
 			HashMap<String, String> replaceMap = new HashMap<>();
 			replaceMap.put("X", String.valueOf(loc.x));
 			replaceMap.put("Y", String.valueOf(loc.y));
 			replaceMap.put("Z", String.valueOf(loc.z));
-			replaceMap.put("Id", String.valueOf(id));
+			replaceMap.put("Id", String.valueOf(id+1));
 			String sendA = Language.replaceArgs(mhr.getLang().get("Cmd_Out_TeleportLoc_Teleported"), replaceMap);
 			sender.sendMessage(sendA);
 		} catch (NumberFormatException e) {

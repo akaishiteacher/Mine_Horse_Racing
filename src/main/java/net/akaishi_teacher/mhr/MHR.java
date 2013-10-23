@@ -66,7 +66,7 @@ public class MHR {
 	public void init() {
 		//Deserializes.
 		deserializes();
-
+		
 		//Configuration load.
 		loadConfig();
 
@@ -105,7 +105,7 @@ public class MHR {
 				status.serverInit(getMHR(), datas);
 			}
 		};
-		plugin.getServer().getScheduler().runTaskLater(plugin, runnable, 100);
+		plugin.getServer().getScheduler().runTaskLater(plugin, runnable, 40);
 
 		plugin.getLogger().info("MineHorseRacingPlugin enabled.");
 	}

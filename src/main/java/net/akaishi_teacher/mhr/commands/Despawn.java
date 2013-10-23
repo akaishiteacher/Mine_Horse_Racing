@@ -18,23 +18,25 @@ public class Despawn extends MHRAbstractCommand {
 	@Override
 	public boolean execute(CommandSender sender, ArrayList<String> args) {
 		try {
-			boolean removeAll = args.size() >= 2 ? true : false;
+			boolean noRemoveAll = args.size() >= 2 ? true : false;
 			int id = 0;
 			HashMap<String, String> replaceMap = new HashMap<>();
 
-			if (removeAll) {
+			if (noRemoveAll) {
 				//Despawn the horse.
-				id = Integer.parseInt(args.get(1));
-				if (!mhr.getController().despawn(id))
+				id = Integer.parseInt(args.get(1)) - 1;
+				if (!mhr.getController().despawn(id)) {
 					sender.sendMessage(mhr.getLang().get("Err_HorseNotFound"));
+					return true;
+				}
 			} else {
 				//Despawn all horses.
 				mhr.getController().despawns(0, mhr.getStatus().getHorseDatas().size());
 			}
 
 			//Replace arguments.
-			if (removeAll)
-				replaceMap.put("Id", String.valueOf(id));
+			if (noRemoveAll)
+				replaceMap.put("Id", String.valueOf(id+1));
 			else
 				replaceMap.put("Id", "ALL");
 

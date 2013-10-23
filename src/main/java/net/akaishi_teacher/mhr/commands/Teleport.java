@@ -25,7 +25,7 @@ public class Teleport extends MHRAbstractCommand {
 			Player player = null;
 
 			//Get id.
-			id = Integer.parseInt(args.get(1))-1;
+			id = Integer.parseInt(args.get(1)) - 1;
 
 			//Assignment the location and flag.
 			if (args.size() >= 3) {
@@ -43,7 +43,7 @@ public class Teleport extends MHRAbstractCommand {
 						return true;
 					}
 					//Get flag.
-					flag = Boolean.parseBoolean(args.get(3));
+					flag = Boolean.parseBoolean(args.get(2));
 				}
 			} else {
 				player = castPlayer(sender);
@@ -57,7 +57,7 @@ public class Teleport extends MHRAbstractCommand {
 
 			//Send message.
 			HashMap<String, String> replaceMap = new HashMap<>();
-			replaceMap.put("Id", String.valueOf(id));
+			replaceMap.put("Id", String.valueOf(id+1));
 			replaceMap.put("Player", player.getName());
 			String sendA = Language.replaceArgs(mhr.getLang().get("Cmd_Out_Teleport_Teleported"), replaceMap);
 			sender.sendMessage(sendA);

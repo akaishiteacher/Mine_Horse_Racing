@@ -44,19 +44,21 @@ public class Spawn extends MHRAbstractCommand {
 		SimpleLocation loc = new SimpleLocation(castPlayer(sender).getWorld().getName(), x, y, z);
 
 		//The fill.
+		//The Virtual spawn amount.
+		int virtualNum = num;
 		ArrayList<HorseData> datas = mhr.getStatus().getHorseDatas();
 		for (int i = 0; i < datas.size(); i++) {
 			int index = datas.indexOf(new HorseData(i, null));
 			if (index == -1) {
 				mhr.getController().spawn(i, loc);
-				num--;
+				virtualNum--;
 			}
 		}
 
 		//Add a horses.
-		if (num >= 1) {
+		if (virtualNum >= 1) {
 			int baseId = datas.size();
-			for (int i = 0; i < num; i++) {
+			for (int i = 0; i < virtualNum; i++) {
 				int id = baseId + i;
 				mhr.getController().spawn(id, loc);
 			}

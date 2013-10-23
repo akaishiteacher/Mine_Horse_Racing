@@ -40,6 +40,7 @@ public class AllTeleportLoc extends MHRAbstractCommand {
 						}
 					} else {
 						sender.sendMessage(getUsage(sender));
+						return true;
 					}
 				}
 			}

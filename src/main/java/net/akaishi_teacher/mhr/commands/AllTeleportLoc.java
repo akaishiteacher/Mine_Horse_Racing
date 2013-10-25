@@ -46,7 +46,7 @@ public class AllTeleportLoc extends MHRAbstractCommand {
 			}
 
 			//Get location.
-			loc = new SimpleLocation(castPlayer(sender).getWorld().getName(), Double.parseDouble(args.get(1)), Double.parseDouble(args.get(2)), Double.parseDouble(args.get(3)), yaw, pitch);
+			loc = new SimpleLocation(castWorld(sender).getName(), Double.parseDouble(args.get(1)), Double.parseDouble(args.get(2)), Double.parseDouble(args.get(3)), yaw, pitch);
 
 			//Teleport horse.
 			for (int i = 0; i < mhr.getStatus().getHorseDatas().size(); i++) {

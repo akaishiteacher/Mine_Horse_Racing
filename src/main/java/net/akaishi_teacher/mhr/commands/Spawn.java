@@ -3,7 +3,7 @@ package net.akaishi_teacher.mhr.commands;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import net.akaishi_teacher.mhr.MHR;
+import net.akaishi_teacher.mhr.MHRCore;
 import net.akaishi_teacher.mhr.other.SimpleLocation;
 import net.akaishi_teacher.mhr.status.HorseData;
 import net.akaishi_teacher.util.lang.Language;
@@ -13,7 +13,7 @@ import org.bukkit.entity.Player;
 
 public class Spawn extends MHRAbstractCommand {
 
-	public Spawn(MHR mhr, String pattern, String permission, String description) {
+	public Spawn(MHRCore mhr, String pattern, String permission, String description) {
 		super(mhr, pattern, permission, description);
 	}
 
@@ -41,7 +41,7 @@ public class Spawn extends MHRAbstractCommand {
 		}
 
 		//Location of the horse to be spawn.
-		SimpleLocation loc = new SimpleLocation(castPlayer(sender).getWorld().getName(), x, y, z);
+		SimpleLocation loc = new SimpleLocation(castWorld(sender).getName(), x, y, z);
 
 		//The fill.
 		//The Virtual spawn amount.

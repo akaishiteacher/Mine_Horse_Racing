@@ -22,9 +22,9 @@ public final class HorseController implements AnimalTamer {
 	/**
 	 * MineHorseRacingPluginのインスタンス
 	 */
-	private MHR mhr;
+	private MHRCore mhr;
 
-	public HorseController(MHR mhr) {
+	public HorseController(MHRCore mhr) {
 		this.mhr = mhr;
 	}
 
@@ -105,8 +105,9 @@ public final class HorseController implements AnimalTamer {
 	public void despawns(int baseId, int num) {
 		ArrayList<HorseData> datas = mhr.getStatus().getHorseDatas();
 		ArrayList<Integer> removeList = new ArrayList<>();
+		int throughIndex = 0;
 		for (int i = 0; i < num; i++) {
-			int index = datas.indexOf(new HorseData(baseId+i, null));
+			int index = datas.indexOf(new HorseData(baseId+i+throughIndex, null));
 			if (index != -1) {
 				//Remove horse.
 				datas.get(index).horse.remove();
@@ -114,6 +115,7 @@ public final class HorseController implements AnimalTamer {
 				removeList.add(datas.get(index).id);
 			} else { //その番号の馬がいない時(翻訳できませんでした)
 				i--;
+				throughIndex++;
 				continue;
 			}
 		}

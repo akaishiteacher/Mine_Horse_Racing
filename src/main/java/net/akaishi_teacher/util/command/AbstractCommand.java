@@ -2,7 +2,10 @@ package net.akaishi_teacher.util.command;
 
 import java.util.ArrayList;
 
+import org.bukkit.World;
+import org.bukkit.command.BlockCommandSender;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
 /**
@@ -117,17 +120,37 @@ public abstract class AbstractCommand {
 
 	/**
 	 * CommandSenderからPlayerに変換します。<br>
-	 * ただし、Consoleの場合、警告文をだし、nullを返します。
+	 * ただし、ConsoleもしくはCommandBlockの場合、警告文をだし、nullを返します。
 	 * @param sender CommandSenderのインスタンス
 	 * @return CommandSenderのgetNameメソッドの文字列からプレイヤーに変換したPlayerクラスのインスタンス
 	 */
 	public static Player castPlayer(CommandSender sender) {
-		if (sender.getName() == "Console") {
+		if (sender instanceof ConsoleCommandSender) {
 			sender.sendMessage("§4Console is can't command execute!");
+			return null;
+		} else if (sender instanceof BlockCommandSender) {
+			sender.sendMessage("§4CommandBlock is can't command execute!");
 			return null;
 		} else {
 			return sender.getServer().getPlayerExact(sender.getName());
 		}
 	}
 
+	/**
+	 * CommandSenderからWorldに変換します。<br>
+	 * ただし、Consoleの場合、警告文をだし、nullを返します。
+	 * @param sender CommandSenderのインスタンス
+	 * @return Consoleではないばあいは、Worldクラスのインスタンス。Consoleならnull
+	 */
+	public static World castWorld(CommandSender sender) {
+		if (sender instanceof ConsoleCommandSender) {
+			sender.sendMessage("§4Console is can't command execute!");
+			return null;
+		} else if (sender instanceof BlockCommandSender) {
+			return ((BlockCommandSender) (sender)).getBlock().getWorld();
+		} else {
+			return sender.getServer().getPlayerExact(sender.getName()).getWorld();
+		}
+	}
+	
 }

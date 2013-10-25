@@ -5,7 +5,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
- * Pluginの実行部分。詳細は{@link MHR MHR}クラスを参照してください。
+ * Pluginの実行部分。詳細は{@link MHRCore MHR}クラスを参照してください。
  * @author mozipi
  */
 public final class Main extends JavaPlugin {
@@ -13,19 +13,20 @@ public final class Main extends JavaPlugin {
 	/**
 	 * MineHorseRacingの処理部
 	 */
-	private MHR mhr;
+	private MHRCore mhr;
 
 	@Override
 	public void onDisable() {
 		super.onDisable();
+		mhr.preDisable();
 		mhr.disable();
 	}
 
 	@Override
 	public void onEnable() {
 		super.onEnable();
-		mhr = new MHR(this);
-		mhr.loadConfig();
+		mhr = new MHRCore(this);
+		mhr.preInit();
 		mhr.init();
 	}
 

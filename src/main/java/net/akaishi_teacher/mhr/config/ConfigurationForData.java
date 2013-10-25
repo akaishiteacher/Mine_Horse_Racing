@@ -1,14 +1,10 @@
-package net.akaishi_teacher.mhr;
+package net.akaishi_teacher.mhr.config;
 
 import java.io.File;
 import java.io.IOException;
 
-import net.akaishi_teacher.mhr.other.SimpleLocation;
-import net.akaishi_teacher.mhr.status.HorseData;
-
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class ConfigurationForData {
@@ -19,15 +15,18 @@ public class ConfigurationForData {
 
 	protected YamlConfiguration conf;
 
-	public ConfigurationForData(JavaPlugin plugin, String fileName) {
+	protected Deserializer deserializer;
+	
+	public ConfigurationForData(JavaPlugin plugin, String fileName, Deserializer deserializer) {
 		this.plugin = plugin;
 		this.fileName = fileName;
+		this.deserializer = deserializer;
 	}
 
 	/**
 	 * {@link YamlConfiguration}のインスタンスを生成し、読み込んで変数に格納します。
 	 */
-	public void load() {
+	public void loadConfig() {
 		File file =
 				new File(plugin.getDataFolder().getAbsolutePath() + "/" + fileName);
 		if (conf == null) {
@@ -39,9 +38,8 @@ public class ConfigurationForData {
 					e.printStackTrace();
 				}
 			}
-
-			ConfigurationSerialization.registerClass(SimpleLocation.class);
-			ConfigurationSerialization.registerClass(HorseData.class);
+			
+			deserializer.deserializes();
 			conf = YamlConfiguration.loadConfiguration(file);
 		} else {
 			try {
@@ -56,7 +54,7 @@ public class ConfigurationForData {
 	/**
 	 * セーブします。
 	 */
-	public void save() {
+	public void saveConfig() {
 		File file =
 				new File(plugin.getDataFolder().getAbsolutePath() + "/" + fileName);
 		try {

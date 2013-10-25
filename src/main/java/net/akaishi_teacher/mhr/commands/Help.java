@@ -3,7 +3,7 @@ package net.akaishi_teacher.mhr.commands;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-import net.akaishi_teacher.mhr.MHR;
+import net.akaishi_teacher.mhr.MHRCore;
 import net.akaishi_teacher.util.command.AbstractCommand;
 
 import org.bukkit.command.CommandSender;
@@ -14,7 +14,7 @@ import org.bukkit.command.CommandSender;
  */
 public final class Help extends MHRAbstractCommand {
 
-	public Help(MHR mhr, String pattern, String permission, String description) {
+	public Help(MHRCore mhr, String pattern, String permission, String description) {
 		super(mhr, pattern, permission, description);
 	}
 

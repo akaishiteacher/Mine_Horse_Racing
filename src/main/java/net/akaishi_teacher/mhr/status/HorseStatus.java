@@ -2,7 +2,7 @@ package net.akaishi_teacher.mhr.status;
 
 import java.util.ArrayList;
 
-import net.akaishi_teacher.mhr.MHR;
+import net.akaishi_teacher.mhr.MHRCore;
 import net.akaishi_teacher.mhr.other.SimpleLocation;
 
 import org.bukkit.World;
@@ -41,14 +41,14 @@ public class HorseStatus {
 		this.status = new CommonHorseStatus(speed, jump);
 	}
 
-	public void serverInit(MHR mhr, ArrayList<HorseData> datas) {
+	public void serverInit(MHRCore mhr, ArrayList<HorseData> datas) {
 		for (int i = 0; i < datas.size(); i++) {
 			HorseData data = datas.get(i);
 			mhr.getController().spawn(data.id, data.loc);
 		}
 	}
 
-	public void serverEnd(MHR mhr) {
+	public void serverEnd(MHRCore mhr) {
 		for (HorseData data : horseDatas) {
 			World world = mhr.getPlugin().getServer().getWorld(data.loc.worldName);
 			data.loc = SimpleLocation.toSimpleLocation(data.horse.getLocation());

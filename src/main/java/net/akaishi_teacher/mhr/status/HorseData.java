@@ -3,9 +3,12 @@ package net.akaishi_teacher.mhr.status;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.akaishi_teacher.mhr.course.event.HorseEvent;
+import net.akaishi_teacher.mhr.course.status.PointData;
 import net.akaishi_teacher.mhr.other.SimpleLocation;
 
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.entity.Horse;
 
@@ -13,7 +16,7 @@ import org.bukkit.entity.Horse;
  * 個別に保存が必要な馬のステータスが存在するクラスです。
  * @author mozipi
  */
-public class HorseData implements ConfigurationSerializable {
+public class HorseData implements ConfigurationSerializable, HorseEvent {
 
 	/**
 	 * 馬のID
@@ -30,15 +33,22 @@ public class HorseData implements ConfigurationSerializable {
 	 */
 	public Horse horse;
 
+	/**
+	 * 馬のコースの走行状態を保持しているクラスのインスタンス
+	 */
+	public PointData pointData;
+	
 	public HorseData(int id, SimpleLocation loc) {
 		this.id = id;
 		this.loc = loc;
+		this.pointData = new PointData();
 	}
 
 	@SuppressWarnings("rawtypes")
 	public HorseData(Map map) {
 		this.id = (int) map.get("Id");
 		this.loc = (SimpleLocation) map.get("Loc");
+		this.pointData = (PointData) map.get("PointData");
 	}
 
 	@Override
@@ -50,6 +60,7 @@ public class HorseData implements ConfigurationSerializable {
 			loc = new SimpleLocation(putLoc.getWorld().getName(), putLoc.getX(), putLoc.getY(), putLoc.getZ());
 		}
 		map.put("Loc", loc);
+		map.put("PointData", pointData);
 		return map;
 	}
 
@@ -73,6 +84,10 @@ public class HorseData implements ConfigurationSerializable {
 		if (id != other.id)
 			return false;
 		return true;
+	}
+
+	@Override
+	public void walk(Material walkedBlock) {
 	}
 
 }

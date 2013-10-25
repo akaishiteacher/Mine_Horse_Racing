@@ -3,7 +3,7 @@ package net.akaishi_teacher.mhr.commands;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import net.akaishi_teacher.mhr.MHR;
+import net.akaishi_teacher.mhr.MHRCore;
 import net.akaishi_teacher.mhr.other.SimpleLocation;
 import net.akaishi_teacher.mhr.status.HorseData;
 import net.akaishi_teacher.util.lang.Language;
@@ -13,7 +13,7 @@ import org.bukkit.entity.Player;
 
 public class AllTeleport extends MHRAbstractCommand {
 
-	public AllTeleport(MHR mhr, String pattern, String permission,
+	public AllTeleport(MHRCore mhr, String pattern, String permission,
 			String description) {
 		super(mhr, pattern, permission, description);
 	}

@@ -1,7 +1,8 @@
-package net.akaishi_teacher.mhr;
+package net.akaishi_teacher.mhr.thread;
 
 import java.util.ArrayList;
 
+import net.akaishi_teacher.mhr.MHRCore;
 import net.akaishi_teacher.mhr.status.HorseData;
 import net.minecraft.server.v1_6_R3.AttributeInstance;
 import net.minecraft.server.v1_6_R3.EntityInsentient;
@@ -11,9 +12,9 @@ import org.bukkit.craftbukkit.v1_6_R3.entity.CraftLivingEntity;
 
 public final class SetStatusThread implements Runnable {
 
-	private MHR mhr;
+	private MHRCore mhr;
 
-	public SetStatusThread(MHR mhr) {
+	public SetStatusThread(MHRCore mhr) {
 		this.mhr = mhr;
 	}
 

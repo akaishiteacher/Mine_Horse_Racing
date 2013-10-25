@@ -1,4 +1,4 @@
-package net.akaishi_teacher.mhr;
+package net.akaishi_teacher.mhr.listener;
 
 import org.bukkit.entity.Horse;
 import org.bukkit.event.EventHandler;

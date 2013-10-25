@@ -3,14 +3,14 @@ package net.akaishi_teacher.mhr.commands;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import net.akaishi_teacher.mhr.MHR;
+import net.akaishi_teacher.mhr.MHRCore;
 import net.akaishi_teacher.util.lang.Language;
 
 import org.bukkit.command.CommandSender;
 
 public class Despawn extends MHRAbstractCommand {
 
-	public Despawn(MHR mhr, String pattern, String permission,
+	public Despawn(MHRCore mhr, String pattern, String permission,
 			String description) {
 		super(mhr, pattern, permission, description);
 	}

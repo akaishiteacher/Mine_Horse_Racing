@@ -3,14 +3,14 @@ package net.akaishi_teacher.mhr.commands;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import net.akaishi_teacher.mhr.MHR;
+import net.akaishi_teacher.mhr.MHRCore;
 import net.akaishi_teacher.util.lang.Language;
 
 import org.bukkit.command.CommandSender;
 
 public class SetSpeed extends MHRAbstractCommand {
 
-	public SetSpeed(MHR mhr, String pattern, String permission,
+	public SetSpeed(MHRCore mhr, String pattern, String permission,
 			String description) {
 		super(mhr, pattern, permission, description);
 	}

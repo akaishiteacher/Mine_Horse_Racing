@@ -14,7 +14,7 @@ public final class CheckWalkingThread implements Runnable {
 	/**
 	 * チェックの間隔
 	 */
-	private int interval;
+	public int interval;
 
 	/**
 	 * 経過時間

@@ -96,7 +96,7 @@ public class MHRCore extends MHRFunc implements Deserializer {
 		plugin.getServer().getScheduler().runTaskTimer(plugin, new SetStatusThread(this), 60, 20);
 		
 		//Register event.
-		plugin.getServer().getPluginManager().registerEvents(new NoDamageEvent(), plugin);
+		plugin.getServer().getPluginManager().registerEvents(new NoDamageEvent(this), plugin);
 
 		//Course function valid?
 		plugin.getConfig().addDefault("CourseFunctionValid", true);
@@ -113,13 +113,6 @@ public class MHRCore extends MHRFunc implements Deserializer {
 
 	@Override
 	public void disable() {
-		//Set Configuration.
-		setConfig();
-
-		//Save configuration.
-		horseDataConf.saveConfig();
-		plugin.saveConfig();
-		
 		//Course function valid?
 		if (mhrCourse != null) {
 			//Pre disable.
@@ -127,6 +120,13 @@ public class MHRCore extends MHRFunc implements Deserializer {
 			//Disable.
 			mhrCourse.disable();
 		}
+		
+		//Set Configuration.
+		setConfig();
+
+		//Save configuration.
+		horseDataConf.saveConfig();
+		plugin.saveConfig();
 
 		plugin.getLogger().info("MineHorseRacingPlugin disabled.");
 	}

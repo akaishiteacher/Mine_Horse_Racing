@@ -1,2 +1,4 @@
 #!/bin/sh
-cp "/home/mozipi/ドキュメント/minecraft/plugins_develop/MHR/MineHorseRacing-1.0.0_for_164.jar" "/home/mozipi/ドキュメント/mcserver/debugserver/plugins/"
+rm "/home/mozipi/ドキュメント/mcserver/debugserver/plugins/'*.jar'"
+cd "target/"
+cp "*.jar" "/home/mozipi/ドキュメント/mcserver/debugserver/plugins"

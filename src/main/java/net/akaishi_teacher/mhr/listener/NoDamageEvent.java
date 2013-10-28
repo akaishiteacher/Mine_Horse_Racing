@@ -3,7 +3,7 @@ package net.akaishi_teacher.mhr.listener;
 import java.util.ArrayList;
 
 import net.akaishi_teacher.mhr.MHRCore;
-import net.akaishi_teacher.mhr.status.HorseData;
+import net.akaishi_teacher.mhr.data.HorseData;
 
 import org.bukkit.entity.Horse;
 import org.bukkit.event.EventHandler;

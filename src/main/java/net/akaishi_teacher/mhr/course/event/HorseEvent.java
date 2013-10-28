@@ -1,9 +1,11 @@
 package net.akaishi_teacher.mhr.course.event;
 
-import org.bukkit.Material;
+import net.akaishi_teacher.mhr.data.HorseData;
+
+import org.bukkit.block.Block;
 
 public interface HorseEvent {
 
-	void walk(Material walkedBlock);
+	void walk(Block block, HorseData data);
 	
 }

@@ -3,8 +3,8 @@ package net.akaishi_teacher.mhr;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import net.akaishi_teacher.mhr.data.HorseData;
 import net.akaishi_teacher.mhr.other.SimpleLocation;
-import net.akaishi_teacher.mhr.status.HorseData;
 
 import org.bukkit.Location;
 import org.bukkit.Material;

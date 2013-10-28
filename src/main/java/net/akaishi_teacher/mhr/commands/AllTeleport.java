@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import net.akaishi_teacher.mhr.MHRCore;
+import net.akaishi_teacher.mhr.data.HorseData;
 import net.akaishi_teacher.mhr.other.SimpleLocation;
-import net.akaishi_teacher.mhr.status.HorseData;
 import net.akaishi_teacher.util.lang.Language;
 
 import org.bukkit.command.CommandSender;

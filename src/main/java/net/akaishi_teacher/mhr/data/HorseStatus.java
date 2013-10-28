@@ -1,4 +1,4 @@
-package net.akaishi_teacher.mhr.status;
+package net.akaishi_teacher.mhr.data;
 
 import java.util.ArrayList;
 

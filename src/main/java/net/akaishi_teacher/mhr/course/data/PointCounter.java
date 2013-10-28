@@ -1,4 +1,4 @@
-package net.akaishi_teacher.mhr.course.status;
+package net.akaishi_teacher.mhr.course.data;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,18 +9,18 @@ import org.bukkit.configuration.serialization.ConfigurationSerializable;
  * 馬のコース走行状態を保持しているクラスです。
  * @author mozipi
  */
-public class PointData implements ConfigurationSerializable {
+public class PointCounter implements ConfigurationSerializable {
 
 	/**
 	 * 現在のチェックポイント通過数
 	 */
 	public int point;
 
-	public PointData() {
+	public PointCounter() {
 	}
 	
 	@SuppressWarnings("rawtypes")
-	public PointData(Map map) {
+	public PointCounter(Map map) {
 		this.point = (int) map.get("Point");
 	}
 	

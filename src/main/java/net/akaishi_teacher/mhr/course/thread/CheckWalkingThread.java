@@ -3,7 +3,7 @@ package net.akaishi_teacher.mhr.course.thread;
 import java.util.ArrayList;
 
 import net.akaishi_teacher.mhr.MHRCore;
-import net.akaishi_teacher.mhr.status.HorseData;
+import net.akaishi_teacher.mhr.data.HorseData;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -42,7 +42,7 @@ public final class CheckWalkingThread implements Runnable {
 					walkedBlockLocation = walkedBlockLocation.add(0, -1, 0);
 					Material type = walkedBlockLocation.getBlock().getType();
 					if (type != Material.AIR) {
-						data.walk(type);
+						mhr.getCourseFunc().walk(walkedBlockLocation.getBlock(), data);
 					}
 				}
 			}

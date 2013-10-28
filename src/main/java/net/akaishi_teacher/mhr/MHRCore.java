@@ -19,11 +19,11 @@ import net.akaishi_teacher.mhr.commands.TeleportLoc;
 import net.akaishi_teacher.mhr.config.ConfigurationForData;
 import net.akaishi_teacher.mhr.config.Deserializer;
 import net.akaishi_teacher.mhr.course.MHRCourse;
-import net.akaishi_teacher.mhr.course.status.PointData;
+import net.akaishi_teacher.mhr.course.data.PointCounter;
+import net.akaishi_teacher.mhr.data.HorseData;
+import net.akaishi_teacher.mhr.data.HorseStatus;
 import net.akaishi_teacher.mhr.listener.NoDamageEvent;
 import net.akaishi_teacher.mhr.other.SimpleLocation;
-import net.akaishi_teacher.mhr.status.HorseData;
-import net.akaishi_teacher.mhr.status.HorseStatus;
 import net.akaishi_teacher.mhr.thread.SetStatusThread;
 import net.akaishi_teacher.util.command.CommandExecutor;
 import net.akaishi_teacher.util.lang.Language;
@@ -195,7 +195,7 @@ public class MHRCore extends MHRFunc implements Deserializer {
 	public void deserializes() {
 		ConfigurationSerialization.registerClass(SimpleLocation.class);
 		ConfigurationSerialization.registerClass(HorseData.class);
-		ConfigurationSerialization.registerClass(PointData.class);
+		ConfigurationSerialization.registerClass(PointCounter.class);
 	}
 
 	protected void loadLocalizationFile(String langName) {
@@ -270,4 +270,12 @@ public class MHRCore extends MHRFunc implements Deserializer {
 		return  controller;
 	}
 
+	/**
+	 * {@link MHRCourse}クラスのインスタンスを取得します。
+	 * @return {@link MHRCourse}クラスのインスタンス
+	 */
+	public MHRCourse getCourseFunc() {
+		return mhrCourse;
+	}
+	
 }

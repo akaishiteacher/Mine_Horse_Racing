@@ -20,7 +20,7 @@ public class Remove extends MHRAbstractCommand {
 		if (mhr.getCourseFunc().getManager().removeCourse(courseName)) {
 			sender.sendMessage(mhr.getLang().get("Cmd_Out_Course.Remove_Removed"));
 		} else {
-			sender.sendMessage(mhr.getLang().get("Cmd_Err_Course.Remove_NotFound"));
+			sender.sendMessage(mhr.getLang().get("Err_Course.CourseNotFound"));
 		}
 		return true;
 	}

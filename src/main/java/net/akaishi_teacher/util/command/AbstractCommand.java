@@ -33,7 +33,7 @@ public abstract class AbstractCommand {
 	 * この変数までの引数を送信しない。それで使用される値です。
 	 */
 	protected int indexOfNotSendOptions = -1;
-	
+
 	public AbstractCommand(String pattern, String permission,
 			String description) {
 		super();
@@ -49,9 +49,9 @@ public abstract class AbstractCommand {
 		this(pattern, permission, description);
 		this.indexOfNotSendOptions = indexOfNotSendOptions;
 	}
-	
-	
-	
+
+
+
 	public String getPattern() {
 		return pattern;
 	}
@@ -73,16 +73,16 @@ public abstract class AbstractCommand {
 	public int getIndexOfNotSendOptions() {
 		return indexOfNotSendOptions;
 	}
-	
-	
-	
+
+
+
 	/**
 	 * コマンドが一致するかを判定します。
 	 * @param args コマンドの引数
 	 * @return 引数に渡されたArrayListを元に判定し、一致する場合はtrue。一致しなければfalse
 	 */
 	public boolean isMatch(ArrayList<String> args) {
-		if (CommandSearcher.search(pattern, (String[]) args.toArray())) {
+		if (CommandSearcher.search(pattern, args.toArray(new String[0]))) {
 			return true;
 		}
 		return false;
@@ -180,13 +180,13 @@ public abstract class AbstractCommand {
 	 * @return if (args.size() >= index)の場合にtrue。
 	 */
 	public static boolean hasOption(ArrayList<String> args, int index) {
-		if (args.size() >= index) {
+		if (args.size() > index)
 			return true;
-		} else {
+		else
 			return false;
-		}
+
 	}
-	
+
 	/**
 	 * 指定されたIndexの引数が、数値であるかどうかを判定します。
 	 * @param args 引数リスト
@@ -201,5 +201,5 @@ public abstract class AbstractCommand {
 			return false;
 		}
 	}
-	
+
 }

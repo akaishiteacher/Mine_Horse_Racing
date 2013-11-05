@@ -11,6 +11,10 @@ import net.akaishi_teacher.mhr.Main;
 import net.akaishi_teacher.mhr.course.commands.Add;
 import net.akaishi_teacher.mhr.course.commands.AddCheckPoint;
 import net.akaishi_teacher.mhr.course.commands.Remove;
+import net.akaishi_teacher.mhr.course.commands.RemoveCheckPoint;
+import net.akaishi_teacher.mhr.course.commands.SetAngle;
+import net.akaishi_teacher.mhr.course.commands.SetOneLapIndex;
+import net.akaishi_teacher.mhr.course.commands.SetUsingCourse;
 import net.akaishi_teacher.util.command.CommandExecutor;
 
 import org.bukkit.block.Block;
@@ -120,14 +124,20 @@ public final class MHRCourse extends MHRFunc implements Deserializer, HorseEvent
 
 	@Override
 	public void deserializes() {
-		ConfigurationSerialization.registerClass(Course.class);
+		ConfigurationSerialization.registerClass(Course.class, "Course");
+		ConfigurationSerialization.registerClass(CheckPoint.class, "CheckPoint");
+		ConfigurationSerialization.registerClass(Area.class, "Area");
 	}
 
 	protected void registerCommands() {
 		CommandExecutor executor = mhr.getCmdExecutor();
 		executor.addCommand(new Add(mhr, "c_add any", "mhrc.course.add", "コースを追加します。"));
 		executor.addCommand(new Remove(mhr, "c_remove any", "mhrc.course.remove", "コースを削除します。"));
-		executor.addCommand(new AddCheckPoint(getMHR(), "c_addpoint", "mhrc.course.addpoint.", "チェックポイントを追加します。"));
+		executor.addCommand(new AddCheckPoint(mhr, "c_addpoint", "mhrc.course.addpoint.", "チェックポイントを追加します。"));
+		executor.addCommand(new RemoveCheckPoint(mhr, "c_rmpoint", "mhrc.course.removepoint", "チェックポイントを消去します。"));
+		executor.addCommand(new SetUsingCourse(mhr, "c_usingcourse any", "mhrc.course.usingcourse", "使用するコースを指定します。"));
+		executor.addCommand(new SetAngle(mhr, "c_setangle any any", "mhrc.course.setangle", "チェックポイントが保持する角度を設定します。"));
+		executor.addCommand(new SetOneLapIndex(mhr, "c_setonelapindex any", "mhrc.course.setonelapindex", "1周に必要なチェックポイントの通過数を設定します。"));
 	}
 	
 	protected void registerCheckWalkingThread(int interval) {

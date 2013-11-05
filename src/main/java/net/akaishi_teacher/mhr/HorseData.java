@@ -74,7 +74,7 @@ public class HorseData implements ConfigurationSerializable {
 	public Map<String, Object> serialize() {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("Id", id);
-		if (horse == null) {
+		if (horse != null) {
 			Location putLoc = horse.getLocation();
 			loc = new SimpleLocation(putLoc.getWorld().getName(), putLoc.getX(), putLoc.getY(), putLoc.getZ());
 		}

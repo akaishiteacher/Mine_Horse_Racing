@@ -17,7 +17,7 @@ public class Course implements ConfigurationSerializable {
 
 	protected int lap;
 
-	protected int onelap;
+	protected int onelapIndex;
 
 	private ArrayList<CheckPoint> checkpoints = new ArrayList<>();
 
@@ -30,6 +30,10 @@ public class Course implements ConfigurationSerializable {
 		this.checkpoints = checkpoints;
 	}
 
+	public String getName() {
+		return courseName;
+	}
+	
 	/**
 	 * チェックポイントを追加します。
 	 * @param checkpoint 追加するチェックポイント
@@ -74,6 +78,26 @@ public class Course implements ConfigurationSerializable {
 	}
 	
 	/**
+	 * 指定されたIndexに一致するチェックポイントを返します。<br>
+	 * 存在しない場合はnullを返します。
+	 * @param index 取得したいチェックポイントのIndex
+	 * @return 指定されたIndexに一致するチェックポイント。存在しない場合はnull
+	 */
+	public CheckPoint getCheckPoint(int index) {
+		int foundIndex = checkpoints.indexOf(new CheckPoint(null, index));
+		return checkpoints.get(foundIndex);
+	}
+	
+	/**
+	 * チェックポイントが存在するか判定します。
+	 * @param index 判定したいチェックポイントのIndex
+	 * @return チェックポイントが存在する場合はtrue。存在しなければfalse
+	 */
+	public boolean hasCheckPoint(int index) {
+		return checkpoints.contains(new CheckPoint(null, index));
+	}
+	
+	/**
 	 * チェックポイントのリストを返します。
 	 * @return チェックポイントのリスト
 	 */
@@ -99,25 +123,25 @@ public class Course implements ConfigurationSerializable {
 
 	/**
 	 * 1周に必要なチェックポイントの数を指定します。
-	 * @param onelap 1周に必要なチェックポイントの数
+	 * @param onelapIndex 1周に必要なチェックポイントの数
 	 */
-	public void setOneLap(int onelap) {
-		this.onelap = onelap;
+	public void setOneLapIndex(int onelapIndex) {
+		this.onelapIndex = onelapIndex;
 	}
 
 	/**
 	 * 1周に必要なチェックポイントの数を返します。
 	 * @return 1周に必要なチェックポイントの数
 	 */
-	public int getOneLap() {
-		return onelap;
+	public int getOneLapIndex() {
+		return onelapIndex;
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public Course(Map map) {
 		this.courseName = (String) map.get("CourseName");
 		this.lap = (int) map.get("Lap");
-		this.onelap = (int) map.get("OneLap");
+		this.onelapIndex = (int) map.get("OneLap");
 		this.checkpoints =  (ArrayList<CheckPoint>) map.get("CheckPoints");
 	}
 
@@ -152,7 +176,7 @@ public class Course implements ConfigurationSerializable {
 		Map<String, Object> map = new HashMap<>();
 		map.put("CourseName", courseName);
 		map.put("Lap", lap);
-		map.put("OneLap", onelap);
+		map.put("OneLap", onelapIndex);
 		map.put("CheckPoints", checkpoints);
 		return map;
 	}

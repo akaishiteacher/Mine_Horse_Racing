@@ -1,6 +1,8 @@
 package net.akaishi_teacher.mhr.course.commands;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import net.akaishi_teacher.mhr.MHRCore;
 import net.akaishi_teacher.mhr.SimpleLocation;
@@ -9,6 +11,7 @@ import net.akaishi_teacher.mhr.course.Area;
 import net.akaishi_teacher.mhr.course.CheckPoint;
 import net.akaishi_teacher.mhr.course.Course;
 import net.akaishi_teacher.mhr.course.CourseManager;
+import net.akaishi_teacher.util.lang.Language;
 
 import org.bukkit.command.CommandSender;
 
@@ -29,7 +32,7 @@ public class AddCheckPoint extends MHRAbstractCommand {
 		CourseManager manager = mhr.getCourseFunc().getManager();
 		Course course = null;
 		Area area = null;
-		int index = 0;
+		int index = -1;
 
 		course = manager.getUsingCourse();
 		if (course == null){
@@ -45,7 +48,7 @@ public class AddCheckPoint extends MHRAbstractCommand {
 				return true;
 			}
 		} else {
-			index = manager.getMaxCheckPointIndex();
+			index = manager.getMaxCheckPointIndex() + 1;
 		}
 		
 		
@@ -67,8 +70,16 @@ public class AddCheckPoint extends MHRAbstractCommand {
 				e.printStackTrace();
 				return true;
 			}
+		} else {
+			sender.sendMessage(mhr.getLang().get("Err_Course.RangeNotSpecified"));
+			return true;
 		}
 		mhr.getCourseFunc().getManager().addCheckPoint(new CheckPoint(area, index));
+		
+		Map<String, String> replaceMap = new HashMap<>();
+		replaceMap.put("Index", String.valueOf(index));
+		sender.sendMessage(Language.replaceArgs(mhr.getLang().get("Cmd_Out_Course.AddPoint_Added"), replaceMap));
+		
 		return true;
 	}
 

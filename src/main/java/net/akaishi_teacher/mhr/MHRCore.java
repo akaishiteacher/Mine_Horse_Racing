@@ -11,6 +11,7 @@ import net.akaishi_teacher.mhr.commands.AllTeleport;
 import net.akaishi_teacher.mhr.commands.AllTeleportLoc;
 import net.akaishi_teacher.mhr.commands.Despawn;
 import net.akaishi_teacher.mhr.commands.Help;
+import net.akaishi_teacher.mhr.commands.ReloadLanguage;
 import net.akaishi_teacher.mhr.commands.SetJump;
 import net.akaishi_teacher.mhr.commands.SetSpeed;
 import net.akaishi_teacher.mhr.commands.Spawn;
@@ -229,6 +230,7 @@ public class MHRCore extends MHRFunc implements Deserializer {
 		cmdExecutor.addCommand(new TeleportLoc(this, "tploc any any any any", "mhr.horse.tploc", "馬を指定した座標テレポートします。"));
 		cmdExecutor.addCommand(new AllTeleport(this, "alltp", "mhr.horse.alltp", "すべての馬をテレポートします。"));
 		cmdExecutor.addCommand(new AllTeleportLoc(this, "alltploc any any any", "mhr.horse.alltploc", "すべての馬を指定した座標にテレポートします。"));
+		cmdExecutor.addCommand(new ReloadLanguage(this, "reloadlang", "mhr.reloadlang", "言語ファイルをリロードします。"));
 	}
 
 	/**

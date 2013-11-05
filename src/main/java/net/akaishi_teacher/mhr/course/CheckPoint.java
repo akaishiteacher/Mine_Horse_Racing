@@ -39,6 +39,14 @@ public class CheckPoint implements ConfigurationSerializable {
 	}
 	
 	/**
+	 * チェックポイントの範囲を設定します。
+	 * @param area チェックポイントの範囲
+	 */
+	public void setArea(Area area) {
+		this.area = area;
+	}
+	
+	/**
 	 * チェックポイントの範囲を示すクラスを返します。
 	 * @return area チェックポイントの範囲を示すクラス
 	 */
@@ -54,6 +62,14 @@ public class CheckPoint implements ConfigurationSerializable {
 		return index;
 	}
 
+	/**
+	 * チェックポイントが保持している角度を設定します。
+	 * @param angle チェックポイントが保持する角度
+	 */
+	public void setAngle(int angle) {
+		this.angle = angle;
+	}
+	
 	/**
 	 * チェックポイントが保持している角度を返します。
 	 * @return チェックポイントが保持している角度

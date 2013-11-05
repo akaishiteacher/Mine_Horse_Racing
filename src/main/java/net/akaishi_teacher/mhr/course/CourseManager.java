@@ -91,6 +91,24 @@ public final class CourseManager {
 	}
 
 	/**
+	 * コースが存在か判定します。
+	 * @param courseName 判定するコース名
+	 * @return コースが存在する場合はtrue。存在しない場合はfalse
+	 */
+	public boolean hasCourse(String courseName) {
+		return courses.contains(new Course(courseName));
+	}
+	
+	/**
+	 * コースが存在か判定します。
+	 * @param course 判定するコース名
+	 * @return コースが存在する場合はtrue。存在しない場合はfalse
+	 */
+	public boolean hasCourse(Course course) {
+		return courses.contains(course);
+	}
+	
+	/**
 	 * コースのリストを取得します。
 	 * @return コースのリスト
 	 */
@@ -175,11 +193,11 @@ public final class CourseManager {
 	
 	/**
 	 * チェックポイントのリストの中で一番大きいindexの数値を返します。<br>
-	 * リストに何もない場合は-1を返します。
-	 * @return チェックポイントのリストの中で一番大きいindex。リストに何もない場合は-1
+	 * リストに何もない場合は0を返します。
+	 * @return チェックポイントのリストの中で一番大きいindex。リストに何もない場合は0
 	 */
 	public int getMaxCheckPointIndex() {
-		int index = -1;
+		int index = 0;
 		for (CheckPoint checkPoint : usingCourse.getCheckpoints()) {
 			if (index < checkPoint.getIndex()) {
 				index = checkPoint.getIndex();

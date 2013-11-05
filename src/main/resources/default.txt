@@ -1,3 +1,4 @@
+#Usage of MHR commands.
 Cmd_Usage_Help=§6/mhr - コマンド一覧を表示します。
 Cmd_Usage_SetSpeed=§6/mhr setspeed <double:speed> - 馬の速度を設定します。
 Cmd_Usage_SetJump=§6/mhr setjump <double:jump> - 馬の速度を設定します。
@@ -7,10 +8,17 @@ Cmd_Usage_Teleport=§6/mhr tp <int:id> [String:player] [boolean:flag] - 馬を�
 Cmd_Usage_TeleportLoc=§6/mhr tploc <int:id> <double:x,y,z> [double:yaw, pitch] [boolean:flag] - 馬を指定した座標にてレポートします。
 Cmd_Usage_AllTeleport=§6/mhr alltp <double: x,y,z> [String:player] [boolean:flag] - すべての馬をテレポートします。
 Cmd_Usage_AllTeleportLoc=§6/mhr alltploc <double: x,y,z> [double: yaw,pitch] [boolean: flag] - すべての馬を指定した座標にテレポートします。
+
+#Usage of MHRC commands.
+Cmd_Usage_Course.SetUsingCourse=§6/mhr c_usingcourse <String:course> - 使用するコースを指定します。
 Cmd_Usage_Course.Add=§6/mhr c_add <String:CourseName> - コースを追加します。
 Cmd_Usage_Course.Remove=§6/mhr c_remove <String:CourseName> - コースを削除します。
-Cmd_Usage_Course.AddCheckPoint=§6/mhr c_addpoint [int:index] - チェックポイントを追加します。
-Cmd_Usage_Course.RemoveCheckPoint=§6/mhr c_rmpoint [int:index] - チェックポイントを消去します。
+Cmd_Usage_Course.AddPoint=§6/mhr c_addpoint [int:index] - チェックポイントを追加します。
+Cmd_Usage_Course.RemovePoint=§6/mhr c_rmpoint [int:index] - チェックポイントを消去します。
+Cmd_Usage_Course.SetAngle=§6/mhr c_setangle <int:index> <int:angle> - チェックポイントが保持する角度を指定します。
+Cmd_Usage_Course.SetOneLapIndex=§6/mhr c_setonelapindex <int:onelapindex> [String:course] - 1周に必要なチェックポイントの通過数を設定します。
+
+#Output message of MHR commands.
 Cmd_Out_SetSpeed_Set=§a馬のスピードを<%speed%>に設定しました。
 Cmd_Out_SetJump_Set=§a馬のジャンプ力を<%jump%>に設定しました。
 Cmd_Out_Spawn_Spawned=§a馬を<%Num%>頭スポーンしました。
@@ -19,11 +27,26 @@ Cmd_Out_Teleport_Teleported=§a馬を<%Player%>にテレポートしました。
 Cmd_Out_TeleportLoc_Teleported=§a馬を<%X%>,<%Y%>,<%Z%>にテレポートしました。(ID:<%Id%>)
 Cmd_Out_AllTeleport_Teleported=§a馬を<%Player%>にテレポートしました。
 Cmd_Out_AllTeleportLoc_Teleported=§a馬を<%X%>,<%Y%>,<%Z%>にテレポートしました。
+
+#Output message of MHRC commands.
 Cmd_Out_Course.Add_Added=§aコースを追加しました。
 Cmd_Out_Course.Remove_Removed=§aコースを削除しました。
+Cmd_Out_Course.SetUsingCourse_Set=§a使用するコースを<%UsingCourse%>にしました。
+Cmd_Out_Course.AddPoint_Added=§aチェックポイントを追加しました。(Index:<%Index%>)
+Cmd_Out_Course.RemovePoint_Removed=§aチェックポイントを消去しました。(Index:<%Index%>)
+Cmd_Out_Course.SetAngle_Set=§a<%Index%>番のチェックポイントが保持する角度を<%Angle%>に設定しました。
+Cmd_Out_Course.SetOneLapIndex_Set=§a<%Course%>コースの1周に必要なチェックポイント通過数を<%OneLapIndex%>に設定しました。
+
+#Error message of MHRC commands.
 Cmd_Err_Course.Add_AlreadyAdded=§4既にコースが存在しています!
-Cmd_Err_Course.Remove_NotFound=§4コースが存在しません!
+Cmd_Err_Course.CheckPointNotFound=§4指定されたチェックポイントは存在しません!
+
+#Common error message of MHR commands.
 Err_HorseNotFound=§4指定された馬は存在しません!
 Err_PlayerNotFound=§4指定されたプレイヤーは存在しません!
 Err_NotNumber=§4数値であるべき指定が数値ではありません!
+
+#Common error message of MHRC commands.
 Err_Course.RequiresTheUsingCourse=§4使用するコースが指定されていません!
+Err_Course.CourseNotFound=§4指定されたコースは存在しません!
+Err_Course.RangeNotSpecified=§4範囲が指定されていません!

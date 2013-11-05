@@ -28,7 +28,7 @@ public class ReloadLanguage extends MHRAbstractCommand {
 
 	@Override
 	public String getUsage(CommandSender sender) {
-		return "This command do language reload.(This message cannot change)";
+		return "§6/mhr reloadlang - This command do language reload.(This message cannot change)";
 	}
 
 }

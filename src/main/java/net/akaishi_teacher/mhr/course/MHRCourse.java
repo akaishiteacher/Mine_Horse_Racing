@@ -13,6 +13,7 @@ import net.akaishi_teacher.mhr.course.commands.AddCheckPoint;
 import net.akaishi_teacher.mhr.course.commands.Remove;
 import net.akaishi_teacher.mhr.course.commands.RemoveCheckPoint;
 import net.akaishi_teacher.mhr.course.commands.SetAngle;
+import net.akaishi_teacher.mhr.course.commands.SetLap;
 import net.akaishi_teacher.mhr.course.commands.SetOneLapIndex;
 import net.akaishi_teacher.mhr.course.commands.SetUsingCourse;
 import net.akaishi_teacher.util.command.CommandExecutor;
@@ -130,14 +131,15 @@ public final class MHRCourse extends MHRFunc implements Deserializer, HorseEvent
 	}
 
 	protected void registerCommands() {
-		CommandExecutor executor = mhr.getCmdExecutor();
-		executor.addCommand(new Add(mhr, "c_add any", "mhrc.course.add", "コースを追加します。"));
-		executor.addCommand(new Remove(mhr, "c_remove any", "mhrc.course.remove", "コースを削除します。"));
-		executor.addCommand(new AddCheckPoint(mhr, "c_addpoint", "mhrc.course.addpoint.", "チェックポイントを追加します。"));
-		executor.addCommand(new RemoveCheckPoint(mhr, "c_rmpoint", "mhrc.course.removepoint", "チェックポイントを消去します。"));
-		executor.addCommand(new SetUsingCourse(mhr, "c_usingcourse any", "mhrc.course.usingcourse", "使用するコースを指定します。"));
-		executor.addCommand(new SetAngle(mhr, "c_setangle any any", "mhrc.course.setangle", "チェックポイントが保持する角度を設定します。"));
-		executor.addCommand(new SetOneLapIndex(mhr, "c_setonelapindex any", "mhrc.course.setonelapindex", "1周に必要なチェックポイントの通過数を設定します。"));
+		CommandExecutor cmdExecutor = mhr.getCmdExecutor();
+		cmdExecutor.addCommand(new Add(mhr, "c_add any", "mhrc.course.add", "コースを追加します。"));
+		cmdExecutor.addCommand(new Remove(mhr, "c_remove any", "mhrc.course.remove", "コースを削除します。"));
+		cmdExecutor.addCommand(new AddCheckPoint(mhr, "c_addpoint", "mhrc.course.addpoint.", "チェックポイントを追加します。"));
+		cmdExecutor.addCommand(new RemoveCheckPoint(mhr, "c_rmpoint", "mhrc.course.removepoint", "チェックポイントを消去します。"));
+		cmdExecutor.addCommand(new SetUsingCourse(mhr, "c_usingcourse any", "mhrc.course.usingcourse", "使用するコースを指定します。"));
+		cmdExecutor.addCommand(new SetAngle(mhr, "c_setangle any any", "mhrc.course.setangle", "チェックポイントが保持する角度を設定します。"));
+		cmdExecutor.addCommand(new SetOneLapIndex(mhr, "c_setonelapindex any", "mhrc.course.setonelapindex", "1周に必要なチェックポイントの通過数を設定します。"));
+		cmdExecutor.addCommand(new SetLap(mhr, "c_setlap any", "mhrc.course.setlap", "ラップ数を設定します。"));
 	}
 	
 	protected void registerCheckWalkingThread(int interval) {

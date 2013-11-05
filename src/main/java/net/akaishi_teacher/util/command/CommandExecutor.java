@@ -42,8 +42,13 @@ public class CommandExecutor {
 				//Sender has permission of the command?
 				if (command.getPermission() == null
 						|| sender.hasPermission(command.getPermission())) {
+					if (command.getIndexOfNotSendOptions() == -1) {
 					return command.execute(
 							sender, new ArrayList<String>(Arrays.asList(args)));
+					} else {
+						return command.execute(
+								sender, new ArrayList<String>(Arrays.asList(splitArgs(command.getIndexOfNotSendOptions(), args))));
+					}
 				} else {
 					//Sender don't have permission,
 					sender.sendMessage("§4You don't have permission!(" + command.getPermission() + ")");
@@ -82,7 +87,23 @@ public class CommandExecutor {
 	}
 
 
-
+	
+	/**
+	 * 指定した位置までの引数を除去します。
+	 * @param index コマンドを切る位置
+	 * @param args 元の引数
+	 * @return 指定した位置までの引数を除去した配列
+	 */
+	public String[] splitArgs(int index, String[] args) {
+		String[] result = new String[args.length - index];
+		for (int i = index; i < args.length; i++) {
+			result[i - index] = args[index];
+		}
+		return result;
+	}
+	
+	
+	
 	public HashSet<AbstractCommand> getCommandSet() {
 		return commandSet;
 	}

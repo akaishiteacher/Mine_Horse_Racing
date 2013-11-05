@@ -29,6 +29,11 @@ public abstract class AbstractCommand {
 	 */
 	protected String description;
 
+	/**
+	 * この変数までの引数を送信しない。それで使用される値です。
+	 */
+	protected int indexOfNotSendOptions = -1;
+	
 	public AbstractCommand(String pattern, String permission,
 			String description) {
 		super();
@@ -39,6 +44,14 @@ public abstract class AbstractCommand {
 
 
 
+	public AbstractCommand(String pattern, String permission,
+			String description, int indexOfNotSendOptions) {
+		this(pattern, permission, description);
+		this.indexOfNotSendOptions = indexOfNotSendOptions;
+	}
+	
+	
+	
 	public String getPattern() {
 		return pattern;
 	}
@@ -57,6 +70,12 @@ public abstract class AbstractCommand {
 
 
 
+	public int getIndexOfNotSendOptions() {
+		return indexOfNotSendOptions;
+	}
+	
+	
+	
 	/**
 	 * コマンドが一致するかを判定します。
 	 * @param args コマンドの引数
@@ -150,6 +169,36 @@ public abstract class AbstractCommand {
 			return ((BlockCommandSender) (sender)).getBlock().getWorld();
 		} else {
 			return sender.getServer().getPlayerExact(sender.getName()).getWorld();
+		}
+	}
+
+	/**
+	 * 指定されたIndexの引数が、引数リストに存在するかを判定します。<br>
+	 * これは、if (args.size() >= index)と同等です。
+	 * @param args 判定する引数リスト
+	 * @param index 判定したいindex
+	 * @return if (args.size() >= index)の場合にtrue。
+	 */
+	public static boolean hasOption(ArrayList<String> args, int index) {
+		if (args.size() >= index) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	/**
+	 * 指定されたIndexの引数が、数値であるかどうかを判定します。
+	 * @param args 引数リスト
+	 * @param index 引数のIndex
+	 * @return 指定されたIndexの引数が数値ならtrue
+	 */
+	public static boolean isNumber(ArrayList<String> args, int index) {
+		try {
+			Integer.parseInt(args.get(index));
+			return true;
+		} catch (NumberFormatException e) {
+			return false;
 		}
 	}
 	

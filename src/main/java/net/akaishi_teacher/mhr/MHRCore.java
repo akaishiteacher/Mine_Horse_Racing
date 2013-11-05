@@ -16,15 +16,8 @@ import net.akaishi_teacher.mhr.commands.SetSpeed;
 import net.akaishi_teacher.mhr.commands.Spawn;
 import net.akaishi_teacher.mhr.commands.Teleport;
 import net.akaishi_teacher.mhr.commands.TeleportLoc;
-import net.akaishi_teacher.mhr.config.ConfigurationForData;
-import net.akaishi_teacher.mhr.config.Deserializer;
 import net.akaishi_teacher.mhr.course.MHRCourse;
-import net.akaishi_teacher.mhr.course.data.PointCounter;
-import net.akaishi_teacher.mhr.data.HorseData;
-import net.akaishi_teacher.mhr.data.HorseStatus;
-import net.akaishi_teacher.mhr.listener.NoDamageEvent;
-import net.akaishi_teacher.mhr.other.SimpleLocation;
-import net.akaishi_teacher.mhr.thread.SetStatusThread;
+import net.akaishi_teacher.mhr.course.PointCounter;
 import net.akaishi_teacher.util.command.CommandExecutor;
 import net.akaishi_teacher.util.lang.Language;
 
@@ -73,10 +66,10 @@ public class MHRCore extends MHRFunc implements Deserializer {
 
 	@Override
 	public void init() {
-		
+
 		//Create the CommandExecutor instance.
 		cmdExecutor = new CommandExecutor();
-		
+
 		//Register commands.
 		registerCommands();
 
@@ -94,7 +87,7 @@ public class MHRCore extends MHRFunc implements Deserializer {
 		plugin.getServer().getScheduler().runTaskLater(plugin, runnable, 40);
 		//Start thread.
 		plugin.getServer().getScheduler().runTaskTimer(plugin, new SetStatusThread(this), 60, 20);
-		
+
 		//Register event.
 		plugin.getServer().getPluginManager().registerEvents(new NoDamageEvent(this), plugin);
 
@@ -120,7 +113,7 @@ public class MHRCore extends MHRFunc implements Deserializer {
 			//Disable.
 			mhrCourse.disable();
 		}
-		
+
 		//Set Configuration.
 		setConfig();
 
@@ -168,7 +161,7 @@ public class MHRCore extends MHRFunc implements Deserializer {
 		horseDataConf.loadConfig();
 		horseDataConf.getConf().addDefault("HorseDatas", new ArrayList<>());
 		ArrayList<HorseData> horseDatas =
-		(ArrayList<HorseData>) horseDataConf.getConf().getList("HorseDatas");
+				(ArrayList<HorseData>) horseDataConf.getConf().getList("HorseDatas");
 
 		//Assignment to the "status" variable.
 		status = new HorseStatus(horseDatas, speed, jump, false);
@@ -198,7 +191,7 @@ public class MHRCore extends MHRFunc implements Deserializer {
 		ConfigurationSerialization.registerClass(PointCounter.class);
 	}
 
-	protected void loadLocalizationFile(String langName) {
+	private void loadLocalizationFile(String langName) {
 		lang = new Language(new File(plugin.getDataFolder().getAbsolutePath() + "/lang"), langName, plugin.getLogger());
 		try {
 			lang.loadLangFile();
@@ -218,7 +211,7 @@ public class MHRCore extends MHRFunc implements Deserializer {
 		}
 	}
 
-	protected void copyDefaultLocalizationFile() throws IOException {
+	private void copyDefaultLocalizationFile() throws IOException {
 		ClassLoader cl = getClass().getClassLoader();
 		InputStream stream = cl.getResourceAsStream("default.txt");
 		InputStreamReader isr = new InputStreamReader(stream, "UTF-8");
@@ -226,7 +219,7 @@ public class MHRCore extends MHRFunc implements Deserializer {
 		stream.close();
 	}
 
-	protected void registerCommands() {
+	private void registerCommands() {
 		cmdExecutor.addCommand(new Help(this, "", null, "Helpコマンドです。"));
 		cmdExecutor.addCommand(new SetSpeed(this, "setspeed any", "mhr.horse.set", "馬の速度を設定します。"));
 		cmdExecutor.addCommand(new SetJump(this, "setjump any", "mhr.horse.set", "馬のジャンプ力を設定します。"));
@@ -277,5 +270,14 @@ public class MHRCore extends MHRFunc implements Deserializer {
 	public MHRCourse getCourseFunc() {
 		return mhrCourse;
 	}
-	
+
+	public static boolean isNumber(String str) {
+		try {
+			Integer.parseInt(str);
+		} catch (NumberFormatException e) {
+			return false;
+		}
+		return true;
+	}
+
 }

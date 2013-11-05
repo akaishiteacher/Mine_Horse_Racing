@@ -3,7 +3,6 @@ package net.akaishi_teacher.mhr.course;
 import java.util.ArrayList;
 
 import net.akaishi_teacher.mhr.MHRCore;
-import net.akaishi_teacher.mhr.course.data.Course;
 
 public final class CourseManager {
 
@@ -12,6 +11,8 @@ public final class CourseManager {
 	private MHRCore mhrCore;
 
 	private MHRCourse mhrCourse;
+
+	private Course usingCourse;
 
 	public CourseManager(MHRCourse mhrCourse) {
 		this.mhrCourse = mhrCourse;
@@ -22,7 +23,23 @@ public final class CourseManager {
 		this(mhrCourse);
 		this.courses = courses;
 	}
-	
+
+	/**
+	* 使用するコースを指定します。
+	* @param usingCourse 使用するコース
+	*/
+	public void setUsingCourse(Course usingCourse) {
+		this.usingCourse = usingCourse;
+	}
+
+	/**
+	* 現在使用しているコースを指定します。
+	* @return 現在使用しているコース
+	*/
+	public Course getUsingCourse() {
+		return usingCourse;
+	}
+
 	/**
 	 * コースを追加します。<br>
 	 * 既にコースが存在する(同じコース名のコース)場合は、追加されず、falseを返します。
@@ -37,7 +54,7 @@ public final class CourseManager {
 			return false;
 		}
 	}
-	
+
 	/**
 	 * コースを削除します。<br>
 	 * コースが存在しない場合はfalseを返します。
@@ -47,7 +64,7 @@ public final class CourseManager {
 	public boolean removeCourse(Course course) {
 		return courses.remove(course);
 	}
-	
+
 	/**
 	 * コースを削除します。<br>
 	 * コースが存在しない場合がfalseを返します。
@@ -57,7 +74,7 @@ public final class CourseManager {
 	public boolean removeCourse(String courseName) {
 		return courses.remove(new Course(courseName));
 	}
-	
+
 	/**
 	 * 指定した名前のコースを取得します。<br>
 	 * 指定した名前のコースがない場合はnullを返します。
@@ -81,4 +98,94 @@ public final class CourseManager {
 		return courses;
 	}
 
+	/**
+	 * チェックポイントを追加します。<br>
+	 * このメソッドは、変数usingCourseのCourseにチェックポイントを追加します。<br>
+	 * usingCourseがnullの場合はfalseを返します。
+	 * @param checkpoint 追加するチェックポイント
+	 */
+	public void addCheckPoint(CheckPoint checkpoint) {
+		usingCourse.addCheckPoint(checkpoint);
+	}
+
+	/**
+	 * チェックポイントを追加します。
+	 * @param course 追加先のコース
+	 * @param checkpoint 追加するチェックポイント
+	 */
+	public void addCheckPoint(Course course, CheckPoint checkpoint) {
+		course.addCheckPoint(checkpoint);
+	}
+
+	/**
+	 * チェックポイントを削除します。<br>
+	 * 戻り値は、{@link ArrayList#remove(Object)}メソッドの振る舞いです。
+	 * @param checkpoint 削除したいチェックポイント
+	 * @return {@link ArrayList#remove(Object)}の振る舞い
+	 */
+	public boolean removeCheckPoint(CheckPoint checkpoint) {
+		return usingCourse.removeCheckPoint(checkpoint);
+	}
+
+	/**
+	 * チェックポイントを削除します。<br>
+	 * 戻り値は、{@link ArrayList#remove(Object)}メソッドの振る舞いです。
+	 * @param course  削除先のコース
+	 * @param checkpoint 削除したいチェックポイント
+	 * @return {@link ArrayList#remove(Object)}の振る舞い
+	 */
+	public boolean removeCheckPoint(Course course, CheckPoint checkpoint) {
+		return course.removeCheckPoint(checkpoint);
+	}
+
+	/**
+	 * チェックポイントを削除します。
+	 * @param index 削除したいチェックポイントのindex
+	 * @return チェックポイントの中に指定されたindexと同じ値のチェックポイントがあれば削除し、true。見つからず削除出来なかった場合はfalse
+	 */
+	public boolean removeCheckPoint(int index) {
+		return usingCourse.removeCheckPoint(index);
+	}
+
+	/**
+	 * チェックポイントを削除します。
+	 * @param course 削除先のコース
+	 * @param index 削除したいチェックポイントのindex
+	 * @return チェックポイントの中に指定されたindexと同じ値のチェックポイントがあれば削除し、true。見つからず削除出来なかった場合はfalse
+	 */
+	public boolean removeCheckPoint(Course course, int index) {
+		return course.removeCheckPoint(index);
+	}
+
+	/**
+	 * チェックポイントのリストの中で一番大きいindexの数値を返します。<br>
+	 * リストに何もない場合は-1を返します。
+	 * @param course コース
+	 * @return チェックポイントのリストの中で一番大きいindex。リストに何もない場合は-1
+	 */
+	public int getMaxCheckPointIndex(Course course) {
+		int index = -1;
+		for (CheckPoint checkPoint : course.getCheckpoints()) {
+			if (index < checkPoint.getIndex()) {
+				index = checkPoint.getIndex();
+			}
+		}
+		return index;
+	}
+	
+	/**
+	 * チェックポイントのリストの中で一番大きいindexの数値を返します。<br>
+	 * リストに何もない場合は-1を返します。
+	 * @return チェックポイントのリストの中で一番大きいindex。リストに何もない場合は-1
+	 */
+	public int getMaxCheckPointIndex() {
+		int index = -1;
+		for (CheckPoint checkPoint : usingCourse.getCheckpoints()) {
+			if (index < checkPoint.getIndex()) {
+				index = checkPoint.getIndex();
+			}
+		}
+		return index;
+	}
+	
 }

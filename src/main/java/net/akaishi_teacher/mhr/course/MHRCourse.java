@@ -2,18 +2,15 @@ package net.akaishi_teacher.mhr.course;
 
 import java.util.ArrayList;
 
+import net.akaishi_teacher.mhr.ConfigurationForData;
+import net.akaishi_teacher.mhr.Deserializer;
+import net.akaishi_teacher.mhr.HorseData;
 import net.akaishi_teacher.mhr.MHRCore;
 import net.akaishi_teacher.mhr.MHRFunc;
 import net.akaishi_teacher.mhr.Main;
-import net.akaishi_teacher.mhr.config.ConfigurationForData;
-import net.akaishi_teacher.mhr.config.Deserializer;
 import net.akaishi_teacher.mhr.course.commands.Add;
+import net.akaishi_teacher.mhr.course.commands.AddCheckPoint;
 import net.akaishi_teacher.mhr.course.commands.Remove;
-import net.akaishi_teacher.mhr.course.data.Course;
-import net.akaishi_teacher.mhr.course.event.HorseEvent;
-import net.akaishi_teacher.mhr.course.event.WalkEvent;
-import net.akaishi_teacher.mhr.course.thread.CheckWalkingThread;
-import net.akaishi_teacher.mhr.data.HorseData;
 import net.akaishi_teacher.util.command.CommandExecutor;
 
 import org.bukkit.block.Block;
@@ -130,6 +127,7 @@ public final class MHRCourse extends MHRFunc implements Deserializer, HorseEvent
 		CommandExecutor executor = mhr.getCmdExecutor();
 		executor.addCommand(new Add(mhr, "c_add any", "mhrc.course.add", "コースを追加します。"));
 		executor.addCommand(new Remove(mhr, "c_remove any", "mhrc.course.remove", "コースを削除します。"));
+		executor.addCommand(new AddCheckPoint(getMHR(), "c_addpoint", "mhrc.course.addpoint.", "チェックポイントを追加します。"));
 	}
 	
 	protected void registerCheckWalkingThread(int interval) {

@@ -1,0 +1,15 @@
+net.akaishi_teacher.mhr
+net.akaishi_teacher.mhr.commands
+net.akaishi_teacher.mhr.config
+net.akaishi_teacher.mhr.course
+net.akaishi_teacher.mhr.course.commands
+net.akaishi_teacher.mhr.course.data
+net.akaishi_teacher.mhr.course.event
+net.akaishi_teacher.mhr.course.thread
+net.akaishi_teacher.mhr.data
+net.akaishi_teacher.mhr.listener
+net.akaishi_teacher.mhr.other
+net.akaishi_teacher.mhr.thread
+net.akaishi_teacher.mht.test
+net.akaishi_teacher.util.command
+net.akaishi_teacher.util.lang

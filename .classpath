@@ -22,5 +22,6 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="/home/mozipi/ドキュメント/mcserver/plugins/WorldEdit.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

@@ -17,8 +17,8 @@ import net.akaishi_teacher.mhr.commands.SetSpeed;
 import net.akaishi_teacher.mhr.commands.Spawn;
 import net.akaishi_teacher.mhr.commands.Teleport;
 import net.akaishi_teacher.mhr.commands.TeleportLoc;
-import net.akaishi_teacher.mhr.course.MHRCourse;
 import net.akaishi_teacher.mhr.course.CourseSession;
+import net.akaishi_teacher.mhr.course.MHRCourse;
 import net.akaishi_teacher.util.command.CommandExecutor;
 import net.akaishi_teacher.util.lang.Language;
 

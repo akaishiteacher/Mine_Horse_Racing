@@ -23,6 +23,10 @@ Cmd_Usage_Course.End=§6/mhr c_end - レースを終了します。
 Cmd_Usage_Course.ViewRank=§6/mhr c_viewrank <Valid> - 順位を表示するかを設定します。
 
 #Output message of MHR commands.
+Cmd_Usage_Course.Add=§6/mhr c_add <String:CourseName> - コースを追加します。
+Cmd_Usage_Course.Remove=§6/mhr c_remove <String:CourseName> - コースを削除します。
+Cmd_Usage_Course.AddCheckPoint=§6/mhr c_addpoint [int:index] - チェックポイントを追加します。
+Cmd_Usage_Course.RemoveCheckPoint=§6/mhr c_rmpoint [int:index] - チェックポイントを消去します。
 Cmd_Out_SetSpeed_Set=§a馬のスピードを<%speed%>に設定しました。
 Cmd_Out_SetJump_Set=§a馬のジャンプ力を<%jump%>に設定しました。
 Cmd_Out_Spawn_Spawned=§a馬を<%Num%>頭スポーンしました。

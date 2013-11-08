@@ -74,8 +74,6 @@ public abstract class AbstractCommand {
 		return indexOfNotSendOptions;
 	}
 
-
-
 	/**
 	 * コマンドが一致するかを判定します。
 	 * @param args コマンドの引数
@@ -180,13 +178,13 @@ public abstract class AbstractCommand {
 	 * @return if (args.size() >= index)の場合にtrue。
 	 */
 	public static boolean hasOption(ArrayList<String> args, int index) {
-		if (args.size() > index)
+		if (args.size() > index) {
 			return true;
-		else
+		} else {
 			return false;
-
+		}
 	}
-
+	
 	/**
 	 * 指定されたIndexの引数が、数値であるかどうかを判定します。
 	 * @param args 引数リスト
@@ -201,5 +199,5 @@ public abstract class AbstractCommand {
 			return false;
 		}
 	}
-
+	
 }

@@ -3,14 +3,14 @@ package net.akaishi_teacher.mhr.course;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import net.akaishi_teacher.mhr.HorseData;
+import net.akaishi_teacher.mhr.MHRCore;
+import net.akaishi_teacher.mhr.SimpleLocation;
+
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Scoreboard;
-
-import net.akaishi_teacher.mhr.HorseData;
-import net.akaishi_teacher.mhr.MHRCore;
-import net.akaishi_teacher.mhr.SimpleLocation;
 
 public final class CourseManager {
 
@@ -46,9 +46,9 @@ public final class CourseManager {
 	}
 
 	/**
-	 * 現在使用しているコースを指定します。
-	 * @return 現在使用しているコース
-	 */
+	* 現在使用しているコースを指定します。
+	* @return 現在使用しているコース
+	*/
 	public Course getUsingCourse() {
 		return usingCourse;
 	}

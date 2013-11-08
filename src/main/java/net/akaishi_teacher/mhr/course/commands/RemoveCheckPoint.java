@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.bukkit.command.CommandSender;
-
 import net.akaishi_teacher.mhr.MHRCore;
 import net.akaishi_teacher.mhr.commands.MHRAbstractCommand;
 import net.akaishi_teacher.mhr.course.Course;
 import net.akaishi_teacher.util.lang.Language;
+
+import org.bukkit.command.CommandSender;
 
 public class RemoveCheckPoint extends MHRAbstractCommand {
 

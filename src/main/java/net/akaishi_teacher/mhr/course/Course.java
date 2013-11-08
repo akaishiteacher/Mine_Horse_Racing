@@ -25,9 +25,9 @@ public class Course implements ConfigurationSerializable {
 	protected ArrayList<CheckPoint> checkpoints = new ArrayList<>();
 
 	protected Countdown countdown;
-	
+
 	protected Timer timer;
-	
+
 	public Course(String courseName) {
 		this.courseName = courseName;
 		this.countdown = new Countdown();
@@ -48,11 +48,11 @@ public class Course implements ConfigurationSerializable {
 		this.countdown = new Countdown();
 		this.timer = new Timer();
 	}
-	
+
 	public String getName() {
 		return courseName;
 	}
-	
+
 	/**
 	 * チェックポイントを追加します。
 	 * @param checkpoint 追加するチェックポイント
@@ -95,7 +95,7 @@ public class Course implements ConfigurationSerializable {
 	public void clearCheckPoint() {
 		checkpoints.clear();
 	}
-	
+
 	/**
 	 * 指定されたIndexに一致するチェックポイントを返します。<br>
 	 * 存在しない場合はnullを返します。
@@ -106,7 +106,7 @@ public class Course implements ConfigurationSerializable {
 		int foundIndex = checkpoints.indexOf(new CheckPoint(null, index));
 		return checkpoints.get(foundIndex);
 	}
-	
+
 	/**
 	 * チェックポイントが存在するか判定します。
 	 * @param index 判定したいチェックポイントのIndex
@@ -115,7 +115,7 @@ public class Course implements ConfigurationSerializable {
 	public boolean hasCheckPoint(int index) {
 		return checkpoints.contains(new CheckPoint(null, index));
 	}
-	
+
 	/**
 	 * チェックポイントのリストを返します。
 	 * @return チェックポイントのリスト
@@ -163,7 +163,7 @@ public class Course implements ConfigurationSerializable {
 	public Timer getTimer() {
 		return timer;
 	}
-	
+
 	/**
 	 * 踏んだチェックポイントのIndexを返します。<br>
 	 * 踏んだBlockがチェックポイントでない場合は-1を返します。
@@ -212,7 +212,6 @@ public class Course implements ConfigurationSerializable {
 		map.put("CourseName", courseName);
 		map.put("Lap", lap);
 		map.put("OneLap", onelapIndex);
-		map.put("CheckPoints", checkpoints);
 		return map;
 	}
 

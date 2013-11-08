@@ -8,6 +8,7 @@ import net.akaishi_teacher.mhr.course.CourseSession;
 import org.bukkit.Location;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.entity.Horse;
+import org.bukkit.entity.Player;
 
 /**
  * 個別に保存が必要な馬のステータスが存在するクラスです。
@@ -48,6 +49,17 @@ public class HorseData implements ConfigurationSerializable {
 		this.courseSession = (CourseSession) map.get("CourseSession");
 	}
 
+	/**
+	 * 乗馬している人を返します。
+	 * @return 乗馬している人。Playerでなければnull
+	 */
+	public Player getPlayer() {
+		if (horse.getPassenger() instanceof Player) {
+			return (Player) horse.getPassenger();
+		}
+		return null;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

@@ -18,6 +18,7 @@ Cmd_Usage_Course.RemovePoint=§6/mhr c_rmpoint [int:index] - チェックポイ�
 Cmd_Usage_Course.SetAngle=§6/mhr c_setangle <int:index> <int:angle> - チェックポイントが保持する角度を指定します。
 Cmd_Usage_Course.SetOneLapIndex=§6/mhr c_setonelapindex <int:onelapindex> [String:course] - 1周に必要なチェックポイントの通過数を設定します。
 Cmd_Usage_Course.SetLap=§6/mhr c_setlap <int:lap> [String:course] - ラップ数を設定します。
+Cmd_Usage_Course.Start=§6/mhr c_start - レースを開始します。
 
 #Output message of MHR commands.
 Cmd_Out_SetSpeed_Set=§a馬のスピードを<%speed%>に設定しました。
@@ -62,3 +63,4 @@ Message_Course.Countdown_Count-3=§6レース開始まで3秒前...
 Message_Course.Countdown_Count-2=§6レース開始まで2秒前...
 Message_Course.Countdown_Count-1=§6レース開始まで1秒前...
 Message_Course.Countdown_End=§6レースが開始されました!
+Message_Course.Goal=§a<%Player%>がゴールしました!!ゴールタイム - <%Time%>

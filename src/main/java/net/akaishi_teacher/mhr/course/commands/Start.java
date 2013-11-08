@@ -40,7 +40,7 @@ public class Start extends MHRAbstractCommand {
 
 	@Override
 	public String getUsage(CommandSender sender) {
-		return mhr.getLang().get("Cmd_Usage_Start");
+		return mhr.getLang().get("Cmd_Usage_Course.Start");
 	}
 
 }

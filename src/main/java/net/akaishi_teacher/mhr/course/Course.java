@@ -31,6 +31,7 @@ public class Course implements ConfigurationSerializable {
 	public Course(String courseName) {
 		this.courseName = courseName;
 		this.countdown = new Countdown();
+		this.timer = new Timer();
 	}
 
 	public Course(String courseName, ArrayList<CheckPoint> checkpoints) {
@@ -45,6 +46,7 @@ public class Course implements ConfigurationSerializable {
 		this.onelapIndex = (int) map.get("OneLap");
 		this.checkpoints =  (ArrayList<CheckPoint>) map.get("CheckPoints");
 		this.countdown = new Countdown();
+		this.timer = new Timer();
 	}
 	
 	public String getName() {

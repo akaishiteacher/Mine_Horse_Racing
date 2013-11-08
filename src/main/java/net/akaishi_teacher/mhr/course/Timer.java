@@ -1,10 +1,14 @@
 package net.akaishi_teacher.mhr.course;
 
+
 public class Timer {
 
-	protected long time;
+	protected int time;
 
 	private CountThread countThread;
+
+	public Timer() {
+	}
 
 	public boolean start() {
 		if (countThread == null) {
@@ -27,7 +31,7 @@ public class Timer {
 		time = -1;
 	}
 
-	public long getTime() {
+	public int getTime() {
 		return time;
 	}
 

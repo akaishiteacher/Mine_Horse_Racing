@@ -16,6 +16,7 @@ import net.akaishi_teacher.mhr.course.commands.SetAngle;
 import net.akaishi_teacher.mhr.course.commands.SetLap;
 import net.akaishi_teacher.mhr.course.commands.SetOneLapIndex;
 import net.akaishi_teacher.mhr.course.commands.SetUsingCourse;
+import net.akaishi_teacher.mhr.course.commands.Start;
 import net.akaishi_teacher.util.command.CommandExecutor;
 
 import org.bukkit.block.Block;
@@ -140,6 +141,7 @@ public final class MHRCourse extends MHRFunc implements Deserializer, HorseEvent
 		cmdExecutor.addCommand(new SetAngle(mhr, "c_setangle any any", "mhrc.course.setangle", "チェックポイントが保持する角度を設定します。"));
 		cmdExecutor.addCommand(new SetOneLapIndex(mhr, "c_setonelapindex any", "mhrc.course.setonelapindex", "1周に必要なチェックポイントの通過数を設定します。"));
 		cmdExecutor.addCommand(new SetLap(mhr, "c_setlap any", "mhrc.course.setlap", "ラップ数を設定します。"));
+		cmdExecutor.addCommand(new Start(mhr, "start", "mhrc.countdown.start", "カウントダウンを開始します。"));
 	}
 	
 	protected void registerCheckWalkingThread(int interval) {

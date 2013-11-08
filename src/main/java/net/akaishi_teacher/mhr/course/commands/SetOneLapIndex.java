@@ -42,7 +42,7 @@ public class SetOneLapIndex extends MHRAbstractCommand {
 		} else {
 			course = manager.getUsingCourse();
 			if (course == null) {
-				sender.sendMessage(mhr.getLang().get("Err_Course.RequiresUsingCourse"));
+				sender.sendMessage(mhr.getLang().get("Err_Course.RequiresTheUsingCourse"));
 				return true;
 			}
 		}

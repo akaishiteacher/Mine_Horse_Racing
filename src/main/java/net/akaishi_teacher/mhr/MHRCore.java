@@ -18,7 +18,7 @@ import net.akaishi_teacher.mhr.commands.Spawn;
 import net.akaishi_teacher.mhr.commands.Teleport;
 import net.akaishi_teacher.mhr.commands.TeleportLoc;
 import net.akaishi_teacher.mhr.course.MHRCourse;
-import net.akaishi_teacher.mhr.course.PointCounter;
+import net.akaishi_teacher.mhr.course.CourseSession;
 import net.akaishi_teacher.util.command.CommandExecutor;
 import net.akaishi_teacher.util.lang.Language;
 
@@ -189,7 +189,7 @@ public class MHRCore extends MHRFunc implements Deserializer {
 	public void deserializes() {
 		ConfigurationSerialization.registerClass(SimpleLocation.class);
 		ConfigurationSerialization.registerClass(HorseData.class);
-		ConfigurationSerialization.registerClass(PointCounter.class);
+		ConfigurationSerialization.registerClass(CourseSession.class);
 	}
 
 	private void loadLocalizationFile(String langName) {

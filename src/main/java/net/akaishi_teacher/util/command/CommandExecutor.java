@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
 
 import org.bukkit.command.CommandSender;
 
@@ -16,8 +18,8 @@ public class CommandExecutor {
 	/**
 	 * コマンドのHashSet
 	 */
-	protected HashSet<AbstractCommand> commandSet =
-			new HashSet<AbstractCommand>();
+	protected LinkedHashSet<AbstractCommand> commandSet =
+			new LinkedHashSet<AbstractCommand>();
 
 
 
@@ -27,14 +29,13 @@ public class CommandExecutor {
 	 * @param args コマンドの引数
 	 * @return コマンドが実行できた場合はtrue。コマンドが見つからなくてもtrue。実行できなかった場合はfalse
 	 */
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public boolean onCommand(CommandSender sender, String[] args) {
 		//Sort of commands.
-		ArrayList l = new ArrayList<AbstractCommand>(commandSet);
+		LinkedList<AbstractCommand> l = new LinkedList<AbstractCommand>(commandSet);
 		Collections.sort(l, new ComparatorCommandArgs());
 
 		//Assignment in sorted commands.
-		commandSet = new HashSet<AbstractCommand>(l);
+		commandSet = new LinkedHashSet<AbstractCommand>(l);
 
 		for (AbstractCommand command : commandSet) {
 			//Match pattern?

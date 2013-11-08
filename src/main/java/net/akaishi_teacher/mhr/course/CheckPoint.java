@@ -14,7 +14,7 @@ import org.bukkit.configuration.serialization.ConfigurationSerializable;
 public class CheckPoint implements ConfigurationSerializable {
 
 	protected Area area;
-	
+
 	protected int index;
 
 	protected int angle;

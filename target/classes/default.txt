@@ -52,3 +52,13 @@ Err_NotNumber=§4数値であるべき指定が数値ではありません!
 Err_Course.RequiresTheUsingCourse=§4使用するコースが指定されていません!
 Err_Course.CourseNotFound=§4指定されたコースは存在しません!
 Err_Course.RangeNotSpecified=§4範囲が指定されていません!
+
+#Output message of MHRC.
+Message_Course.Disqualification=§4<%Player%>が<%Lap%>周目の<%LapIndex%>で失格しました!
+Message_Course.Flying=§4<%Player%>がフライングをして失格です!
+Message_Course.Countdown_Start=§6まもなくレースが開始されます!
+Message_Course.Countdown_Count-5=§6レース開始まで5秒前...
+Message_Course.Countdown_Count-3=§6レース開始まで3秒前...
+Message_Course.Countdown_Count-2=§6レース開始まで2秒前...
+Message_Course.Countdown_Count-1=§6レース開始まで1秒前...
+Message_Course.Countdown_End=§6レースが開始されました!

@@ -1,8 +1,10 @@
 package net.akaishi_teacher.mhr.course;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import net.akaishi_teacher.mhr.MHRCore;
+import net.akaishi_teacher.mhr.SimpleLocation;
 
 public final class CourseManager {
 
@@ -21,7 +23,10 @@ public final class CourseManager {
 
 	public CourseManager(MHRCourse mhrCourse, ArrayList<Course> courses) {
 		this(mhrCourse);
-		this.courses = courses;
+		this.courses = new ArrayList<>();
+		for (Course course : courses) {
+			addCourse(course);
+		}
 	}
 
 	/**
@@ -48,6 +53,8 @@ public final class CourseManager {
 	 */
 	public boolean addCourse(Course course) {
 		if (courses.indexOf(course) == -1) {
+			course.getCountdown().addListener(new SayCountdownMessage(mhrCore.getLang()));
+			course.getCountdown().addListener(new StartTimerListener(course.getTimer()));
 			courses.add(course);
 			return true;
 		} else {
@@ -204,6 +211,40 @@ public final class CourseManager {
 			}
 		}
 		return index;
+	}
+	
+	/**
+	 * 踏んだチェックポイントのIndexを返します。<br>
+	 * 踏んだBlockがチェックポイントでない場合は-1を返します。
+	 * @param location 踏んだBlockのLocation
+	 * @return 踏んだチェックポイントのIndex。踏んだBlockがチェックポイントではない場合は-1
+	 */
+	public int getWalkedCheckPointIndex(SimpleLocation location) {
+		for (Iterator<Course> iterator = courses.iterator(); iterator.hasNext();) {
+			Course course = (Course) iterator.next();
+			int walkedCheckPoint = course.getWalkedCheckPointIndex(location);
+			if (walkedCheckPoint != -1) {
+				return walkedCheckPoint;
+			}
+		}
+		return -1;
+	}
+	
+	/**
+	 * 踏んだチェックポイントのコースを返します。<br>
+	 * 踏んだBlockがチェックポイントでない場合はnullを返します。
+	 * @param location 踏んだBlockのLocation
+	 * @return 踏んだチェックポイントのコース。踏んだBlockがチェックポイントではない場合は-1
+	 */
+	public Course getWalkedCheckPointCourse(SimpleLocation location) {
+		for (Iterator<Course> iterator = courses.iterator(); iterator.hasNext();) {
+			Course course = (Course) iterator.next();
+			int walkedCheckPoint = course.getWalkedCheckPointIndex(location);
+			if (walkedCheckPoint != -1) {
+				return course;
+			}
+		}
+		return null;
 	}
 	
 }

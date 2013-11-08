@@ -2,7 +2,10 @@ package net.akaishi_teacher.mhr.course;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+
+import net.akaishi_teacher.mhr.SimpleLocation;
 
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 
@@ -19,10 +22,15 @@ public class Course implements ConfigurationSerializable {
 
 	protected int onelapIndex;
 
-	private ArrayList<CheckPoint> checkpoints = new ArrayList<>();
+	protected ArrayList<CheckPoint> checkpoints = new ArrayList<>();
 
+	protected Countdown countdown;
+	
+	protected Timer timer;
+	
 	public Course(String courseName) {
 		this.courseName = courseName;
+		this.countdown = new Countdown();
 	}
 
 	public Course(String courseName, ArrayList<CheckPoint> checkpoints) {
@@ -30,6 +38,15 @@ public class Course implements ConfigurationSerializable {
 		this.checkpoints = checkpoints;
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public Course(Map map) {
+		this.courseName = (String) map.get("CourseName");
+		this.lap = (int) map.get("Lap");
+		this.onelapIndex = (int) map.get("OneLap");
+		this.checkpoints =  (ArrayList<CheckPoint>) map.get("CheckPoints");
+		this.countdown = new Countdown();
+	}
+	
 	public String getName() {
 		return courseName;
 	}
@@ -137,12 +154,28 @@ public class Course implements ConfigurationSerializable {
 		return onelapIndex;
 	}
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public Course(Map map) {
-		this.courseName = (String) map.get("CourseName");
-		this.lap = (int) map.get("Lap");
-		this.onelapIndex = (int) map.get("OneLap");
-		this.checkpoints =  (ArrayList<CheckPoint>) map.get("CheckPoints");
+	public Countdown getCountdown() {
+		return countdown;
+	}
+
+	public Timer getTimer() {
+		return timer;
+	}
+	
+	/**
+	 * 踏んだチェックポイントのIndexを返します。<br>
+	 * 踏んだBlockがチェックポイントでない場合は-1を返します。
+	 * @param location 踏んだBlockのLocation
+	 * @return 踏んだチェックポイントのIndex。踏んだBlockがチェックポイントではない場合は-1
+	 */
+	public int getWalkedCheckPointIndex(SimpleLocation location) {
+		for (Iterator<CheckPoint> iterator = checkpoints.iterator(); iterator.hasNext();) {
+			CheckPoint checkPoint = (CheckPoint) iterator.next();
+			if (checkPoint.getArea().isInArea(location)) {
+				return checkPoint.index;
+			}
+		}
+		return -1;
 	}
 
 	@Override

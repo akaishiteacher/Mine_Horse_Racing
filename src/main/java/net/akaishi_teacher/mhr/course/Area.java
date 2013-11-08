@@ -6,7 +6,6 @@ import java.util.Map;
 import net.akaishi_teacher.mhr.SimpleLocation;
 
 import org.bukkit.Location;
-import org.bukkit.block.Block;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 
 /**
@@ -29,27 +28,26 @@ public class Area implements ConfigurationSerializable {
 		this.p2 = SimpleLocation.toSimpleLocation(p2);
 	}
 
-	public boolean isInArea(Block block) {
-		Location location = block.getLocation();
+	public boolean isInArea(SimpleLocation location) {
         if (this.p1.x <= this.p2.x) {
-                if (location.getX() < this.p1.x || this.p2.x + 1 <= location.getX())
+                if (location.x < this.p1.x || this.p2.x + 1 <= location.x)
                         return false;
         } else {
-                if (location.getX() < this.p2.x || this.p1.x + 1 <= location.getX())
+                if (location.x < this.p2.x || this.p1.x + 1 <= location.x)
                         return false;
         }
         if (this.p1.y <= this.p2.y) {
-                if (location.getY() < this.p1.y || this.p2.y + 1 <= location.getY())
+                if (location.y < this.p1.y || this.p2.y + 1 <= location.y)
                         return false;
         } else {
-                if (location.getY() < this.p2.y || this.p1.y + 1 <= location.getY())
+                if (location.y < this.p2.y || this.p1.y + 1 <= location.y)
                         return false;
         }
         if (this.p1.z <= this.p2.z) {
-                if (location.getZ() < this.p1.z || this.p2.z + 1 <= location.getZ())
+                if (location.z < this.p1.z || this.p2.z + 1 <= location.z)
                         return false;
         } else {
-                if (location.getZ() < this.p2.z || this.p1.z + 1 <= location.getZ())
+                if (location.z < this.p2.z || this.p1.z + 1 <= location.z)
                         return false;
         }
 		return true;

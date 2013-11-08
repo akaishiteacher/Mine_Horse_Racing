@@ -3,7 +3,7 @@ package net.akaishi_teacher.mhr;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.akaishi_teacher.mhr.course.PointCounter;
+import net.akaishi_teacher.mhr.course.CourseSession;
 
 import org.bukkit.Location;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
@@ -33,19 +33,19 @@ public class HorseData implements ConfigurationSerializable {
 	/**
 	 * 馬のコースの走行状態を保持しているクラスのインスタンス
 	 */
-	public PointCounter pointCounter;
+	public CourseSession courseSession;
 	
 	public HorseData(int id, SimpleLocation loc) {
 		this.id = id;
 		this.loc = loc;
-		this.pointCounter = new PointCounter();
+		this.courseSession = new CourseSession();
 	}
 
 	@SuppressWarnings("rawtypes")
 	public HorseData(Map map) {
 		this.id = (int) map.get("Id");
 		this.loc = (SimpleLocation) map.get("Loc");
-		this.pointCounter = (PointCounter) map.get("PointData");
+		this.courseSession = (CourseSession) map.get("CourseSession");
 	}
 
 	@Override
@@ -79,7 +79,7 @@ public class HorseData implements ConfigurationSerializable {
 			loc = new SimpleLocation(putLoc.getWorld().getName(), putLoc.getX(), putLoc.getY(), putLoc.getZ());
 		}
 		map.put("Loc", loc);
-		map.put("PointData", pointCounter);
+		map.put("CourseSession", courseSession);
 		return map;
 	}
 	

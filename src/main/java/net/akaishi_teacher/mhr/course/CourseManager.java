@@ -3,6 +3,12 @@ package net.akaishi_teacher.mhr.course;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+import org.bukkit.scoreboard.DisplaySlot;
+import org.bukkit.scoreboard.Scoreboard;
+
+import net.akaishi_teacher.mhr.HorseData;
 import net.akaishi_teacher.mhr.MHRCore;
 import net.akaishi_teacher.mhr.SimpleLocation;
 
@@ -15,6 +21,8 @@ public final class CourseManager {
 	private MHRCourse mhrCourse;
 
 	private Course usingCourse;
+
+	private boolean viewRank;
 
 	public CourseManager(MHRCourse mhrCourse) {
 		this.mhrCourse = mhrCourse;
@@ -30,17 +38,17 @@ public final class CourseManager {
 	}
 
 	/**
-	* 使用するコースを指定します。
-	* @param usingCourse 使用するコース
-	*/
+	 * 使用するコースを指定します。
+	 * @param usingCourse 使用するコース
+	 */
 	public void setUsingCourse(Course usingCourse) {
 		this.usingCourse = usingCourse;
 	}
 
 	/**
-	* 現在使用しているコースを指定します。
-	* @return 現在使用しているコース
-	*/
+	 * 現在使用しているコースを指定します。
+	 * @return 現在使用しているコース
+	 */
 	public Course getUsingCourse() {
 		return usingCourse;
 	}
@@ -105,7 +113,7 @@ public final class CourseManager {
 	public boolean hasCourse(String courseName) {
 		return courses.contains(new Course(courseName));
 	}
-	
+
 	/**
 	 * コースが存在か判定します。
 	 * @param course 判定するコース名
@@ -114,7 +122,7 @@ public final class CourseManager {
 	public boolean hasCourse(Course course) {
 		return courses.contains(course);
 	}
-	
+
 	/**
 	 * コースのリストを取得します。
 	 * @return コースのリスト
@@ -197,7 +205,7 @@ public final class CourseManager {
 		}
 		return index;
 	}
-	
+
 	/**
 	 * チェックポイントのリストの中で一番大きいindexの数値を返します。<br>
 	 * リストに何もない場合は0を返します。
@@ -212,7 +220,7 @@ public final class CourseManager {
 		}
 		return index;
 	}
-	
+
 	/**
 	 * 踏んだチェックポイントのIndexを返します。<br>
 	 * 踏んだBlockがチェックポイントでない場合は-1を返します。
@@ -229,7 +237,7 @@ public final class CourseManager {
 		}
 		return -1;
 	}
-	
+
 	/**
 	 * 踏んだチェックポイントのコースを返します。<br>
 	 * 踏んだBlockがチェックポイントでない場合はnullを返します。
@@ -246,5 +254,51 @@ public final class CourseManager {
 		}
 		return null;
 	}
+
+	/**
+	 * 順位を表示するかを指定します。
+	 * @param viewRank 順位を表示するか
+	 */
+	public void setViewRank(boolean viewRank) {
+		this.viewRank = viewRank;
+	}
 	
+	/**
+	 * 順位を表示する場合はtrueを返します。
+	 * @return 順位を表示する場合はtrue
+	 */
+	public boolean viewRank() {
+		return viewRank;
+	}
+	
+	/**
+	 * スコアを追加します。<br>
+	 * viewRankがtrueの時は表示されていないとき表示します。
+	 * @param data 馬のデータ
+	 * @param cpIndex 踏んだチェックポイントのIndex
+	 */
+	public void addScore(HorseData data, int cpIndex) {
+		Player player = data.getPlayer();
+		Scoreboard scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
+		if (scoreboard.getObjective("MHR_Point") != null) {
+			scoreboard.getObjective("MHR_Point").setDisplaySlot(DisplaySlot.SIDEBAR);
+			scoreboard.getObjective("MHR_Point").getScore(player).setScore(cpIndex);
+		} else if (viewRank) {
+			scoreboard.registerNewObjective("MHR_Point", "MHR_Point");
+			addScore(data, cpIndex);
+		}
+	}
+
+	/**
+	 * スコアをリセットします。
+	 */
+	public void resetScore() {
+		Scoreboard scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
+		if (scoreboard.getObjective("MHR_Point") != null) {
+			scoreboard.getObjective("MHR_Point").unregister();
+			scoreboard.registerNewObjective("MHR_Point", "MHR_Point");
+			scoreboard.getObjective("MHR_Point").setDisplaySlot(DisplaySlot.SIDEBAR);
+		}
+	}
+
 }

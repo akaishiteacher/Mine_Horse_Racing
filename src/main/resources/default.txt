@@ -19,6 +19,8 @@ Cmd_Usage_Course.SetAngle=§6/mhr c_setangle <int:index> <int:angle> - チェッ
 Cmd_Usage_Course.SetOneLapIndex=§6/mhr c_setonelapindex <int:onelapindex> [String:course] - 1周に必要なチェックポイントの通過数を設定します。
 Cmd_Usage_Course.SetLap=§6/mhr c_setlap <int:lap> [String:course] - ラップ数を設定します。
 Cmd_Usage_Course.Start=§6/mhr c_start - レースを開始します。
+Cmd_Usage_Course.End=§6/mhr c_end - レースを終了します。
+Cmd_Usage_Course.ViewRank=§6/mhr c_viewrank <Valid> - 順位を表示するかを設定します。
 
 #Output message of MHR commands.
 Cmd_Out_SetSpeed_Set=§a馬のスピードを<%speed%>に設定しました。
@@ -39,6 +41,8 @@ Cmd_Out_Course.RemovePoint_Removed=§aチェックポイントを消去しまし
 Cmd_Out_Course.SetAngle_Set=§a<%Index%>番のチェックポイントが保持する角度を<%Angle%>に設定しました。
 Cmd_Out_Course.SetOneLapIndex_Set=§a<%Course%>コースの1周に必要なチェックポイント通過数を<%OneLapIndex%>に設定しました。
 Cmd_Out_Course.SetLap_Set=§a<%Course%>コースのラップ数を<%Lap%>に設定しました。
+Cmd_Out_Course.End_End=§a<%Course%>コースのレースを終了しました。経過時間 - <%Time%>
+Cmd_Out_Course.ViewRank_Set=§a順位を表示するか設定しました。
 
 #Error message of MHRC commands.
 Cmd_Err_Course.Add_AlreadyAdded=§4既にコースが存在しています!

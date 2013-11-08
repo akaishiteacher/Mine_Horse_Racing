@@ -14,6 +14,7 @@ import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scoreboard.DisplaySlot;
 
 public final class WalkEvent {
 
@@ -46,12 +47,16 @@ public final class WalkEvent {
 				if (course.getCountdown().started() && !course.getCountdown().ended())
 					flying(block, data, walkedCPIndex, nowCPIndex, course);
 
-				//Disqualification?
-				if (!data.courseSession.checkDiqualification(walkedCPIndex))
-					checkpointPass(block, data, walkedCPIndex, nowCPIndex, course);
-				else
-					disqualification(block, data, walkedCPIndex, nowCPIndex, course);
+				//Timer running?
+				if (course.getTimer().running()) {
 
+					//Disqualification?
+					if (!data.courseSession.checkDiqualification(walkedCPIndex))
+						checkpointPass(block, data, walkedCPIndex, nowCPIndex, course);
+					else
+						disqualification(block, data, walkedCPIndex, nowCPIndex, course);
+
+				}
 			}
 		}
 	}
@@ -59,21 +64,24 @@ public final class WalkEvent {
 	private void checkpointPass(Block block, HorseData data, int walkedCPIndex, int nowCPIndex, Course course) {
 		EnumPointState pointState = 
 				data.courseSession.addPoint(walkedCPIndex, course.getOneLapIndex());
+		int point = ((data.courseSession.getLap()+1) * course.getOneLapIndex()) - (course.getOneLapIndex() - data.courseSession.getPoint());
 		if (pointState == EnumPointState.ADD) {
 			alert(data, Sound.LEVEL_UP, 2);
+			mhrCourse.getManager().addScore(data, point);
 		} else if (pointState == EnumPointState.LAP) {
 			alert(data, Sound.NOTE_STICKS, 1.4F, 4, 1, 7);
+			mhrCourse.getManager().addScore(data, point);
 		}
+		
 		if (data.courseSession.checkHasGoal(course)) {
 			Map<String, String> replaceMap = new HashMap<>();
-			int second = course.getTimer().getTime() / 20;
-			int min = course.getTimer().getTime() / (20 * 60);
-			replaceMap.put("Time", "" + min + ":" + second);
+			replaceMap.put("Time", course.getTimer().formattedTime("%01d:%02d"));
 			replaceMap.put("Player", data.getPlayer().getName());
 			Bukkit.broadcastMessage(Language.replaceArgs(mhr.getLang().get("Message_Course.Goal"), replaceMap));
+			alert(data, Sound.EXPLODE, 2, 2, 5, 2);
 		}
 	}
-
+	
 	private void alert(HorseData data, final Sound sound, final float pitch, final int repeat, final int offset, final int overlap) {
 		final Player player = data.getPlayer();
 		for (int i = 0; i < repeat; i++) {
@@ -114,8 +122,8 @@ public final class WalkEvent {
 			Player player = (Player) data.horse.getPassenger();
 			Map<String, String> replaceMap = new HashMap<>();
 			replaceMap.put("Player", player.getName());
-			replaceMap.put("Lap", String.valueOf(walkedCPIndex / course.getOneLapIndex() + 1));
-			replaceMap.put("LapIndex", String.valueOf(walkedCPIndex % course.getOneLapIndex()));
+			replaceMap.put("Lap", String.valueOf(data.courseSession.getLap()+1));
+			replaceMap.put("LapIndex", String.valueOf(walkedCPIndex));
 			server.broadcastMessage(Language.replaceArgs(mhr.getLang().get("Message_Course.Disqualification"), replaceMap));
 		}
 	}

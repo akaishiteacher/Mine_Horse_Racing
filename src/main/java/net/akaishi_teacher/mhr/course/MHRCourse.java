@@ -10,6 +10,7 @@ import net.akaishi_teacher.mhr.MHRFunc;
 import net.akaishi_teacher.mhr.Main;
 import net.akaishi_teacher.mhr.course.commands.Add;
 import net.akaishi_teacher.mhr.course.commands.AddCheckPoint;
+import net.akaishi_teacher.mhr.course.commands.End;
 import net.akaishi_teacher.mhr.course.commands.Remove;
 import net.akaishi_teacher.mhr.course.commands.RemoveCheckPoint;
 import net.akaishi_teacher.mhr.course.commands.SetAngle;
@@ -17,6 +18,7 @@ import net.akaishi_teacher.mhr.course.commands.SetLap;
 import net.akaishi_teacher.mhr.course.commands.SetOneLapIndex;
 import net.akaishi_teacher.mhr.course.commands.SetUsingCourse;
 import net.akaishi_teacher.mhr.course.commands.Start;
+import net.akaishi_teacher.mhr.course.commands.ViewRank;
 import net.akaishi_teacher.util.command.CommandExecutor;
 
 import org.bukkit.block.Block;
@@ -77,10 +79,12 @@ public final class MHRCourse extends MHRFunc implements Deserializer, HorseEvent
 		
 		//Add defaults.
 		config.addDefault("IntervalOfCheckWalk", 1);
+		config.addDefault("ViewRank", true);
 		
 		
 		//Get interval.
 		int interval = config.getInt("IntervalOfCheckWalk");
+		boolean viewRank = config.getBoolean("ViewRank");
 		
 		//Get courses data.
 		courseDataConf = new ConfigurationForData(getPlugin(), "coursesdata.info", this);
@@ -91,6 +95,10 @@ public final class MHRCourse extends MHRFunc implements Deserializer, HorseEvent
 		
 		//Assignment manager.
 		manager = new CourseManager(this, courses);
+		
+		//Set ViewRank.
+		manager.setViewRank(viewRank);
+		
 		
 		//Register the check walking thread.
 		registerCheckWalkingThread(interval);
@@ -141,7 +149,9 @@ public final class MHRCourse extends MHRFunc implements Deserializer, HorseEvent
 		cmdExecutor.addCommand(new SetAngle(mhr, "c_setangle any any", "mhrc.course.setangle", "チェックポイントが保持する角度を設定します。"));
 		cmdExecutor.addCommand(new SetOneLapIndex(mhr, "c_setonelapindex any", "mhrc.course.setonelapindex", "1周に必要なチェックポイントの通過数を設定します。"));
 		cmdExecutor.addCommand(new SetLap(mhr, "c_setlap any", "mhrc.course.setlap", "ラップ数を設定します。"));
-		cmdExecutor.addCommand(new Start(mhr, "start", "mhrc.countdown.start", "カウントダウンを開始します。"));
+		cmdExecutor.addCommand(new Start(mhr, "c_start", "mhrc.course.start", "レースを開始します。"));
+		cmdExecutor.addCommand(new End(mhr, "c_end", "mhrc.course.end", "レースを終了します。"));
+		cmdExecutor.addCommand(new ViewRank(mhr, "c_viewrank any", "mhrc.course.viewrank", "順位を表示するか指定します。"));
 	}
 	
 	protected void registerCheckWalkingThread(int interval) {

@@ -63,20 +63,26 @@ public class CourseSession implements ConfigurationSerializable {
 	 * @return lapを追加した場合はLAP。ポイント追加のみならADD、失敗すればFAILED。
 	 */
 	public EnumPointState addPoint(int walkedCPIndex, int onelapIndex) {
-		if (point + 1 >= onelapIndex && walkedCPIndex == 1) {
+		if (point + 1 > onelapIndex && walkedCPIndex == 1) {
 			lap++;
 			point = 0;
-			System.out.println("(´・ω・`)");
 			return EnumPointState.LAP;
 		}
 		if (walkedCPIndex >= point + 1) {
-			System.out.println("(;_;)");
 			point++;
 			return EnumPointState.ADD;
 		}
 		return EnumPointState.FAILED;
 	}
 
+	/**
+	 * 現在走っているラップ数を返します。
+	 * @return 現在走っているラップ数
+	 */
+	public int getLap() {
+		return lap;
+	}
+	
 	/**
 	 * 失格しているかを判定します。
 	 * @param walkedCPIndex 踏んだチェックポイントのIndex

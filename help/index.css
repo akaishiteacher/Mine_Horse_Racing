@@ -1,0 +1,43 @@
+@CHARSET "UTF-8";
+
+body {
+	margin: auto;
+	font-family: serif;
+	background-color: #CCC;
+}
+
+h1 {
+	margin: auto;
+	color: #CCC;
+	-webkit-border-bottom-right-radius: 10px;
+	-webkit-border-bottom-left-radius: 10px;
+	-moz-border-radius-bottomright: 10px;
+	-moz-border-radius-bottomleft: 10px;
+	background-color: #333;
+	border: solid 2px #666;
+	font-size: 32px;
+}
+
+.main {
+	margin-left: 10px;
+}
+
+.noconsole {
+	color: #F6F;
+	font-size: 14pt;
+}
+
+.noblock {
+	color: #F00;
+	font-size: 14pt;
+}
+
+.noconsole_ {
+	color: #F6F;
+}
+
+.noblock_ {
+	color: #F00;
+}
+
+}

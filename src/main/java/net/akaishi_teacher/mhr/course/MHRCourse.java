@@ -10,6 +10,7 @@ import net.akaishi_teacher.mhr.MHRFunc;
 import net.akaishi_teacher.mhr.Main;
 import net.akaishi_teacher.mhr.course.commands.Add;
 import net.akaishi_teacher.mhr.course.commands.AddCheckPoint;
+import net.akaishi_teacher.mhr.course.commands.CannotExitMode;
 import net.akaishi_teacher.mhr.course.commands.End;
 import net.akaishi_teacher.mhr.course.commands.Remove;
 import net.akaishi_teacher.mhr.course.commands.RemoveCheckPoint;
@@ -69,7 +70,10 @@ public final class MHRCourse extends MHRFunc implements Deserializer, HorseEvent
 		//Register commands.
 		registerCommands();
 		
-		mhr.getPlugin().getLogger().info("MineHorseRacing course function enabled!");
+		//Cannnot exit listener.
+		getPlugin().getServer().getPluginManager().registerEvents(new CannotExitListener(mhr), plugin);
+		
+		getPlugin().getLogger().info("MineHorseRacing course function enabled!");
 	}
 
 	@SuppressWarnings("unchecked")
@@ -80,11 +84,13 @@ public final class MHRCourse extends MHRFunc implements Deserializer, HorseEvent
 		//Add defaults.
 		config.addDefault("IntervalOfCheckWalk", 1);
 		config.addDefault("ViewRank", true);
+		config.addDefault("CannotExitMode", false);
 		
 		
 		//Get interval.
 		int interval = config.getInt("IntervalOfCheckWalk");
 		boolean viewRank = config.getBoolean("ViewRank");
+		boolean cannotExitMode = config.getBoolean("CannotExitMode");
 		
 		//Get courses data.
 		courseDataConf = new ConfigurationForData(getPlugin(), "coursesdata.info", this);
@@ -99,6 +105,8 @@ public final class MHRCourse extends MHRFunc implements Deserializer, HorseEvent
 		//Set ViewRank.
 		manager.setViewRank(viewRank);
 		
+		//Set cannnot exit mode.
+		manager.setCannotExitMode(cannotExitMode);
 		
 		//Register the check walking thread.
 		registerCheckWalkingThread(interval);
@@ -128,6 +136,12 @@ public final class MHRCourse extends MHRFunc implements Deserializer, HorseEvent
 		//Set interval.
 		config.set("IntervalOfCheckWalk", checkWalkingThread.interval);
 		
+		//Set viewrank.
+		config.set("ViewRank", manager.viewRank());
+		
+		//Set cannnot exit mode.
+		config.set("CannotExitMode", manager.isCannotExitMode());
+		
 		//Set courses data.
 		courseDataConf.getConf().set("Courses", manager.getCourses());
 	}
@@ -149,9 +163,10 @@ public final class MHRCourse extends MHRFunc implements Deserializer, HorseEvent
 		cmdExecutor.addCommand(new SetAngle(mhr, "c_setangle any any", "mhrc.course.setangle", "チェックポイントが保持する角度を設定します。"));
 		cmdExecutor.addCommand(new SetOneLapIndex(mhr, "c_setonelapindex any", "mhrc.course.setonelapindex", "1周に必要なチェックポイントの通過数を設定します。"));
 		cmdExecutor.addCommand(new SetLap(mhr, "c_setlap any", "mhrc.course.setlap", "ラップ数を設定します。"));
-		cmdExecutor.addCommand(new Start(mhr, "c_start", "mhrc.course.start", "レースを開始します。"));
-		cmdExecutor.addCommand(new End(mhr, "c_end", "mhrc.course.end", "レースを終了します。"));
-		cmdExecutor.addCommand(new ViewRank(mhr, "c_viewrank any", "mhrc.course.viewrank", "順位を表示するか指定します。"));
+		cmdExecutor.addCommand(new Start(mhr, "c_start", "mhrc.racing.start", "レースを開始します。"));
+		cmdExecutor.addCommand(new End(mhr, "c_end", "mhrc.racing.end", "レースを終了します。"));
+		cmdExecutor.addCommand(new ViewRank(mhr, "c_viewrank any", "mhrc.racing.viewrank", "順位を表示するか指定します。"));
+		cmdExecutor.addCommand(new CannotExitMode(mhr, "c_cannotexitmode any", "mhrc.course.cannotexitmode", "降りれない機能を有効化するか設定します。"));
 	}
 	
 	protected void registerCheckWalkingThread(int interval) {

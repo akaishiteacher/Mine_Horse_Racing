@@ -24,6 +24,8 @@ public final class CourseManager {
 
 	private boolean viewRank;
 
+	private boolean cannotExitMode;
+	
 	public CourseManager(MHRCourse mhrCourse) {
 		this.mhrCourse = mhrCourse;
 		this.mhrCore = mhrCourse.getMHR();
@@ -46,9 +48,9 @@ public final class CourseManager {
 	}
 
 	/**
-	* 現在使用しているコースを指定します。
-	* @return 現在使用しているコース
-	*/
+	 * 現在使用しているコースを指定します。
+	 * @return 現在使用しているコース
+	 */
 	public Course getUsingCourse() {
 		return usingCourse;
 	}
@@ -262,7 +264,7 @@ public final class CourseManager {
 	public void setViewRank(boolean viewRank) {
 		this.viewRank = viewRank;
 	}
-	
+
 	/**
 	 * 順位を表示する場合はtrueを返します。
 	 * @return 順位を表示する場合はtrue
@@ -270,7 +272,7 @@ public final class CourseManager {
 	public boolean viewRank() {
 		return viewRank;
 	}
-	
+
 	/**
 	 * スコアを追加します。<br>
 	 * viewRankがtrueの時は表示されていないとき表示します。
@@ -279,13 +281,15 @@ public final class CourseManager {
 	 */
 	public void addScore(HorseData data, int cpIndex) {
 		Player player = data.getPlayer();
-		Scoreboard scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
-		if (scoreboard.getObjective("MHR_Point") != null) {
-			scoreboard.getObjective("MHR_Point").setDisplaySlot(DisplaySlot.SIDEBAR);
-			scoreboard.getObjective("MHR_Point").getScore(player).setScore(cpIndex);
-		} else if (viewRank) {
-			scoreboard.registerNewObjective("MHR_Point", "MHR_Point");
-			addScore(data, cpIndex);
+		if (player != null) {
+			Scoreboard scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
+			if (scoreboard.getObjective("MHR_Point") != null && viewRank) {
+				scoreboard.getObjective("MHR_Point").setDisplaySlot(DisplaySlot.SIDEBAR);
+				scoreboard.getObjective("MHR_Point").getScore(player).setScore(cpIndex);
+			} else if (viewRank) {
+				scoreboard.registerNewObjective("MHR_Point", "MHR_Point");
+				addScore(data, cpIndex);
+			}
 		}
 	}
 
@@ -301,4 +305,28 @@ public final class CourseManager {
 		}
 	}
 
+	/**
+	 * コース機能のインスタンスを返します。
+	 * @return コース機能のインスタンス
+	 */
+	public MHRCourse getMHRCourse() {
+		return mhrCourse;
+	}
+
+	/**
+	 * 降りれない機能が有効か返します。
+	 * @return 降りれない機能が有効ならtrue
+	 */
+	public boolean isCannotExitMode() {
+		return cannotExitMode;
+	}
+
+	/**
+	 * 降りれない機能を有効にするか指定します。
+	 * @param cannotExitMode 有効にするか
+	 */
+	public void setCannotExitMode(boolean cannotExitMode) {
+		this.cannotExitMode = cannotExitMode;
+	}
+	
 }

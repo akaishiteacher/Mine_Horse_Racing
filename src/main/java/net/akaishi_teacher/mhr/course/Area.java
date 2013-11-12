@@ -6,7 +6,6 @@ import java.util.Map;
 import net.akaishi_teacher.mhr.SimpleLocation;
 
 import org.bukkit.Location;
-import org.bukkit.block.Block;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 
 /**

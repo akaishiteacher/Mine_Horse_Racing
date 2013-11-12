@@ -1,0 +1,48 @@
+<html>
+<title>MineHorseRacingPlugin - コマンド一覧</title>
+<meta http-equiv="Content-Type" content="text/html" charset="utf-8">
+<link rel="stylesheet" href="index.css" type="text/css">
+
+<div class="main">
+	パターンは、()が必須、[]が任意です。<br> <span class="noblock">@</span>
+	はコンソール不可とコマンドブロック不可 <span class="noconsole">@</span> はコンソール不可を表します。
+	!マークは、その引数をつけると、上記の色に合わせて、利用不可になることを表します。<br>
+	#マークは、その引数をつけないと、上記の色に合わせて、利用不可になることを表します。<br>
+	""で囲んである文字は、任意の文字や数値ではなく、そのまま入れるべき文字です。<br>
+	
+	<h2>・馬をコントロールするコマンド</h2>
+	/mhr setspeed (speed) - 馬の速度を設定します。<br>
+	/mhr setjump (jump) - 馬のジャンプ力を設定します。<br>
+	<span class="noconsole">@</span>/mhr spawn (num) <span class="noblock_">#</span>[x,y,z] - 馬をスポーンさせます。<br>
+	<span class="noconsole">@</span>/mhr spawn_id (num["-"maxnum]) <span class="noblock_">#</span>[x,y,z] - numからmaxnumまでの馬をスポーンさせます。maxnumは指定必須ではありません。<br>
+	<span class="noconsole">@</span>/mhr despawn [index] - 馬をデスポーンさせます。<br>
+	<span class="noblock">@</span>/mhr tp (id) [player] [flag] - 馬をテレポートします。<br>
+	<span class="noconsole">@</span>/mhr tploc (id) (x,y,z) [yaw,pitch] [flag] - 馬を指定した座標にテレポートします。<br>
+	<span class="noblock">@</span>/mhr alltp [player] [flag] - 全ての馬をテレポートします。<br>
+	<span class="noconsole">@</span>/mhr alltploc (x,y,z) [yaw,pitch] [flag] - 全ての馬を、指定した座標にテレポートします。<br>
+	
+	<br>
+	
+	<h2>・プレイヤーを操作するコマンド</h2>
+	/mhr ride (index) <span class="noblock_">#</span>[player] - プレイヤーを馬に乗せます。<br>
+	/mhr patternride (num"-"maxnum) (player) - numからmaxnumまでの範囲で、プレイヤーを馬に乗せます。<br>
+	/mhr cannotexitmode (valid) - 馬から降りれなくするかを設定します。<br>
+	
+	<br>
+	
+	<h2>・コースを操作するコマンド</h2>
+	/mhr c_usingcourse (course) - 使用するコースを指定します。(主催者がいる時のみ使用推奨)<br>
+	/mhr c_add (course) - コースを追加します。<br>
+	/mhr c_remove (course) - コースを削除します。<br>
+	<span class="noblock">@</span>/mhr c_addpoint [index] - チェックポイントを追加します。<br>
+	<span class="noblock">@</span>/mhr c_rmpoint [index] - チェックポイントを削除します。<br>
+	<span class="noblock">@</span>/mhr c_setangle (index) (angle) - チェックポイントが保持する角度を指定します。<br>
+	/mhr c_setonelapindex (onelapindex) [course] - 1周に必要な、チェックポイントの数を指定します。<br>
+	/mhr c_setlap (lap) [course] - ゴールまでのラップ数を指定します。<br>
+	/mhr c_start [course] - レースを開始します。<br>
+	/mhr c_end [course] - レースを終了します。<br>
+	/mhr viewrank (valid) - 現在のチェックポイント通過数を表示するか指定します。<br>
+	
+</div>
+
+</html>

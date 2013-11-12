@@ -23,6 +23,8 @@ public class ViewRank extends MHRAbstractCommand {
 		
 		mhr.getCourseFunc().getManager().setViewRank(b);
 		
+		mhr.getCourseFunc().getManager().resetScore();
+		
 		sender.sendMessage(mhr.getLang().get("Cmd_Out_Course.ViewRank_Set"));
 		
 		return true;

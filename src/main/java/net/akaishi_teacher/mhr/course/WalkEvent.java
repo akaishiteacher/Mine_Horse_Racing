@@ -34,6 +34,8 @@ public final class WalkEvent {
 		}
 	}
 
+
+
 	private void checkpointWalked(Block block, HorseData data, int walkedCPIndex, Course course) {
 		int nowCPIndex = data.courseSession.point;
 		//No disqualification?
@@ -60,19 +62,28 @@ public final class WalkEvent {
 		}
 	}
 
+
+
 	private void checkpointPass(Block block, HorseData data, int walkedCPIndex, int nowCPIndex, Course course) {
+		//Get pointstate and add point.
 		EnumPointState pointState = 
 				data.courseSession.addPoint(walkedCPIndex, course.getOneLapIndex());
+
+		//Get point(lap * index).
 		int point = ((data.courseSession.getLap()+1) * course.getOneLapIndex()) - (course.getOneLapIndex() - data.courseSession.getPoint());
-		if (pointState == EnumPointState.ADD) {
+
+		//Play alert.
+		//Setting score to score board.
+		if (pointState == EnumPointState.ADD) { //Add
 			alert(data, Sound.LEVEL_UP, 2);
 			mhrCourse.getManager().addScore(data, point);
-		} else if (pointState == EnumPointState.LAP) {
+		} else if (pointState == EnumPointState.LAP) { //Lap
 			alert(data, Sound.NOTE_STICKS, 1.4F, 4, 1, 7);
 			mhrCourse.getManager().addScore(data, point);
 		}
-		
-		if (data.courseSession.checkHasGoal(course)) {
+
+		if (data.courseSession.checkHasGoal(course) && data.getPlayer() != null) { //Has goal?
+			//Broadcast and to play alert.
 			Map<String, String> replaceMap = new HashMap<>();
 			replaceMap.put("Time", course.getTimer().formattedTime("%01d:%02d"));
 			replaceMap.put("Player", data.getPlayer().getName());
@@ -80,26 +91,36 @@ public final class WalkEvent {
 			alert(data, Sound.EXPLODE, 2, 2, 5, 2);
 		}
 	}
-	
+
+
+
 	private void alert(HorseData data, final Sound sound, final float pitch, final int repeat, final int offset, final int overlap) {
 		final Player player = data.getPlayer();
-		for (int i = 0; i < repeat; i++) {
-			Runnable alertRunnable = new Runnable() {
-				@Override
-				public void run() {
-					for (int j = 0; j < overlap; j++) {
-						player.playSound(player.getLocation(), sound, 1, pitch);
+		if (player != null) {
+			for (int i = 0; i < repeat; i++) {
+				Runnable alertRunnable = new Runnable() {
+					@Override
+					public void run() {
+						for (int j = 0; j < overlap; j++) {
+							player.playSound(player.getLocation(), sound, 1, pitch);
+						}
 					}
-				}
-			};
-			Bukkit.getScheduler().runTaskLater(mhr.getPlugin(), alertRunnable, offset * i);
+				};
+				Bukkit.getScheduler().runTaskLater(mhr.getPlugin(), alertRunnable, offset * i);
+			}
 		}
 	}
 
+
+
 	private void alert(HorseData data, Sound sound, float pitch) {
 		Player player = data.getPlayer();
-		player.playSound(player.getLocation(), sound, 1, pitch);
+		if (player != null) {
+			player.playSound(player.getLocation(), sound, 1, pitch);
+		}
 	}
+
+
 
 	private void flying(Block block, HorseData data, int cpIndex, int nowCPIndex, Course course) {
 		JavaPlugin plugin = mhr.getPlugin();
@@ -112,6 +133,8 @@ public final class WalkEvent {
 			server.broadcastMessage(Language.replaceArgs(mhr.getLang().get("Message_Course.Flying"), replaceMap));
 		}
 	}
+
+
 
 	private void disqualification(Block block, HorseData data, int walkedCPIndex, int nowCPIndex, Course course) {
 		JavaPlugin plugin = mhr.getPlugin();
@@ -126,5 +149,7 @@ public final class WalkEvent {
 			server.broadcastMessage(Language.replaceArgs(mhr.getLang().get("Message_Course.Disqualification"), replaceMap));
 		}
 	}
+
+
 
 }

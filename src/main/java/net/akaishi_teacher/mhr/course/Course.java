@@ -156,10 +156,18 @@ public class Course implements ConfigurationSerializable {
 		return onelapIndex;
 	}
 
+	/**
+	 * カウントダウン機能のインスタンスを返します。
+	 * @return カウントダウン機能のインスタンス
+	 */
 	public Countdown getCountdown() {
 		return countdown;
 	}
 
+	/**
+	 * タイマー機能のインスタンスを返します。
+	 * @return タイマー機能のインスタンス
+	 */
 	public Timer getTimer() {
 		return timer;
 	}
@@ -212,6 +220,7 @@ public class Course implements ConfigurationSerializable {
 		map.put("CourseName", courseName);
 		map.put("Lap", lap);
 		map.put("OneLap", onelapIndex);
+		map.put("CheckPoints", checkpoints);
 		return map;
 	}
 

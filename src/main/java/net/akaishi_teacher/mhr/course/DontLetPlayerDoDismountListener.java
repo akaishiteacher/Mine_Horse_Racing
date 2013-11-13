@@ -10,11 +10,11 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.vehicle.VehicleExitEvent;
 
-public class CannotExitListener implements Listener {
+public class DontLetPlayerDoDismountListener implements Listener {
 
 	private MHRCore mhr;
 
-	public CannotExitListener(MHRCore mhr) {
+	public DontLetPlayerDoDismountListener(MHRCore mhr) {
 		this.mhr = mhr;
 	}
 
@@ -24,7 +24,7 @@ public class CannotExitListener implements Listener {
 			if (event.getVehicle() instanceof Horse) {
 				ArrayList<HorseData> datas = mhr.getStatus().getHorseDatas();
 				for (HorseData data : datas) {
-					if (data.horse.equals(event.getVehicle())) {
+					if (data.horse.equals(event.getVehicle()) && !data.tpFlag) {
 						event.setCancelled(true);
 					}
 				}

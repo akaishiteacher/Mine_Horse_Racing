@@ -5,7 +5,10 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import net.akaishi_teacher.mhr.SimpleLocation;
+import net.akaishi_teacher.mhr.commands.Countdown;
+import net.akaishi_teacher.mhr.commands.Timer;
+import net.akaishi_teacher.mhr.common.Area;
+import net.akaishi_teacher.mhr.common.SimpleLocation;
 
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 
@@ -16,20 +19,44 @@ import org.bukkit.configuration.serialization.ConfigurationSerializable;
  */
 public class Course implements ConfigurationSerializable {
 
+	/**
+	 * コース名
+	 */
 	protected String courseName;
 
+	/**
+	 * ゴールまでのラップ数
+	 */
 	protected int lap;
 
+	/**
+	 * 1周に必要なチェックポイント通過数
+	 */
 	protected int onelapIndex;
 
+	/**
+	 * チェックポイントのリスト
+	 */
 	protected ArrayList<CheckPoint> checkpoints = new ArrayList<>();
 
+	/**
+	 * コースの範囲
+	 */
+	protected Area range;
+
+	/**
+	 * カウントダウン機能のインスタンス
+	 */
 	protected Countdown countdown;
 
+	/**
+	 * タイマー機能のインスタンス
+	 */
 	protected Timer timer;
 
 	public Course(String courseName) {
 		this.courseName = courseName;
+		this.range = new Area(new SimpleLocation(null, Integer.MIN_VALUE, Integer.MIN_VALUE, Integer.MIN_VALUE), new SimpleLocation(null, Integer.MIN_VALUE, Integer.MIN_VALUE, Integer.MIN_VALUE));
 		this.countdown = new Countdown();
 		this.timer = new Timer();
 	}
@@ -45,10 +72,18 @@ public class Course implements ConfigurationSerializable {
 		this.lap = (int) map.get("Lap");
 		this.onelapIndex = (int) map.get("OneLap");
 		this.checkpoints =  (ArrayList<CheckPoint>) map.get("CheckPoints");
+		this.range = (Area) map.get("Range");
 		this.countdown = new Countdown();
 		this.timer = new Timer();
+		if (range == null) {
+			this.range =  new Area(new SimpleLocation(null, Integer.MIN_VALUE, Integer.MIN_VALUE, Integer.MIN_VALUE), new SimpleLocation(null, Integer.MIN_VALUE, Integer.MIN_VALUE, Integer.MIN_VALUE));
+		}
 	}
 
+	/**
+	 * コース名を取得します。
+	 * @return コース名
+	 */
 	public String getName() {
 		return courseName;
 	}
@@ -104,7 +139,11 @@ public class Course implements ConfigurationSerializable {
 	 */
 	public CheckPoint getCheckPoint(int index) {
 		int foundIndex = checkpoints.indexOf(new CheckPoint(null, index));
-		return checkpoints.get(foundIndex);
+		if (foundIndex != -1) {
+			return checkpoints.get(foundIndex);
+		} else {
+			return null;
+		}
 	}
 
 	/**
@@ -154,6 +193,22 @@ public class Course implements ConfigurationSerializable {
 	 */
 	public int getOneLapIndex() {
 		return onelapIndex;
+	}
+
+	/**
+	 * コースの範囲を指定します。
+	 * @param area コースの範囲
+	 */
+	public void setRange(Area area) {
+		this.range = area;
+	}
+
+	/**
+	 * コースの範囲を返します。
+	 * @return コースの範囲
+	 */
+	public Area getRange() {
+		return range;
 	}
 
 	/**
@@ -221,6 +276,7 @@ public class Course implements ConfigurationSerializable {
 		map.put("Lap", lap);
 		map.put("OneLap", onelapIndex);
 		map.put("CheckPoints", checkpoints);
+		map.put("Range", range);
 		return map;
 	}
 

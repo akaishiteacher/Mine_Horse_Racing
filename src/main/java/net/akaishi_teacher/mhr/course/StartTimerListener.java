@@ -1,5 +1,7 @@
 package net.akaishi_teacher.mhr.course;
 
+import net.akaishi_teacher.mhr.commands.Timer;
+
 public class StartTimerListener implements CountdownListener {
 
 	protected Timer timer;

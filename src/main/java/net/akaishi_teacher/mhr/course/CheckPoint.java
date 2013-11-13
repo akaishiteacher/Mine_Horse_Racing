@@ -3,6 +3,8 @@ package net.akaishi_teacher.mhr.course;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.akaishi_teacher.mhr.common.Area;
+
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 
 /**
@@ -13,10 +15,19 @@ import org.bukkit.configuration.serialization.ConfigurationSerializable;
  */
 public class CheckPoint implements ConfigurationSerializable {
 
+	/**
+	 * チェックポイントのエリア
+	 */
 	protected Area area;
 	
+	/**
+	 * チェックポイントのIndex
+	 */
 	protected int index;
 
+	/**
+	 * チェックポイントが保持する角度
+	 */
 	protected int angle;
 	
 	public CheckPoint(Area area, int index) {

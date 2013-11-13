@@ -2,6 +2,8 @@ package net.akaishi_teacher.mhr;
 
 import java.util.ArrayList;
 
+import net.akaishi_teacher.mhr.common.SimpleLocation;
+
 import org.bukkit.World;
 
 /**

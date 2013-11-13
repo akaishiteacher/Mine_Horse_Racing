@@ -25,6 +25,7 @@ Cmd_Usage_Course.Start=§6/mhr c_start [course] - レースを開始します。
 Cmd_Usage_Course.End=§6/mhr c_end [course] - レースを終了します。
 Cmd_Usage_Course.ViewRank=§6/mhr c_viewrank <valid> - 順位を表示するかを設定します。
 Cmd_Usage_Course.CannotExitMode=§6/mhr c_cannotexitmode <valid> - 降りれない機能を有効化するか指定します。
+Cmd_Usage_Course.SetRange=§6/mhr c_setrange [course] - コースの範囲を指定します。(少し広めに指定してください。)
 
 #Output message of MHR commands.
 Cmd_Out_SetSpeed_Set=§a馬のスピードを<%speed%>に設定しました。
@@ -51,6 +52,7 @@ Cmd_Out_Course.SetLap_Set=§a<%Course%>コースのラップ数を<%Lap%>に設�
 Cmd_Out_Course.End_End=§a<%Course%>コースのレースを終了しました。経過時間 - <%Time%>
 Cmd_Out_Course.ViewRank_Set=§a順位を表示するか設定しました。
 Cmd_Out_Course.CannotExitMode_Set=§a馬から降りれない機能を有効化するか設定しました。(有効:<%Mode%>)
+Cmd_Out_Course.SetRange_Set=§a<%Course%>コースの範囲を指定しました。
 
 #Common error message of MHR commands.
 Err_HorseNotFound=§4指定された馬は存在しません!

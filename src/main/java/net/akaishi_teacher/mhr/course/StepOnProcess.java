@@ -5,7 +5,7 @@ import java.util.Map;
 
 import net.akaishi_teacher.mhr.HorseData;
 import net.akaishi_teacher.mhr.MHRCore;
-import net.akaishi_teacher.mhr.SimpleLocation;
+import net.akaishi_teacher.mhr.common.SimpleLocation;
 import net.akaishi_teacher.util.lang.Language;
 
 import org.bukkit.Bukkit;
@@ -15,13 +15,13 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public final class WalkEvent {
+public final class StepOnProcess {
 
 	private MHRCourse mhrCourse;
 
 	private MHRCore mhr;
 
-	public WalkEvent(MHRCourse mhrCourse) {
+	public StepOnProcess(MHRCourse mhrCourse) {
 		this.mhrCourse = mhrCourse;
 		this.mhr = mhrCourse.getMHR();
 	}

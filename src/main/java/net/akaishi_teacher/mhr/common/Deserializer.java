@@ -1,4 +1,4 @@
-package net.akaishi_teacher.mhr;
+package net.akaishi_teacher.mhr.common;
 
 /**
  * このクラスはDeserializeを任意のタイミングに呼び出すために、実装されたクラスです。<br>

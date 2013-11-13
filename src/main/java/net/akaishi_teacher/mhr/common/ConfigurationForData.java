@@ -1,4 +1,4 @@
-package net.akaishi_teacher.mhr;
+package net.akaishi_teacher.mhr.common;
 
 import java.io.File;
 import java.io.IOException;

@@ -1,5 +1,7 @@
 package net.akaishi_teacher.mhr;
 
+import net.akaishi_teacher.mhr.common.Deserializer;
+
 
 public abstract class MHRFunc implements Deserializer {
 

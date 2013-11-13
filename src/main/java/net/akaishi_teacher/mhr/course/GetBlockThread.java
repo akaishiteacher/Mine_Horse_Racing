@@ -6,10 +6,9 @@ import net.akaishi_teacher.mhr.HorseData;
 import net.akaishi_teacher.mhr.MHRCore;
 
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.entity.Horse;
 
-public final class CheckWalkingThread implements Runnable {
+public final class GetBlockThread implements Runnable {
 
 	/**
 	 * チェックの間隔
@@ -26,7 +25,7 @@ public final class CheckWalkingThread implements Runnable {
 	 */
 	private MHRCore mhr;
 
-	public CheckWalkingThread(MHRCore mhr, int interval) {
+	public GetBlockThread(MHRCore mhr, int interval) {
 		this.mhr = mhr;
 		this.interval = interval;
 	}
@@ -40,10 +39,7 @@ public final class CheckWalkingThread implements Runnable {
 				if (horse != null) {
 					Location walkedBlockLocation = horse.getLocation().clone();
 					walkedBlockLocation = walkedBlockLocation.add(0, -1, 0);
-					Material type = walkedBlockLocation.getBlock().getType();
-					if (type != Material.AIR) {
-						mhr.getCourseFunc().walk(walkedBlockLocation.getBlock(), data);
-					}
+					mhr.getCourseFunc().walk(walkedBlockLocation.getBlock(), data);
 				}
 			}
 		}

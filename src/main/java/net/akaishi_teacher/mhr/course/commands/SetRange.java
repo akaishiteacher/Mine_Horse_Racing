@@ -4,15 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.akaishi_teacher.mhr.MHRCore;
-import net.akaishi_teacher.mhr.commands.MHRAbstractCommand;
-import net.akaishi_teacher.mhr.common.Area;
-import net.akaishi_teacher.mhr.common.SimpleLocation;
-import net.akaishi_teacher.mhr.course.CheckPoint;
-import net.akaishi_teacher.mhr.course.Course;
-import net.akaishi_teacher.mhr.course.CourseManager;
-import net.akaishi_teacher.util.lang.Language;
-
 import org.bukkit.command.CommandSender;
 
 import com.sk89q.worldedit.IncompleteRegionException;
@@ -20,9 +11,17 @@ import com.sk89q.worldedit.LocalSession;
 import com.sk89q.worldedit.WorldEdit;
 import com.sk89q.worldedit.regions.RegionSelector;
 
-public class AddCheckPoint extends MHRAbstractCommand {
+import net.akaishi_teacher.mhr.MHRCore;
+import net.akaishi_teacher.mhr.commands.MHRAbstractCommand;
+import net.akaishi_teacher.mhr.common.Area;
+import net.akaishi_teacher.mhr.common.SimpleLocation;
+import net.akaishi_teacher.mhr.course.Course;
+import net.akaishi_teacher.mhr.course.CourseManager;
+import net.akaishi_teacher.util.lang.Language;
 
-	public AddCheckPoint(MHRCore mhr, String pattern, String permission,
+public class SetRange extends MHRAbstractCommand {
+
+	public SetRange(MHRCore mhr, String pattern, String permission,
 			String description) {
 		super(mhr, pattern, permission, description);
 	}
@@ -32,26 +31,20 @@ public class AddCheckPoint extends MHRAbstractCommand {
 		CourseManager manager = mhr.getCourseFunc().getManager();
 		Course course = null;
 		Area area = null;
-		int index = -1;
 
 		course = manager.getUsingCourse();
-		if (course == null) {
+		if (hasOption(args, 1)) {
+			course = manager.getCourse(args.get(1));
+			if (course == null) {
+				sender.sendMessage(mhr.getLang().get("Err_Course.CourseNotFound"));
+				return true;
+			}
+		}
+		if (course == null) { 
 			sender.sendMessage(mhr.getLang().get("Err_Course.RequiresTheUsingCourse"));
 			return true;
 		}
-		
-		if (hasOption(args, 1)) {
-			if (isNumber(args, 1)) {
-				index = Integer.parseInt(args.get(1));
-			} else {
-				sender.sendMessage(mhr.getLang().get("Err_NotNumber"));
-				return true;
-			}
-		} else {
-			index = manager.getMaxCheckPointIndex() + 1;
-		}
-		
-		
+
 		LocalSession session = WorldEdit.getInstance().getSession(sender.getName());
 		if (session != null) {
 			RegionSelector regionSelector = session.getRegionSelector(session.getSelectionWorld());
@@ -74,18 +67,18 @@ public class AddCheckPoint extends MHRAbstractCommand {
 			sender.sendMessage(mhr.getLang().get("Err_Course.RangeNotSpecified"));
 			return true;
 		}
-		mhr.getCourseFunc().getManager().addCheckPoint(new CheckPoint(area, index));
+		course.setRange(area);
 		
 		Map<String, String> replaceMap = new HashMap<>();
-		replaceMap.put("Index", String.valueOf(index));
-		sender.sendMessage(Language.replaceArgs(mhr.getLang().get("Cmd_Out_Course.AddPoint_Added"), replaceMap));
+		replaceMap.put("Course", course.getName());
+		sender.sendMessage(Language.replaceArgs(mhr.getLang().get("Cmd_Out_Course.SetRange_Set"), replaceMap));
 		
 		return true;
 	}
 
 	@Override
 	public String getUsage(CommandSender sender) {
-		return mhr.getLang().get("Cmd_Usage_Course.AddPoint");
+		return mhr.getLang().get("Cmd_Usage_Course.SetRange");
 	}
 
 }

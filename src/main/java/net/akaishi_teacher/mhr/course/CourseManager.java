@@ -5,7 +5,7 @@ import java.util.Iterator;
 
 import net.akaishi_teacher.mhr.HorseData;
 import net.akaishi_teacher.mhr.MHRCore;
-import net.akaishi_teacher.mhr.SimpleLocation;
+import net.akaishi_teacher.mhr.common.SimpleLocation;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -14,16 +14,34 @@ import org.bukkit.scoreboard.Scoreboard;
 
 public final class CourseManager {
 
+	/**
+	 * コースのリスト
+	 */
 	private ArrayList<Course> courses;
 
+	/**
+	 * MHRのインスタンス
+	 */
 	private MHRCore mhrCore;
 
+	/**
+	 * MHRのコース機能のインスタンス
+	 */
 	private MHRCourse mhrCourse;
 
+	/**
+	 * 現在、使用しているコース
+	 */
 	private Course usingCourse;
 
+	/**
+	 * Rankを表示するか
+	 */
 	private boolean viewRank;
 
+	/**
+	 * 馬から降りれなくするか
+	 */
 	private boolean cannotExitMode;
 	
 	public CourseManager(MHRCourse mhrCourse) {
@@ -257,6 +275,22 @@ public final class CourseManager {
 		return null;
 	}
 
+	/**
+	 * 座標内にあるコースを返します。<br>
+	 * 存在しない場合はnullを返します。
+	 * @param location 座標
+	 * @return 座標内にあるコース。存在しなければnull
+	 */
+	public Course getInAreaCourse(SimpleLocation location) {
+		for (Iterator<Course> iterator = courses.iterator(); iterator.hasNext();) {
+			Course course = (Course) iterator.next();
+			if (course.getRange().isInArea(location)) {
+				return course;
+			}
+		}
+		return null;
+	}
+	
 	/**
 	 * 順位を表示するかを指定します。
 	 * @param viewRank 順位を表示するか

@@ -3,6 +3,8 @@ package net.akaishi_teacher.mhr;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import net.akaishi_teacher.mhr.common.SimpleLocation;
+
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -170,7 +172,9 @@ public final class HorseController implements AnimalTamer {
 			Location toLoc = new Location(horse.getWorld(), loc.x, loc.y, loc.z);
 
 			//Eject passenger.
+			mhr.getStatus().getHorseDatas().get(index).tpFlag = true;
 			horse.eject();
+			mhr.getStatus().getHorseDatas().get(index).tpFlag = false;
 
 			//Teleport horse.
 			horse.teleport(toLoc);

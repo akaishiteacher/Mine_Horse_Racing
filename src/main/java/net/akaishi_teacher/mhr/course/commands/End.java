@@ -41,7 +41,7 @@ public class End extends MHRAbstractCommand {
 		replaceMap.put("Time", course.getTimer().formattedTime("%01d:%02d"));
 		sender.sendMessage(Language.replaceArgs(mhr.getLang().get("Cmd_Out_Course.End_End"), replaceMap));
 		
-		course.getTimer().end();
+		course.getTimer().stop();
 		course.getTimer().reset();
 		
 		mhr.getCourseFunc().getManager().resetScore();

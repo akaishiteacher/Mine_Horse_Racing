@@ -3,6 +3,7 @@ package net.akaishi_teacher.mhr;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.akaishi_teacher.mhr.common.SimpleLocation;
 import net.akaishi_teacher.mhr.course.CourseSession;
 
 import org.bukkit.Location;
@@ -35,6 +36,11 @@ public class HorseData implements ConfigurationSerializable {
 	 * 馬のコースの走行状態を保持しているクラスのインスタンス
 	 */
 	public CourseSession courseSession;
+	
+	/**
+	 * バグ修正用のフラグ
+	 */
+	public boolean tpFlag;
 	
 	public HorseData(int id, SimpleLocation loc) {
 		this.id = id;

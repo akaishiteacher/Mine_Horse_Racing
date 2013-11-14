@@ -16,6 +16,10 @@ import org.bukkit.entity.Horse.Style;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+/**
+ * 馬をコントロールするクラスです。
+ * @author mozipi
+ */
 public final class HorseController implements AnimalTamer {
 
 	/**

@@ -2,7 +2,9 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>net.akaichi_teacher.mhr</groupId>
-	<name>MHR Maven Mojo</name>
+	<name>MineHorseRacing開発チーム</name>
+	<version>beta1.0.0_for_164</version>
+	<artifactId>MineHorseRacing</artifactId>
 	<url>https://github.com/akaishiteacher/Mine_Horse_Racing</url>
 
 	<dependencies>
@@ -39,10 +41,6 @@
 		</dependency>
 
 	</dependencies>
-
-	<version>1.0.1.2_for_164</version>
-
-	<artifactId>MineHorseRacing</artifactId>
 
 	<organization>
 		<name>Developers for akaishi teacher</name>

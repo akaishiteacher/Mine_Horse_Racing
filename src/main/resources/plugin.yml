@@ -1,6 +1,6 @@
 name: MineHorseRacingPlugin
 main: net.akaishi_teacher.mhr.Main
-version: 1.0.2.1
+version: beta1.0.0
 softdepend: [WorldEdit]
 loadbefore: [WorldEdit]
 

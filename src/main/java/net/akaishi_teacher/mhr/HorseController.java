@@ -1,6 +1,7 @@
 package net.akaishi_teacher.mhr;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 
 import net.akaishi_teacher.mhr.common.SimpleLocation;
@@ -78,12 +79,15 @@ public final class HorseController implements AnimalTamer {
 			}
 		}
 		Horse horse = spawn(loc);
-		//Set horse status.
-		horse.setStyle(Style.values()[(int) (Math.random() * Style.values().length)]);
-		horse.setColor(Color.values()[(int) (Math.random() * Color.values().length)]);
+		//馬のスタイルや名前などを設定///////////////////////////////////////////////////////
+		int styleIndex = (int) (Math.random() * Style.values().length);
+		int colorIndex = (int) (Math.random() * Color.values().length);
+		horse.setStyle(Style.values()[styleIndex]);
+		horse.setColor(Color.values()[colorIndex]);
 		horse.setCustomName(String.valueOf(data.id+1));
 		horse.getInventory().setSaddle(new ItemStack(Material.SADDLE));
 		horse.setOwner(this);
+		/////////////////////////////////////////////////////////////////////////////////
 		data.horse = horse;
 		mhr.getStatus().getHorseDatas().add(data);
 		return data;
@@ -106,33 +110,36 @@ public final class HorseController implements AnimalTamer {
 	 * @param num デスポーンさせる数
 	 */
 	public void despawns(int baseId, int num) {
+		Collections.sort(mhr.getStatus().getHorseDatas(), new ComparatorHorseDataId());
 		ArrayList<HorseData> datas = mhr.getStatus().getHorseDatas();
-		ArrayList<Integer> removeList = new ArrayList<>();
-		int throughIndex = 0;
+		ArrayList<HorseData> removeList = new ArrayList<>();
+
+		//baseIdに最も近いIDの馬を探す。線形探索なのであまり馬をスポーンさせると重くなるかも
+		int startIndex = -1;
+		int difference = Integer.MAX_VALUE;
+		for (int i = 0; i < datas.size(); i++) {
+			HorseData data = datas.get(i);
+			if (Math.abs(data.id - baseId) < difference) {
+				startIndex = i;
+				difference = Math.abs(data.id - baseId); 
+			}
+		}
+
+		//startIndexを下にremoveListに追加していく
 		for (int i = 0; i < num; i++) {
-			int index = datas.indexOf(new HorseData(baseId+i+throughIndex, null));
-			if (index != -1) {
-				//Remove horse.
-				datas.get(index).horse.remove();
-				//Add to the "remove list".
-				removeList.add(datas.get(index).id);
-			} else { //その番号の馬がいない時(翻訳できませんでした)
-				i--;
-				throughIndex++;
-				continue;
+			try {
+				HorseData data = datas.get(startIndex + i);
+				removeList.add(data);
+			} catch (IndexOutOfBoundsException e) {
+				break;
 			}
 		}
 
-		for (Iterator<Integer> iterator = removeList.iterator(); iterator.hasNext();) {
-			int index = datas.indexOf(new HorseData(iterator.next(), null));
-			if (index != -1) {
-				//Remove the "MHR horse".
-				datas.remove(index);
-			}
+		//データ削除
+		for (Iterator<HorseData> iterator = removeList.iterator(); iterator.hasNext();) {
+			HorseData data = (HorseData) iterator.next();
+			datas.remove(data);
 		}
-
-		//Memory reduction.
-		removeList = null;
 
 		datas.trimToSize();
 	}
@@ -146,9 +153,8 @@ public final class HorseController implements AnimalTamer {
 		ArrayList<HorseData> datas = mhr.getStatus().getHorseDatas();
 		int index = datas.indexOf(new HorseData(id, null));
 		if (index != -1) {
-			//Remove horse.
+			//馬のデスポーンとデータ削除
 			datas.get(index).horse.remove();
-			//Remove the "MHR horse".
 			datas.remove(index);
 		} else {
 			return false;
@@ -172,22 +178,22 @@ public final class HorseController implements AnimalTamer {
 			Horse horse = mhr.getStatus().getHorseDatas().get(index).horse;
 			Player passenger = (Player) horse.getPassenger();
 
-			//Cast location.
-			Location toLoc = new Location(horse.getWorld(), loc.x, loc.y, loc.z);
+			//SimpleLocationからLocationに
+			Location toLoc = SimpleLocation.castLocation(loc, mhr.getPlugin());
 
-			//Eject passenger.
+			//乗っている人を降ろす。この時、Eventが発生するので、降りれない機能の誤作動防止もする。
 			mhr.getStatus().getHorseDatas().get(index).tpFlag = true;
 			horse.eject();
 			mhr.getStatus().getHorseDatas().get(index).tpFlag = false;
 
-			//Teleport horse.
+			//馬をテレポート
 			horse.teleport(toLoc);
 			toLoc.setYaw((float) loc.yaw);
 			toLoc.setPitch((float) toLoc.getPitch());
-			if (flag && passenger != null) {
-				//Teleport passenger.
+			if (flag && passenger != null) { //馬に乗っている人もtpするか判定
+				//乗っている人をテレポート
 				passenger.teleport(toLoc);
-				//Ride on.
+				//馬に乗る
 				horse.setPassenger(passenger);
 			}
 		} else {

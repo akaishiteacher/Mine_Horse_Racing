@@ -80,15 +80,7 @@ public final class StepOnProcess {
 		} else if (pointState == EnumPointState.LAP) { //Lap
 			alert(data, Sound.NOTE_STICKS, 1.4F, 4, 1, 7);
 			mhrCourse.getManager().addScore(data, point);
-			int nowTime = course.getTimer().getTime();
-			int lapTime = nowTime - data.courseSession.getLapTime();
-			data.courseSession.addLapTime(lapTime);
-			int second = lapTime / 20 % 60;
-			int min = lapTime / (20*60);
-			Map<String, String> replaceMap = new HashMap<>();
-			replaceMap.put("Time", String.format("%01d:%02d", min, second));
-			replaceMap.put("Player", data.getPlayer().getName());
-			data.getPlayer().sendMessage(Language.replaceArgs(mhr.getLang().get("Message_Course.Lap"), replaceMap));
+			sendLapTime(course, data);
 		}
 
 		if (data.courseSession.checkHasGoal(course) && data.getPlayer() != null) { //Has goal?
@@ -96,8 +88,10 @@ public final class StepOnProcess {
 			Map<String, String> replaceMap = new HashMap<>();
 			replaceMap.put("Time", course.getTimer().formattedTime("%01d:%02d"));
 			replaceMap.put("Player", data.getPlayer().getName());
+			replaceMap.put("Rank", String.valueOf(course.getRankIndex()));
 			Bukkit.broadcastMessage(Language.replaceArgs(mhr.getLang().get("Message_Course.Goal"), replaceMap));
 			alert(data, Sound.EXPLODE, 2, 2, 5, 2);
+			course.addRankIndex();
 		}
 	}
 
@@ -157,6 +151,20 @@ public final class StepOnProcess {
 			replaceMap.put("LapIndex", String.valueOf(walkedCPIndex));
 			server.broadcastMessage(Language.replaceArgs(mhr.getLang().get("Message_Course.Disqualification"), replaceMap));
 		}
+	}
+
+
+
+	private void sendLapTime(Course course, HorseData data) {
+		int nowTime = course.getTimer().getTime();
+		int lapTime = nowTime - data.courseSession.getLapTime();
+		data.courseSession.addLapTime(lapTime);
+		int second = lapTime / 20 % 60;
+		int min = lapTime / (20*60);
+		Map<String, String> replaceMap = new HashMap<>();
+		replaceMap.put("Time", String.format("%01d:%02d", min, second));
+		replaceMap.put("Player", data.getPlayer().getName());
+		data.getPlayer().sendMessage(Language.replaceArgs(mhr.getLang().get("Message_Course.Lap"), replaceMap));
 	}
 
 

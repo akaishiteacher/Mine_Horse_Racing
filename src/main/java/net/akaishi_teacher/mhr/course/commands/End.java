@@ -43,6 +43,7 @@ public class End extends MHRAbstractCommand {
 		
 		course.getTimer().stop();
 		course.getTimer().reset();
+		course.resetRankIndex();
 		
 		mhr.getCourseFunc().getManager().resetScore();
 		

@@ -45,6 +45,11 @@ public class Course implements ConfigurationSerializable {
 	protected Area range;
 
 	/**
+	 * 現在の順位のIndex
+	 */
+	protected int rank = 1;
+	
+	/**
 	 * カウントダウン機能のインスタンス
 	 */
 	protected Countdown countdown;
@@ -211,6 +216,28 @@ public class Course implements ConfigurationSerializable {
 		return range;
 	}
 
+	/**
+	 * RankのIndexを1追加します。
+	 */
+	public void addRankIndex() {
+		rank++;
+	}
+
+	/**
+	 * RankのIndexを返します。
+	 * @return RankのIndex
+	 */
+	public int getRankIndex() {
+		return rank;
+	}
+	
+	/**
+	 * RankのIndexをリセット(1)にします。
+	 */
+	public void resetRankIndex() {
+		rank = 1;
+	}
+	
 	/**
 	 * カウントダウン機能のインスタンスを返します。
 	 * @return カウントダウン機能のインスタンス

@@ -80,7 +80,9 @@ public final class StepOnProcess {
 		} else if (pointState == EnumPointState.LAP) { //Lap
 			alert(data, Sound.NOTE_STICKS, 1.4F, 4, 1, 7);
 			mhrCourse.getManager().addScore(data, point);
-			sendLapTime(course, data);
+			if (data.getPlayer() != null) {
+				sendLapTime(course, data);
+			}
 		}
 
 		if (data.courseSession.checkHasGoal(course) && data.getPlayer() != null) { //Has goal?

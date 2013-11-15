@@ -33,20 +33,31 @@ public class HorseStatus {
 		this.status = new CommonHorseStatus(speed, jump);
 	}
 
-	public HorseStatus(ArrayList<HorseData> horseDatas, double speed, double jump, boolean flag) {
-		if (flag) {
-			this.horseDatas = horseDatas;
-		}
-		this.status = new CommonHorseStatus(speed, jump);
-	}
-
-	public void serverInit(MHRCore mhr, ArrayList<HorseData> datas) {
-		for (int i = 0; i < datas.size(); i++) {
-			HorseData data = datas.get(i);
+	/**
+	 * サーバーを起動した時に呼び出すべき処理
+	 * @param mhr MHRCoreのインスタンス
+	 */
+	public void serverInit(MHRCore mhr) {
+		/*
+		 * spawnListにインスタンス参照をバックアップしておかないと、
+		 * horseDatasに新しいArrayListを代入すると、参照がなくなってしまうので、こういう処理になっています。
+		 * HorseController#spawn(int, SimpleLocation)メソッドは、スポーンと同時に、horseDatasに
+		 * 馬のデータを追加してしまうため、horseDatasを新しくする必要があったためです。
+		 */
+		//馬のデータリストのインスタンス参照をバックアップ
+		ArrayList<HorseData> spawnList = horseDatas;
+		//horseDatasを新しいArrayListにして、spawnメソッドの仕様を回避
+		horseDatas = new ArrayList<>();
+		for (int i = 0; i < spawnList.size(); i++) {
+			HorseData data = spawnList.get(i);
 			mhr.getController().spawn(data.id, data.loc);
 		}
 	}
 
+	/**
+	 * サーバーを終了する時に呼び出すべき処理
+	 * @param mhr MHRCoreのインスタンス
+	 */
 	public void serverEnd(MHRCore mhr) {
 		for (HorseData data : horseDatas) {
 			World world = mhr.getPlugin().getServer().getWorld(data.loc.worldName);

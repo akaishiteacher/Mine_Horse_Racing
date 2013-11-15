@@ -52,11 +52,14 @@ public class Spawn extends MHRAbstractCommand {
 			if (index == -1) {
 				mhr.getController().spawn(i, loc);
 				virtualNum--;
+				if (virtualNum <= 0) {
+					break;
+				}
 			}
 		}
 
 		//Add a horses.
-		if (virtualNum >= 1) {
+		if (virtualNum > 0) {
 			int baseId = datas.size();
 			for (int i = 0; i < virtualNum; i++) {
 				int id = baseId + i;

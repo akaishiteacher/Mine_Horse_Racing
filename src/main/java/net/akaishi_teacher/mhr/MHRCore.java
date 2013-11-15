@@ -83,15 +83,6 @@ public class MHRCore extends MHRFunc implements Deserializer {
 		//Assignment controller.
 		controller = new HorseController(this);
 
-		//Server initialize schedule.
-		Runnable runnable = new Runnable() {
-			@Override
-			public void run() {
-				status.serverInit((MHRCore) getMHR(), status.getHorseDatas());
-			}
-		};
-		//Register server initialize schedule.
-		plugin.getServer().getScheduler().runTaskLater(plugin, runnable, 40);
 		//Start thread.
 		plugin.getServer().getScheduler().runTaskTimer(plugin, new SetStatusThread(this), 60, 20);
 
@@ -139,55 +130,64 @@ public class MHRCore extends MHRFunc implements Deserializer {
 		FileConfiguration config =
 				plugin.getConfig();
 
-		//Deserializes.
+		//デシリアライズ
 		deserializes();
 
-		//Create instance of "ConfigurationForData".
+		//馬のデータを読み書きするためのクラスのインスタンスを生成
 		horseDataConf =
 				new ConfigurationForData(plugin, "horsedatas.info", this);
 
-		//Add defaults.
+		//デフォルト値指定
 		config.addDefault("lang", "ja_JP");
 		config.addDefault("Speed", 0.3);
 		config.addDefault("Jump", 0.75);
 
-		//Get language name to use.
+		//使用する言語名を指定
 		String langName = 
 				config.getString("lang");
 
-		//Get common horse status.
+		//SpeedとJump力を取得
 		double speed =
 				config.getDouble("Speed");
 		double jump =
 				config.getDouble("Jump");
 
-		//Load localized file.
+		//言語ファイルを読み込み
 		loadLocalizationFile(langName);
 
-		//Get horse datas.
+		//馬のデータを取得
 		horseDataConf.loadConfig();
 		horseDataConf.getConf().addDefault("HorseDatas", new ArrayList<>());
 		ArrayList<HorseData> horseDatas =
 				(ArrayList<HorseData>) horseDataConf.getConf().getList("HorseDatas");
 
-		//Assignment to the "status" variable.
-		status = new HorseStatus(horseDatas, speed, jump, false);
+		//馬のステータスを保持するクラスのインスタンスを生成
+		status = new HorseStatus(horseDatas, speed, jump);
+		
+		//サーバー起動時に呼び出されるタスクを作成>登録
+		Runnable runnable = new Runnable() {
+			@Override
+			public void run() {
+				status.serverInit((MHRCore) getMHR());
+			}
+		};
+		plugin.getServer().getScheduler().runTaskLater(plugin, runnable, 40);
 	}
 
 	@Override
 	public void preDisable() {
-		//Server end.
+		//サーバー終了処理
 		status.serverEnd(this);
 	}
 
 	@Override
 	public void setConfig() {
-		//Set horsedatas.
+		//馬のデータを保存
 		horseDataConf.getConf().set("HorseDatas", status.getHorseDatas());
-		//Set common status.
+		//共通データを保存
 		plugin.getConfig().set("Speed", status.getCommonStatus().getSpeed());
 		plugin.getConfig().set("Jump", status.getCommonStatus().getJump());
-		//Valid course function.
+		//コース機能が有効かを保存
 		plugin.getConfig().set("CourseFunctionValid", mhrCourse == null ? false : true);
 	}
 
@@ -203,7 +203,7 @@ public class MHRCore extends MHRFunc implements Deserializer {
 		try {
 			lang.loadLangFile();
 		} catch (IOException | URISyntaxException e) {
-			//Load default language file.
+			//言語ファイルロード
 			try {
 				copyDefaultLocalizationFile();
 				try {

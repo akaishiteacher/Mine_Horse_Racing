@@ -31,6 +31,11 @@ public class CourseSession implements ConfigurationSerializable {
 	 */
 	protected boolean hasGoal;
 	
+	/**
+	 * 1Lap前のlaptime
+	 */
+	protected int lapTime;
+	
 	public CourseSession() {
 	}
 	
@@ -124,6 +129,30 @@ public class CourseSession implements ConfigurationSerializable {
 		return point;
 	}
 
+	/**
+	 * LapTimeを指定します。
+	 * @param lapTime LapTime
+	 */
+	public void setLapTime(int lapTime) {
+		this.lapTime = lapTime;
+	}
+	
+	/**
+	 * LapTimeを追加します。
+	 * @param lapTime LapTime
+	 */
+	public void addLapTime(int lapTime) {
+		this.lapTime += lapTime;
+	}
+	
+	/**
+	 * 1ラップ前のLapTimeを返します。
+	 * @return  1ラップ前のLapTime
+	 */
+	public int getLapTime() {
+		return lapTime;
+	}
+	
 	@Override
 	public Map<String, Object> serialize() {
 		Map<String, Object> map = new HashMap<>();

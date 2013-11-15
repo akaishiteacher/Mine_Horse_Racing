@@ -139,6 +139,7 @@ public final class HorseController implements AnimalTamer {
 		for (Iterator<HorseData> iterator = removeList.iterator(); iterator.hasNext();) {
 			HorseData data = (HorseData) iterator.next();
 			datas.remove(data);
+			data.horse.remove();
 		}
 
 		datas.trimToSize();

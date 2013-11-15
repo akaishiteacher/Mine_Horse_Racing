@@ -80,6 +80,15 @@ public final class StepOnProcess {
 		} else if (pointState == EnumPointState.LAP) { //Lap
 			alert(data, Sound.NOTE_STICKS, 1.4F, 4, 1, 7);
 			mhrCourse.getManager().addScore(data, point);
+			int nowTime = course.getTimer().getTime();
+			int lapTime = nowTime - data.courseSession.getLapTime();
+			data.courseSession.addLapTime(lapTime);
+			int second = lapTime / 20 % 60;
+			int min = lapTime / (20*60);
+			Map<String, String> replaceMap = new HashMap<>();
+			replaceMap.put("Time", String.format("%01d:%02d", min, second));
+			replaceMap.put("Player", data.getPlayer().getName());
+			data.getPlayer().sendMessage(Language.replaceArgs(mhr.getLang().get("Message_Course.Lap"), replaceMap));
 		}
 
 		if (data.courseSession.checkHasGoal(course) && data.getPlayer() != null) { //Has goal?

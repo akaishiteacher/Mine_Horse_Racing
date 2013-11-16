@@ -23,7 +23,10 @@ public final class SetStatusThread implements Runnable {
 			HorseData data = datas.get(i);
 			data.horse.setJumpStrength(mhr.getStatus().getCommonStatus().getJump());
 			AttributeInstance attributes = ((EntityInsentient)((CraftLivingEntity)data.horse).getHandle()).getAttributeInstance(GenericAttributes.d);
-	        attributes.setValue(mhr.getStatus().getCommonStatus().getSpeed());
+			attributes.setValue(mhr.getStatus().getCommonStatus().getSpeed());
+		}
+		if (mhr.getViewer() != null) {
+			mhr.getViewer().repaintStatus();
 		}
 	}
 

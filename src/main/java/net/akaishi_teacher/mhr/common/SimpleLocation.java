@@ -71,6 +71,11 @@ public class SimpleLocation implements ConfigurationSerializable {
 		return map;
 	}
 
+	@Override
+	public String toString() {
+		return worldName + "<" + x + ", " + y + ", " + z + " - " + yaw + ", " + pitch;
+	}
+	
 	public static Location castLocation(SimpleLocation loc, JavaPlugin plugin) {
 		return new Location(plugin.getServer().getWorld(loc.worldName), loc.x, loc.y, loc.z);
 	}

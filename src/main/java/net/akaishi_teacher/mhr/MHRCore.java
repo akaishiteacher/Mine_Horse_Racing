@@ -25,6 +25,7 @@ import net.akaishi_teacher.mhr.common.Deserializer;
 import net.akaishi_teacher.mhr.common.SimpleLocation;
 import net.akaishi_teacher.mhr.course.CourseSession;
 import net.akaishi_teacher.mhr.course.MHRCourse;
+import net.akaishi_teacher.mhr.viewer.Viewer;
 import net.akaishi_teacher.util.command.CommandExecutor;
 import net.akaishi_teacher.util.lang.Language;
 
@@ -67,6 +68,11 @@ public class MHRCore extends MHRFunc implements Deserializer {
 	 */
 	private MHRCourse mhrCourse;
 
+	/**
+	 * GUIのMHRStatusビューアー
+	 */
+	private Viewer viewer;
+
 	public MHRCore(Main plugin) {
 		super(plugin);
 	}
@@ -97,6 +103,12 @@ public class MHRCore extends MHRFunc implements Deserializer {
 			mhrCourse.preInit();
 			//Initialize.
 			mhrCourse.init();
+		}
+
+		//Viewer function valid?
+		plugin.getConfig().addDefault("ViewerFunctionValid", false);
+		if (plugin.getConfig().getBoolean("ViewerFunctionValid")) {
+			this.viewer = new Viewer(this);
 		}
 
 		plugin.getLogger().info("MineHorseRacingPlugin enabled.");
@@ -160,10 +172,10 @@ public class MHRCore extends MHRFunc implements Deserializer {
 		horseDataConf.getConf().addDefault("HorseDatas", new ArrayList<>());
 		ArrayList<HorseData> horseDatas =
 				(ArrayList<HorseData>) horseDataConf.getConf().getList("HorseDatas");
-
+		
 		//馬のステータスを保持するクラスのインスタンスを生成
 		status = new HorseStatus(horseDatas, speed, jump);
-		
+
 		//サーバー起動時に呼び出されるタスクを作成>登録
 		Runnable runnable = new Runnable() {
 			@Override
@@ -282,6 +294,14 @@ public class MHRCore extends MHRFunc implements Deserializer {
 		return mhrCourse;
 	}
 
+	/**
+	 * Viewerを返します。
+	 * @return viewer
+	 */
+	public Viewer getViewer() {
+		return viewer;
+	}
+	
 	public static boolean isNumber(String str) {
 		try {
 			Integer.parseInt(str);

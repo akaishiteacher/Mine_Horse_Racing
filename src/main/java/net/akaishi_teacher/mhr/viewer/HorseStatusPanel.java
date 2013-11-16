@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 import javax.swing.JTextArea;
 
-import net.akaishi_teacher.mhr.HorseData;
-import net.akaishi_teacher.mhr.course.CourseSession;
+import net.akaishi_teacher.mhr.course.data.CourseSession;
+import net.akaishi_teacher.mhr.data.HorseData;
 
 
 

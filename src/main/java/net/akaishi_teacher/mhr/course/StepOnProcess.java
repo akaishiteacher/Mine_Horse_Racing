@@ -3,9 +3,11 @@ package net.akaishi_teacher.mhr.course;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.akaishi_teacher.mhr.HorseData;
 import net.akaishi_teacher.mhr.MHRCore;
 import net.akaishi_teacher.mhr.common.SimpleLocation;
+import net.akaishi_teacher.mhr.course.data.Course;
+import net.akaishi_teacher.mhr.course.data.EnumPointState;
+import net.akaishi_teacher.mhr.data.HorseData;
 import net.akaishi_teacher.util.lang.Language;
 
 import org.bukkit.Bukkit;
@@ -37,12 +39,12 @@ public final class StepOnProcess {
 
 
 	private void checkpointWalked(Block block, HorseData data, int walkedCPIndex, Course course) {
-		int nowCPIndex = data.courseSession.point;
+		int nowCPIndex = data.courseSession.getPoint();
 		//No disqualification?
 		if (!data.courseSession.isDisqualification()) {
 
 			//Not have goal?
-			if (!data.courseSession.hasGoal) {
+			if (!data.courseSession.hasGoal()) {
 
 				//Flying Check
 				if (course.getCountdown().started() && !course.getCountdown().ended())

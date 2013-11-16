@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Iterator;
 
 import net.akaishi_teacher.mhr.common.SimpleLocation;
+import net.akaishi_teacher.mhr.data.HorseData;
 
 import org.bukkit.Location;
 import org.bukkit.Material;

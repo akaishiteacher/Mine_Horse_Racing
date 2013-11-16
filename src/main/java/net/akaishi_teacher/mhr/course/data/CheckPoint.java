@@ -1,4 +1,4 @@
-package net.akaishi_teacher.mhr.course;
+package net.akaishi_teacher.mhr.course.data;
 
 import java.util.HashMap;
 import java.util.Map;

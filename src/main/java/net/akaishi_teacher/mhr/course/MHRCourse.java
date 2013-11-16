@@ -2,7 +2,6 @@ package net.akaishi_teacher.mhr.course;
 
 import java.util.ArrayList;
 
-import net.akaishi_teacher.mhr.HorseData;
 import net.akaishi_teacher.mhr.MHRCore;
 import net.akaishi_teacher.mhr.MHRFunc;
 import net.akaishi_teacher.mhr.Main;
@@ -22,6 +21,9 @@ import net.akaishi_teacher.mhr.course.commands.SetRange;
 import net.akaishi_teacher.mhr.course.commands.SetUsingCourse;
 import net.akaishi_teacher.mhr.course.commands.Start;
 import net.akaishi_teacher.mhr.course.commands.ViewRank;
+import net.akaishi_teacher.mhr.course.data.CheckPoint;
+import net.akaishi_teacher.mhr.course.data.Course;
+import net.akaishi_teacher.mhr.data.HorseData;
 import net.akaishi_teacher.util.command.CommandExecutor;
 
 import org.bukkit.block.Block;

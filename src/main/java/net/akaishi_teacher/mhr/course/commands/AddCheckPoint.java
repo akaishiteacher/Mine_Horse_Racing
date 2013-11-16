@@ -8,9 +8,9 @@ import net.akaishi_teacher.mhr.MHRCore;
 import net.akaishi_teacher.mhr.commands.MHRAbstractCommand;
 import net.akaishi_teacher.mhr.common.Area;
 import net.akaishi_teacher.mhr.common.SimpleLocation;
-import net.akaishi_teacher.mhr.course.CheckPoint;
-import net.akaishi_teacher.mhr.course.Course;
 import net.akaishi_teacher.mhr.course.CourseManager;
+import net.akaishi_teacher.mhr.course.data.CheckPoint;
+import net.akaishi_teacher.mhr.course.data.Course;
 import net.akaishi_teacher.util.lang.Language;
 
 import org.bukkit.command.CommandSender;

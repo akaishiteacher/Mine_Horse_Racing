@@ -1,10 +1,10 @@
-package net.akaishi_teacher.mhr;
+package net.akaishi_teacher.mhr.data;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import net.akaishi_teacher.mhr.common.SimpleLocation;
-import net.akaishi_teacher.mhr.course.CourseSession;
+import net.akaishi_teacher.mhr.course.data.CourseSession;
 
 import org.bukkit.Location;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;

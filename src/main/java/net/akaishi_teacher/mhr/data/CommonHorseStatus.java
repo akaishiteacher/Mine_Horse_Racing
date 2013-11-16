@@ -1,4 +1,4 @@
-package net.akaishi_teacher.mhr;
+package net.akaishi_teacher.mhr.data;
 
 /**
  * 共通の馬のステータスを保持するクラスです。

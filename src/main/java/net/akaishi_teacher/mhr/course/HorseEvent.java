@@ -1,6 +1,6 @@
 package net.akaishi_teacher.mhr.course;
 
-import net.akaishi_teacher.mhr.HorseData;
+import net.akaishi_teacher.mhr.data.HorseData;
 
 import org.bukkit.block.Block;
 

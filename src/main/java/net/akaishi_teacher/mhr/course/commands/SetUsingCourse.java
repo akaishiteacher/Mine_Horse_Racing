@@ -8,7 +8,7 @@ import org.bukkit.command.CommandSender;
 
 import net.akaishi_teacher.mhr.MHRCore;
 import net.akaishi_teacher.mhr.commands.MHRAbstractCommand;
-import net.akaishi_teacher.mhr.course.Course;
+import net.akaishi_teacher.mhr.course.data.Course;
 import net.akaishi_teacher.util.lang.Language;
 
 public class SetUsingCourse extends MHRAbstractCommand {

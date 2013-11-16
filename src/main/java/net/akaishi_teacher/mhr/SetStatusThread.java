@@ -2,6 +2,7 @@ package net.akaishi_teacher.mhr;
 
 import java.util.ArrayList;
 
+import net.akaishi_teacher.mhr.data.HorseData;
 import net.minecraft.server.v1_6_R3.AttributeInstance;
 import net.minecraft.server.v1_6_R3.EntityInsentient;
 import net.minecraft.server.v1_6_R3.GenericAttributes;

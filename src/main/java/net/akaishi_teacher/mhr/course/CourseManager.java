@@ -3,9 +3,11 @@ package net.akaishi_teacher.mhr.course;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import net.akaishi_teacher.mhr.HorseData;
 import net.akaishi_teacher.mhr.MHRCore;
 import net.akaishi_teacher.mhr.common.SimpleLocation;
+import net.akaishi_teacher.mhr.course.data.CheckPoint;
+import net.akaishi_teacher.mhr.course.data.Course;
+import net.akaishi_teacher.mhr.data.HorseData;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;

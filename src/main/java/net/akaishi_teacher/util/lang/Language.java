@@ -14,13 +14,13 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Properties;
-import java.util.logging.Logger;
 
 /**
  * 言語ファイルを読み込む機能を持ったクラスです。<br>
  * 言語ファイルはYAMLではなくPropertiesクラスが提供するフォーマットです。<br>
  * 言語ファイル名は国コードに従う必要はなく、[lang].langというファイルをロードします。
  * @author mozipi
+ * @version 1.1.0
  */
 public class Language {
 
@@ -39,15 +39,9 @@ public class Language {
 	 */
 	protected HashMap<String, String> localizedStringMap = new HashMap<String, String>();
 
-	/**
-	 * ログ出力のためのインスタンスが格納された変数
-	 */
-	protected Logger logger;
-
-	public Language(File langFileDir, String lang, Logger logger) {
+	public Language(File langFileDir, String lang) {
 		this.langFileDir = langFileDir;
 		this.lang = lang;
-		this.logger = logger;
 		mkdir();
 	}
 
@@ -60,11 +54,13 @@ public class Language {
 		//言語ファイルがあるディレクトリが存在するかどうか。
 		//存在しない場合はディレクトリ生成する。
 		if (!langFileDir.exists()) {
-			logger.warning("the Language files directory not found!");
-			logger.info("This plugin will try to make the language files directory.");
+			System.err.println("The language file directory not found!");
+			System.out.println("This plugin will try make the language file directory.");
 			try {
 				if (langFileDir.mkdirs()) {
-					logger.info("Made language files directory.");
+					System.out.println("Made the language file directory.");
+				} else {
+					System.err.println("This plugin tried make the language file directory. but I couldn't.");
 				}
 			} catch (SecurityException e) {
 				e.printStackTrace();

@@ -39,7 +39,7 @@ public class CommandExecutor {
 
 		for (AbstractCommand command : commandSet) {
 			//Match pattern?
-			if (CommandSearcher.search(command.pattern, args)) {
+			if (command.getPattern().match(args)) {
 				//Sender has permission of the command?
 				if (command.getPermission() == null
 						|| sender.hasPermission(command.getPermission())) {
@@ -55,7 +55,7 @@ public class CommandExecutor {
 					sender.sendMessage("§4You don't have permission!(" + command.getPermission() + ")");
 				}
 			} else {
-				if (CommandSearcher.search_notAnys(command.pattern, args)) {
+				if (command.getPattern().match_notAnys(args)) {
 					sender.sendMessage(command.getUsage(sender));
 					return true;
 				}
@@ -88,7 +88,7 @@ public class CommandExecutor {
 	}
 
 
-	
+
 	/**
 	 * 指定した位置までの引数を除去します。
 	 * @param index コマンドを切る位置
@@ -102,9 +102,9 @@ public class CommandExecutor {
 		}
 		return result;
 	}
-	
-	
-	
+
+
+
 	public HashSet<AbstractCommand> getCommandSet() {
 		return commandSet;
 	}

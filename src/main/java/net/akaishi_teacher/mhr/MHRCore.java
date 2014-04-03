@@ -26,7 +26,6 @@ import net.akaishi_teacher.mhr.common.SimpleLocation;
 import net.akaishi_teacher.mhr.course.MHRCourse;
 import net.akaishi_teacher.mhr.course.data.CourseSession;
 import net.akaishi_teacher.mhr.data.HorseData;
-import net.akaishi_teacher.mhr.viewer.Viewer;
 import net.akaishi_teacher.util.command.CommandExecutor;
 import net.akaishi_teacher.util.lang.Language;
 
@@ -69,10 +68,6 @@ public class MHRCore extends MHRFunc implements Deserializer {
 	 */
 	private MHRCourse mhrCourse;
 
-	/**
-	 * GUIのMHRStatusビューアー
-	 */
-	private Viewer viewer;
 
 	public MHRCore(Main plugin) {
 		super(plugin);
@@ -81,35 +76,27 @@ public class MHRCore extends MHRFunc implements Deserializer {
 	@Override
 	public void init() {
 
-		//Create the CommandExecutor instance.
+		//コマンド実行のためのインスタンス生成
 		cmdExecutor = new CommandExecutor();
 
-		//Register commands.
+		//コマンドの追加
 		registerCommands();
 
-		//Assignment controller.
+		//馬のコントローラのインスタンス生成
 		controller = new HorseController(this);
 
-		//Start thread.
+		//馬のステータス変更をするスレッドをスケジューラに登録
 		plugin.getServer().getScheduler().runTaskTimer(plugin, new SetStatusThread(this), 60, 20);
 
-		//Register event.
+		//イベントを追加
 		plugin.getServer().getPluginManager().registerEvents(new NoDamageEvent(this), plugin);
 
-		//Course function valid?
+		//コース機能が有効であるか判定
 		plugin.getConfig().addDefault("CourseFunctionValid", true);
 		if (plugin.getConfig().getBoolean("CourseFunctionValid")) {
 			mhrCourse = new MHRCourse(getPlugin(), this);
-			//Pre initialize.
 			mhrCourse.preInit();
-			//Initialize.
 			mhrCourse.init();
-		}
-
-		//Viewer function valid?
-		plugin.getConfig().addDefault("ViewerFunctionValid", false);
-		if (plugin.getConfig().getBoolean("ViewerFunctionValid")) {
-			this.viewer = new Viewer(this);
 		}
 
 		plugin.getLogger().info("MineHorseRacingPlugin enabled.");
@@ -117,7 +104,6 @@ public class MHRCore extends MHRFunc implements Deserializer {
 
 	@Override
 	public void disable() {
-		//Course function valid?
 		if (mhrCourse != null) {
 			//Pre disable.
 			mhrCourse.preDisable();
@@ -125,10 +111,8 @@ public class MHRCore extends MHRFunc implements Deserializer {
 			mhrCourse.disable();
 		}
 
-		//Set Configuration.
 		setConfig();
 
-		//Save configuration.
 		horseDataConf.saveConfig();
 		plugin.saveConfig();
 
@@ -156,7 +140,7 @@ public class MHRCore extends MHRFunc implements Deserializer {
 		config.addDefault("Jump", 0.75);
 
 		//使用する言語名を指定
-		String langName = 
+		String langName =
 				config.getString("lang");
 
 		//SpeedとJump力を取得
@@ -173,7 +157,7 @@ public class MHRCore extends MHRFunc implements Deserializer {
 		horseDataConf.getConf().addDefault("HorseDatas", new ArrayList<>());
 		ArrayList<HorseData> horseDatas =
 				(ArrayList<HorseData>) horseDataConf.getConf().getList("HorseDatas");
-		
+
 		//馬のステータスを保持するクラスのインスタンスを生成
 		status = new HorseStatus(horseDatas, speed, jump);
 
@@ -212,7 +196,7 @@ public class MHRCore extends MHRFunc implements Deserializer {
 	}
 
 	private void loadLocalizationFile(String langName) {
-		lang = new Language(new File(plugin.getDataFolder().getAbsolutePath() + "/lang"), langName, plugin.getLogger());
+		lang = new Language(new File(plugin.getDataFolder().getAbsolutePath() + "/lang"), langName);
 		try {
 			lang.loadLangFile();
 		} catch (IOException | URISyntaxException e) {
@@ -295,14 +279,6 @@ public class MHRCore extends MHRFunc implements Deserializer {
 		return mhrCourse;
 	}
 
-	/**
-	 * Viewerを返します。
-	 * @return viewer
-	 */
-	public Viewer getViewer() {
-		return viewer;
-	}
-	
 	public static boolean isNumber(String str) {
 		try {
 			Integer.parseInt(str);

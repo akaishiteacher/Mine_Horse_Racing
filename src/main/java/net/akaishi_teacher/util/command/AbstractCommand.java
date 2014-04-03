@@ -17,7 +17,7 @@ public abstract class AbstractCommand {
 	/**
 	 * コマンドのパターン(anyは必須引数)
 	 */
-	protected String pattern;
+	protected CommandPattern pattern;
 
 	/**
 	 * コマンドのパーミッション
@@ -37,7 +37,7 @@ public abstract class AbstractCommand {
 	public AbstractCommand(String pattern, String permission,
 			String description) {
 		super();
-		this.pattern = pattern;
+		this.pattern = new CommandPattern(pattern);
 		this.permission = permission;
 		this.description = description;
 	}
@@ -52,18 +52,30 @@ public abstract class AbstractCommand {
 
 
 
-	public String getPattern() {
+	/**
+	 * コマンドパターンを返します。
+	 * @return コマンドパターン
+	 */
+	public CommandPattern getPattern() {
 		return pattern;
 	}
 
 
 
+	/**
+	 * コマンドのパーミッションを返します。
+	 * @return コマンドのパーミッション
+	 */
 	public String getPermission() {
 		return permission;
 	}
 
 
 
+	/**
+	 * コマンドの使い方を返します。
+	 * @return コマンドの使い方
+	 */
 	public String getDescription() {
 		return description;
 	}
@@ -80,7 +92,7 @@ public abstract class AbstractCommand {
 	 * @return 引数に渡されたArrayListを元に判定し、一致する場合はtrue。一致しなければfalse
 	 */
 	public boolean isMatch(ArrayList<String> args) {
-		if (CommandSearcher.search(pattern, args.toArray(new String[0]))) {
+		if (pattern.match(args.toArray(new String[0]))) {
 			return true;
 		}
 		return false;
@@ -184,7 +196,7 @@ public abstract class AbstractCommand {
 			return false;
 		}
 	}
-	
+
 	/**
 	 * 指定されたIndexの引数が、数値であるかどうかを判定します。
 	 * @param args 引数リスト
@@ -199,5 +211,5 @@ public abstract class AbstractCommand {
 			return false;
 		}
 	}
-	
+
 }

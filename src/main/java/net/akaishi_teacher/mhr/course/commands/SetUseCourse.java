@@ -11,9 +11,9 @@ import net.akaishi_teacher.mhr.commands.MHRAbstractCommand;
 import net.akaishi_teacher.mhr.course.data.Course;
 import net.akaishi_teacher.util.lang.Language;
 
-public class SetUsingCourse extends MHRAbstractCommand {
+public class SetUseCourse extends MHRAbstractCommand {
 
-	public SetUsingCourse(MHRCore mhr, String pattern, String permission,
+	public SetUseCourse(MHRCore mhr, String pattern, String permission,
 			String description) {
 		super(mhr, pattern, permission, description);
 	}
@@ -21,25 +21,25 @@ public class SetUsingCourse extends MHRAbstractCommand {
 	@Override
 	public boolean execute(CommandSender sender, ArrayList<String> args) {
 		Course course = null;
-		
+
 		course = mhr.getCourseFunc().getManager().getCourse(args.get(1));
 		if (course == null) {
 			sender.sendMessage(mhr.getLang().get("Err_Course.CourseNotFound"));
 			return true;
 		}
-		
+
 		mhr.getCourseFunc().getManager().setUsingCourse(course);
-	
+
 		Map<String, String> replaceMap = new HashMap<>();
 		replaceMap.put("UsingCourse", course.getName());
-		sender.sendMessage(Language.replaceArgs(mhr.getLang().get("Cmd_Out_Course.SetUsingCourse_Set"), replaceMap));
-		
+		sender.sendMessage(Language.replaceArgs(mhr.getLang().get("Cmd_Out_Course.SetUseCourse_Set"), replaceMap));
+
 		return true;
 	}
 
 	@Override
 	public String getUsage(CommandSender sender) {
-		return mhr.getLang().get("Cmd_Usage_Course.SetUsingCourse");
+		return mhr.getLang().get("Cmd_Usage_Course.SetUseCourse");
 	}
 
 }

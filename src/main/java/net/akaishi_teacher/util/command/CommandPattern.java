@@ -2,12 +2,23 @@ package net.akaishi_teacher.util.command;
 
 import java.util.LinkedList;
 
-/**
- * @author mozipi
- */
-public class CommandSearcher {
+public class CommandPattern {
 
-	public static boolean search(String pattern, String[] commandArgs) {
+	protected final String pattern;
+
+	public CommandPattern(String pattern) {
+		this.pattern = pattern;
+	}
+
+	/**
+	 * コマンドのパターン文字列を返します。
+	 * @return コマンドのパターン文字列
+	 */
+	public String getPatternString() {
+		return pattern;
+	}
+
+	public boolean match(String[] args) {
 		//Command that does not have command pattern.
 		if (pattern.equals("")) {
 			return true;
@@ -17,7 +28,7 @@ public class CommandSearcher {
 		String[] dividedPattern = pattern.split(" ");
 
 		//Arguments shortage.
-		if (dividedPattern.length > commandArgs.length) {
+		if (dividedPattern.length > args.length) {
 			return false;
 		}
 
@@ -27,26 +38,26 @@ public class CommandSearcher {
 			}
 			if (dividedPattern[i].endsWith(":any")) {
 				String startsWithStr = dividedPattern[i].split(":")[0];
-				if (!commandArgs[i].startsWith(startsWithStr)) {
+				if (!args[i].startsWith(startsWithStr)) {
 					return false;
 				}
 				continue;
 			}
 			if (dividedPattern[i].startsWith("any:")) {
 				String endsWithStr = dividedPattern[i].split(":")[1];
-				if (!commandArgs[i].endsWith(endsWithStr)) {
+				if (!args[i].endsWith(endsWithStr)) {
 					return false;
 				}
 				continue;
 			}
-			if (!commandArgs[i].equalsIgnoreCase(dividedPattern[i])) {
+			if (!args[i].equalsIgnoreCase(dividedPattern[i])) {
 				return false;
 			}
 		}
 		return true;
 	}
 
-	public static boolean search_notAnys(String pattern, String[] commandArgs) {
+	public boolean match_notAnys(String[] args) {
 		//Command that does not have command pattern.
 		if (pattern.equals("")) {
 			return true;
@@ -66,10 +77,10 @@ public class CommandSearcher {
 		}
 
 		//Compare two list.
-		if (commandArgs.length < s1.size()) return false;
+		if (args.length < s1.size()) return false;
 
 		for (int i = 0; i < s1.size(); i++) {
-			s2.add(commandArgs[i]);
+			s2.add(args[i]);
 		}
 
 		for (int i = 0; i < s1.size(); i++) {

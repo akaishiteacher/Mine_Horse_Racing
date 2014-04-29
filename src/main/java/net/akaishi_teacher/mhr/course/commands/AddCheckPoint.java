@@ -30,8 +30,8 @@ public class AddCheckPoint extends MHRAbstractCommand {
 	@Override
 	public boolean execute(CommandSender sender, ArrayList<String> args) {
 		CourseManager manager = mhr.getCourseFunc().getManager();
-		Course course = null;
-		Area area = null;
+		Course course;
+		Area area;
 		int index = -1;
 
 		course = manager.getUsingCourse();

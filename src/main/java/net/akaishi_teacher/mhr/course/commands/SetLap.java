@@ -22,7 +22,7 @@ public class SetLap extends MHRAbstractCommand {
 	@Override
 	public boolean execute(CommandSender sender, ArrayList<String> args) {
 		CourseManager manager = mhr.getCourseFunc().getManager();
-		Course course = null;
+		Course course;
 		int lap = -1;
 		
 		if (isNumber(args, 1)) {

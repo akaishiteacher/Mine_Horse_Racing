@@ -20,7 +20,7 @@ public class End extends MHRAbstractCommand {
 
 	@Override
 	public boolean execute(CommandSender sender, ArrayList<String> args) {
-		Course course = null;
+		Course course;
 
 		if (hasOption(args, 1)) {
 			course = mhr.getCourseFunc().getManager().getCourse(args.get(1));

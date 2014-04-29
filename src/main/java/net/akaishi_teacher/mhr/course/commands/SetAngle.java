@@ -21,7 +21,7 @@ public class SetAngle extends MHRAbstractCommand {
 
 	@Override
 	public boolean execute(CommandSender sender, ArrayList<String> args) {
-		Course course = null;
+		Course course;
 		int index = -1;
 		int angle = -1;
 

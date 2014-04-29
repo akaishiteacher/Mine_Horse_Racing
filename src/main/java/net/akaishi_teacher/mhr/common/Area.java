@@ -67,6 +67,7 @@ public class Area implements ConfigurationSerializable {
 	 * @param x 範囲拡大量X
 	 * @param y 範囲拡大量Y
 	 * @param z 範囲拡大量Z
+     * @return 拡張したエリア
 	 */
 	public SimpleLocation[] expand(double x, double y, double z) {
 		SimpleLocation[] locations = new SimpleLocation[2];

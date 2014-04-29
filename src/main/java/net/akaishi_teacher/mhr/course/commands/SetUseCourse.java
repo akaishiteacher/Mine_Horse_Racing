@@ -20,7 +20,7 @@ public class SetUseCourse extends MHRAbstractCommand {
 
 	@Override
 	public boolean execute(CommandSender sender, ArrayList<String> args) {
-		Course course = null;
+		Course course;
 
 		course = mhr.getCourseFunc().getManager().getCourse(args.get(1));
 		if (course == null) {

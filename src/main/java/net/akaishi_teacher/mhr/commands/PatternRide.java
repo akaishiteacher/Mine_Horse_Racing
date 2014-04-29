@@ -23,7 +23,7 @@ public class PatternRide extends MHRAbstractCommand {
 	public boolean execute(CommandSender sender, ArrayList<String> args) {
 		int num = 0;
 		int maxNum = -1;
-		Player player = null;
+		Player player;
 
 
 		String[] strs = args.get(1).split("-");

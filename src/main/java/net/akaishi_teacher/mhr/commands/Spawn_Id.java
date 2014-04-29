@@ -55,7 +55,7 @@ public class Spawn_Id extends MHRAbstractCommand {
 			z = player.getLocation().getZ();
 		}
 
-		//Location of the horse to be spawn.
+		//Location for spawn a horse.
 		SimpleLocation loc = new SimpleLocation(castWorld(sender).getName(), x, y, z);
 		
 		if (maxNum != -1) {

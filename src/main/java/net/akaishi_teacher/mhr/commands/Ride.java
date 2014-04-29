@@ -20,10 +20,11 @@ public class Ride extends MHRAbstractCommand {
 	}
 
 	@Override
+    @SuppressWarnings("empty-statement")
 	public boolean execute(CommandSender sender, ArrayList<String> args) {
-		Player player = null;
+		Player player;
 		int index = 0;
-		HorseData data = null;
+		HorseData data;
 
 		//Get index.
 		if (isNumber(args, 1)) {

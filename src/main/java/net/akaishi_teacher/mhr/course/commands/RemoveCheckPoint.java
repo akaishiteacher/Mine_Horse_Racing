@@ -20,7 +20,7 @@ public class RemoveCheckPoint extends MHRAbstractCommand {
 
 	@Override
 	public boolean execute(CommandSender sender, ArrayList<String> args) {
-		Course course = null;
+		Course course;
 		int index = -1;
 		
 		course = mhr.getCourseFunc().getManager().getUsingCourse();

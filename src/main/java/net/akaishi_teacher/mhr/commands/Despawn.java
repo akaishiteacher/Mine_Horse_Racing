@@ -18,7 +18,7 @@ public class Despawn extends MHRAbstractCommand {
 	@Override
 	public boolean execute(CommandSender sender, ArrayList<String> args) {
 		try {
-			boolean noRemoveAll = args.size() >= 2 ? true : false;
+			boolean noRemoveAll = args.size() >= 2;
 			int id = 0;
 			HashMap<String, String> replaceMap = new HashMap<>();
 

@@ -21,7 +21,7 @@ public class AllTeleport extends MHRAbstractCommand {
 	@Override
 	public boolean execute(CommandSender sender, ArrayList<String> args) {
 		boolean flag = false;
-		Player player = null;
+		Player player;
 
 		//Assignment the location and flag.
 		if (args.size() >= 3) {
@@ -58,7 +58,7 @@ public class AllTeleport extends MHRAbstractCommand {
 		HashMap<String, String> replaceMap = new HashMap<>();
 		replaceMap.put("Player", player.getName());
 		String sendA = Language.replaceArgs(mhr.getLang().get("Cmd_Out_AllTeleport_Teleported"), replaceMap);
-		sender.sendMessage(sendA);;
+		sender.sendMessage(sendA);
 		return true;
 	}
 

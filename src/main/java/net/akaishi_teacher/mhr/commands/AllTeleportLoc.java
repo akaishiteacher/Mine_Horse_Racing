@@ -21,7 +21,7 @@ public class AllTeleportLoc extends MHRAbstractCommand {
 	public boolean execute(CommandSender sender, ArrayList<String> args) {
 		try {
 			boolean flag = false;
-			SimpleLocation loc = null;
+			SimpleLocation loc;
 			double yaw = 0;
 			double pitch = 0;
 
